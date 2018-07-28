@@ -21,17 +21,17 @@ const router = express.Router();
  *   403: Wrong password.
  *   200: OK (data.token is available).
  */
-router.post("/login", function(
+router.post("/login", async function(
   req: express.Request,
   res: express.Response
-): void {
+): Promise<void> {
   const { username, password } = req.body;
   if (!username || !password) {
     return void res.send({
       code: 400
     });
   }
-  const token = login(username, password);
+  const token = await login(username, password);
   if (token === LOGIN_ERR_CODE.NOT_FOUND) {
     return void res.send({
       code: 404
@@ -48,10 +48,10 @@ router.post("/login", function(
   });
 });
 
-export function requestToken(
+export async function requestToken(
   req: express.Request,
   res: express.Response
-): void {
+): Promise<void> {
   const token = req.get("hod-token");
   const uid = token && parseToken(token);
 
@@ -59,7 +59,7 @@ export function requestToken(
     return void res.status(403);
   }
 
-  req.user = db.getUser(uid);
+  req.user = await db.getUser(uid);
 
   req.next();
 }
