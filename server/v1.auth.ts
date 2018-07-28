@@ -7,10 +7,46 @@
  */
 
 import express from "express";
+import { login, LOGIN_ERR_CODE } from "./auth";
 import * as db from "./db";
 import { parseToken } from "./token";
 
 const router = express.Router();
+
+/**
+ * TODO(qti3e) Add rate limit to this endpoint.
+ * Response codes:
+ *   400: Not enough data.
+ *   404: User does not exists.
+ *   403: Wrong password.
+ *   200: OK (data.token is available).
+ */
+router.post("/login", function(
+  req: express.Request,
+  res: express.Response
+): void {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return void res.send({
+      code: 400
+    });
+  }
+  const token = login(username, password);
+  if (token === LOGIN_ERR_CODE.NOT_FOUND) {
+    return void res.send({
+      code: 404
+    });
+  }
+  if (token === LOGIN_ERR_CODE.WRONG_PASSWORD) {
+    return void res.send({
+      code: 403
+    });
+  }
+  res.send({
+    code: 200,
+    token
+  });
+});
 
 export function requestToken(
   req: express.Request,
@@ -20,8 +56,7 @@ export function requestToken(
   const uid = token && parseToken(token);
 
   if (!uid) {
-    res.status(403);
-    return;
+    return void res.status(403);
   }
 
   req.user = db.getUser(uid);

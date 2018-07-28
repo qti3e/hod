@@ -12,15 +12,8 @@ import { requestToken, router as auth } from "./v1.auth";
 
 const router = express.Router();
 
-router.get("/ver", (req, res) => {
-  res.send({
-    name: "Hod",
-    version: "v0.1.0",
-    author: "qti3e"
-  });
-});
-
 router.use("/auth", auth);
+
 // Only things that are in /auth do not need login
 // by default.
 router.use(requestToken);

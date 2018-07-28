@@ -6,6 +6,7 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { findUserByUsername, getPasswordByUID } from "./db";
 import { createToken } from "./token";
 
 // This file manages authentication functionalities.
@@ -18,10 +19,10 @@ export enum LOGIN_ERR_CODE {
   WRONG_PASSWORD = -2
 }
 
-export function login(
+export async function login(
   username: string,
   password: string
-): string | LOGIN_ERR_CODE {
+): Promise<string | LOGIN_ERR_CODE> {
   if (username === ROOT_USERNAME) {
     if (password === ROOT_PASSWORD) {
       // 1 is root's UID.
@@ -29,5 +30,15 @@ export function login(
     }
     return LOGIN_ERR_CODE.WRONG_PASSWORD;
   }
-  return LOGIN_ERR_CODE.NOT_FOUND;
+
+  const user = await findUserByUsername(username);
+  if (!user) {
+    return LOGIN_ERR_CODE.NOT_FOUND;
+  }
+
+  if (password === await getPasswordByUID(user.uid)) {
+    return createToken(user.uid);
+  }
+
+  return LOGIN_ERR_CODE.WRONG_PASSWORD;
 }

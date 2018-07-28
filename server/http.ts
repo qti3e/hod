@@ -19,6 +19,14 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(morgan("tiny"));
 
+app.get("/info", (req, res) => {
+  res.send({
+    name: "Hod Hod Co",
+    version: "v1",
+    author: "Qti3e"
+  });
+});
+
 app.use("/v1", v1);
 
 app.listen(10234);
