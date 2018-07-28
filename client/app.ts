@@ -24,9 +24,11 @@ function renderApp(wrapper: HTMLElement) {
 
   const app = document.createElement("div");
   app.id = "app";
+  wrapper.appendChild(app);
 
   const render = () => {
-    // TODO(qti3e) Maybe use a smooth animation like fading?
+    // TODO(qti3e) Maybe use a smooth animation?
+    // (something like fading)
     app.innerHTML = "";
     if (get("isLoggedIn")) {
       renderDashboard(app);
@@ -35,7 +37,7 @@ function renderApp(wrapper: HTMLElement) {
     }
   };
 
-  // We can emit this event from anywhere request
+  // We can emit this event from anywhere to request
   // a rerender.
   on("render-main", render);
 

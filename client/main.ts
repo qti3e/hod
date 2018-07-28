@@ -20,6 +20,9 @@ function main() {
 
   // TODO(qti3e) Load production build in production.
   win.loadURL("http://localhost:8080");
+
+  // Open devtools.
+  win.webContents.toggleDevTools();
 }
 
 app.on("ready", main);
