@@ -12,7 +12,8 @@ function main() {
   // Create a new window.
   const win = new BrowserWindow({
     minWidth: 1200,
-    minHeight: 800
+    minHeight: 800,
+    frame: false
   });
   // Disable default menu bar.
   win.setMenu(null);

@@ -6,12 +6,15 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-const rootEl = document.getElementById("root");
+import { renderFrame } from "./frame";
 
-function renderDiv() {
-  const div = document.createElement("div");
-  div.innerHTML = "Hello World";
-  rootEl.appendChild(div);
+function renderApp(wrapper: HTMLElement) {
+  // Remove all children.
+  wrapper.innerHTML = "";
+  // Set default direction to RTL.
+  wrapper.dir = "rtl";
+  // Render electron's window frame.
+  renderFrame(wrapper);
 }
 
-renderDiv();
+renderApp(document.getElementById("root"));
