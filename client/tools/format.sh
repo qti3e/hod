@@ -3,4 +3,5 @@
   app.ts \
   main.ts \
   frame.ts \
+  rpc.ts \
   styles.scss

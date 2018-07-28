@@ -6,12 +6,21 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { get } from "./context";
+import { on } from "./rpc";
+
 /**
  * Renders electron window's frame.
  */
 export function renderFrame(wrapper: HTMLElement): void {
   const div = document.createElement("div");
   div.id = "frame-wrapper";
-  div.innerHTML = "X";
+
+  on("login", () => {
+    if (get("isLoggedIn")) {
+    } else {
+    }
+  });
+
   wrapper.appendChild(div);
 }
