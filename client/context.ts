@@ -33,4 +33,6 @@ export function set<T extends keyof ContextTypesMap>(
 }
 
 function save() {
+  // TODO(qti3e) Save context somewhere like localStorage or maybe
+  // a file as we use electron :D
 }

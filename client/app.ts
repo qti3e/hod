@@ -6,7 +6,13 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { get } from "./context";
+import { on } from "./rpc";
+
+// Import views.
+import { renderDashboard } from "./dashboard";
 import { renderFrame } from "./frame";
+import { renderLogin } from "./login";
 
 function renderApp(wrapper: HTMLElement) {
   // Remove all children.
@@ -15,6 +21,26 @@ function renderApp(wrapper: HTMLElement) {
   wrapper.dir = "rtl";
   // Render electron's window frame.
   renderFrame(wrapper);
+
+  const app = document.createElement("div");
+  app.id = "app";
+
+  const render = () => {
+    // TODO(qti3e) Maybe use a smooth animation like fading?
+    app.innerHTML = "";
+    if (get("isLoggedIn")) {
+      renderDashboard(app);
+    } else {
+      renderLogin(app);
+    }
+  };
+
+  // We can emit this event from anywhere request
+  // a rerender.
+  on("render-main", render);
+
+  // Initial rendering.
+  render();
 }
 
 renderApp(document.getElementById("root"));

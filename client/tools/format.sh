@@ -4,4 +4,6 @@
   main.ts \
   frame.ts \
   rpc.ts \
+  dashboard.ts \
+  login.ts \
   styles.scss
