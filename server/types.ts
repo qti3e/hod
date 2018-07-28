@@ -9,3 +9,9 @@
 // Common types.
 
 export type UID = string | number;
+
+export interface User {
+  uid: UID;
+  name: string;
+  isRoot?: boolean;
+}
