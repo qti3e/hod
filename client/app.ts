@@ -7,7 +7,7 @@
  */
 
 import { get } from "./context";
-import { on } from "./rpc";
+import { on } from "./ipc";
 
 // Import views.
 import { renderDashboard } from "./dashboard";

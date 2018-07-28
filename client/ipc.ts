@@ -11,3 +11,5 @@ import EventEmitter from "eventemitter3";
 const EE = new EventEmitter();
 
 export = EE;
+
+window["rpc"] = EE;

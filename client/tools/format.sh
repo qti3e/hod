@@ -3,7 +3,7 @@
   app.ts \
   main.ts \
   frame.ts \
-  rpc.ts \
+  ipc.ts \
   dashboard.ts \
   login.ts \
   styles.scss
