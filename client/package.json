@@ -15,7 +15,9 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
+    "@types/electron": "^1.6.10",
     "@types/react": "^16.4.6",
+    "electron": "^2.0.5",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   },
