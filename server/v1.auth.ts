@@ -64,4 +64,13 @@ export async function requestToken(
   req.next();
 }
 
+router.use(requestToken);
+
+router.post("/me", async function(
+  req: express.Request,
+  res: express.Response
+): Promise<void> {
+  res.send(req.user);
+});
+
 export { router };
