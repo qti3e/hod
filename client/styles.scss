@@ -42,11 +42,16 @@ body #app * {
 }
 
 #app {
+  opacity: 1;
+  transition: opacity 200ms ease;
   width: 100vw;
   height: calc(100% - #{$frame-height});
   display: flex;
   justify-content: center;
   align-items: center;
+  &.hide {
+    opacity: 0;
+  }
 }
 
 #login-box {

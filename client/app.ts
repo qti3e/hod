@@ -34,16 +34,19 @@ function renderApp(wrapper: HTMLElement) {
     await delay(200);
     // Remove all the contents inside the element.
     app.innerHTML = "";
-    // To prevent a flush.
-    await delay(50);
-    // Remove the hide class.
-    app.classList.remove("hide");
+    // First render page, then show it to the user.
+    try {
+      if (len(get("tokens")) === 0) {
+        return renderLogin(app);
+      }
 
-    if (len(get("tokens")) === 0) {
-      return renderLogin(app);
-    }
-
-    if (page === "home") {
+      if (page === "home") {
+      }
+    } finally {
+      // To prevent a flush.
+      await delay(50);
+      // Remove the hide class.
+      app.classList.remove("hide");
     }
   };
 
