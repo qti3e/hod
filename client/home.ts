@@ -6,5 +6,6 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-export function renderDashboard(wrapper: HTMLElement): void {
+export function renderHome(wrapper: HTMLElement): void {
+  console.log("home");
 }

@@ -1,23 +1,58 @@
+$background: #fff;
+$primary: #ff9b26;
+$secondry: #ff003b;
+$frame-height: 30px;
+
 html,
 body {
   margin: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #FCFCFB;
+  background-color: $background;
 }
-
-$frame-height: 30px;
 
 #frame-wrapper {
   width: 100vw;
-  height: $frame-height;
+  height: $frame-height - 1px;
   margin: 0;
-  background: #F6F5F2;
+  background:$background;
   -webkit-user-select: none;
   -webkit-app-region: drag;
+  border-bottom: 1px solid $primary;
 }
 
 #app {
   width: 100vw;
   height: calc(100% - #{$frame-height});
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#login-box {
+  width: 350px;
+  height: 500px;
+  border-right: 1px solid $primary;
+  border-left: 1px solid $primary;
+  background-image: linear-gradient(
+    darken($background, 1%),
+    $background
+    );
+  img {
+    width: 350px;
+  }
+  input {
+    border: none;
+    border-bottom: 1px solid $primary;
+    font-size: 14pt;
+    width: 100%;
+    padding-top: 10px;
+    color: $primary;
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: $primary;
+    }
+  }
 }

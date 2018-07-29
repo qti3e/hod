@@ -8,11 +8,13 @@
 
 import { get } from "./context";
 import { on } from "./ipc";
+import { delay, len } from "./util";
 
 // Import views.
-import { renderDashboard } from "./dashboard";
 import { renderFrame } from "./frame";
 import { renderLogin } from "./login";
+
+export type Pages = "home" | "users.list";
 
 function renderApp(wrapper: HTMLElement) {
   // Remove all children.
@@ -26,23 +28,34 @@ function renderApp(wrapper: HTMLElement) {
   app.id = "app";
   wrapper.appendChild(app);
 
-  const render = () => {
-    // TODO(qti3e) Maybe use a smooth animation?
-    // (something like fading)
+  const render = async (page: Pages) => {
+    // Hide current content with a fade effect.
+    app.classList.add("hide");
+    await delay(200);
+    // Remove all the contents inside the element.
     app.innerHTML = "";
-    if (get("isLoggedIn")) {
-      renderDashboard(app);
-    } else {
-      renderLogin(app);
+    // To prevent a flush.
+    await delay(50);
+    // Remove the hide class.
+    app.classList.remove("hide");
+
+    if (len(get("tokens")) === 0) {
+      return renderLogin(app);
+    }
+
+    if (page === "home") {
     }
   };
 
-  // We can emit this event from anywhere to request
-  // a rerender.
-  on("render-main", render);
+  // We can emit this event from anywhere to move
+  // user to another page.
+  on("go-to", render);
 
   // Initial rendering.
-  render();
+  // Try to open home page, it might render login page
+  render("home");
 }
 
-renderApp(document.getElementById("root"));
+window.addEventListener("load", () => {
+  renderApp(document.getElementById("root"));
+});

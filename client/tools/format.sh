@@ -4,6 +4,6 @@
   main.ts \
   frame.ts \
   ipc.ts \
-  dashboard.ts \
+  home.ts \
   login.ts \
   styles.scss

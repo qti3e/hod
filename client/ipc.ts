@@ -12,4 +12,4 @@ const EE = new EventEmitter();
 
 export = EE;
 
-window["rpc"] = EE;
+window["ipc"] = EE;
