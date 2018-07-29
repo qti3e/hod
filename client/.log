@@ -1,6 +1,0 @@
-[22395:0729/200738.384534:ERROR:CONSOLE(6294)] "console.assert", source: chrome-devtools://devtools/bundled/inspector.js (6294)
-[22395:0729/200738.388928:ERROR:CONSOLE(6294)] "Uncaught (in promise) TypeError: Cannot read property '_rawLocationToUILocation' of null", source: chrome-devtools://devtools/bundled/inspector.js (6294)
-[22395:0729/200739.680065:ERROR:CONSOLE(6294)] "console.assert", source: chrome-devtools://devtools/bundled/inspector.js (6294)
-[22395:0729/200739.681112:ERROR:CONSOLE(6294)] "Uncaught (in promise) TypeError: Cannot read property '_rawLocationToUILocation' of null", source: chrome-devtools://devtools/bundled/inspector.js (6294)
-[22395:0729/200816.246423:ERROR:CONSOLE(6294)] "console.assert", source: chrome-devtools://devtools/bundled/inspector.js (6294)
-[22395:0729/200816.250276:ERROR:CONSOLE(6294)] "Uncaught (in promise) TypeError: Cannot read property '_rawLocationToUILocation' of null", source: chrome-devtools://devtools/bundled/inspector.js (6294)

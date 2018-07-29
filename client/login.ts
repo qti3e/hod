@@ -8,6 +8,7 @@
 
 import axios from "axios";
 import { get, set } from "./context";
+import { login as local } from "./fa";
 
 let loginBoxCache: HTMLElement;
 
@@ -29,12 +30,16 @@ export function renderLogin(wrapper: HTMLElement): void {
   const usernameIn = document.createElement("input");
   usernameIn.type = "text";
   usernameIn.name = "username";
-  usernameIn.placeholder = "National Code...";
+  usernameIn.placeholder = local.username;
   loginBox.appendChild(usernameIn);
 
   const passwordIn = document.createElement("input");
   passwordIn.type = "password";
   passwordIn.name = "password";
-  passwordIn.placeholder = "Password...";
+  passwordIn.placeholder = local.password;
   loginBox.appendChild(passwordIn);
+
+  const loginBtn = document.createElement("button");
+  loginBtn.innerText = local.login;
+  loginBox.appendChild(loginBtn);
 }
