@@ -18,7 +18,8 @@ let context: ContextTypesMap;
 const defaultContext: ContextTypesMap = {
   tokens: {},
   currentToken: undefined,
-  server: "http://localhost:10234/v1/"
+  // Note: There must be no "/" at the end.
+  server: "http://localhost:10234/v1"
 };
 
 export interface ContextTypesMap {

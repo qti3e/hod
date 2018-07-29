@@ -8,13 +8,13 @@
 
 import { get } from "./context";
 import { on } from "./ipc";
-import { delay, len } from "./util";
+import { delay } from "./util";
 
 // Import views.
 import { renderFrame } from "./frame";
 import { renderLogin } from "./login";
 
-export type Pages = "home" | "users.list";
+export type Pages = "login" | "home" | "users.list";
 
 function renderApp(wrapper: HTMLElement) {
   // Remove all children.
@@ -32,15 +32,30 @@ function renderApp(wrapper: HTMLElement) {
     // Hide current content with a fade effect.
     app.classList.add("hide");
     await delay(200);
-    // Remove all the contents inside the element.
+    // First try to remove the first node very nicely.
+    if (app.childNodes.length > 0) {
+      const child = app.childNodes[0];
+      // Let current component know we're going to unmount it.
+      const e = new Event("component-will-unmount");
+      const cancelled = !child.dispatchEvent(e);
+      // We might want to call `e.preventDefault()`.
+      if (cancelled) {
+        return;
+      }
+      app.removeChild(child);
+    }
+    // Hard-remove all other contents inside the element.
     app.innerHTML = "";
     // First render page, then show it to the user.
     try {
-      if (len(get("tokens")) === 0) {
+      const currentToken = get("currentToken");
+      const shouldLogin = !currentToken || !get("tokens")[currentToken];
+      if (page === "login" || shouldLogin) {
         return renderLogin(app);
       }
 
       if (page === "home") {
+        console.log("Home");
       }
     } finally {
       // To prevent a flush.
@@ -52,10 +67,11 @@ function renderApp(wrapper: HTMLElement) {
 
   // We can emit this event from anywhere to move
   // user to another page.
-  on("go-to", render);
+  on("goto", render);
 
   // Initial rendering.
-  // Try to open home page, it might render login page
+  // Try to open home page, it might render login page in
+  // case user is not signed-in.
   render("home");
 }
 

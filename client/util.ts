@@ -13,3 +13,11 @@ export function delay(t: number): Promise<void> {
 export function len(o: {}): number {
   return Object.keys(o).length;
 }
+
+export function onEnter(el: HTMLElement, cb): void {
+  el.addEventListener("keyup", (e) => {
+    if (e.keyCode === 13) {
+      cb();
+    }
+  });
+}

@@ -8,8 +8,11 @@
 
 import axios from "axios";
 import { get, set } from "./context";
-import { login as local } from "./fa";
+import { emit } from "./ipc";
+import { login as local } from "./local";
+import { onEnter } from "./util";
 
+// Cache the elements.
 let loginBoxCache: HTMLElement;
 
 export function renderLogin(wrapper: HTMLElement): void {
@@ -23,23 +26,62 @@ export function renderLogin(wrapper: HTMLElement): void {
   // Set attributes.
   loginBox.id = "login-box";
 
+  const doLogin = () => {
+    submit(usernameIn.value, passwordIn.value);
+  };
+
   const img = document.createElement("img");
   img.src = require("./assets/logo.png");
   loginBox.appendChild(img);
 
   const usernameIn = document.createElement("input");
   usernameIn.type = "text";
-  usernameIn.name = "username";
   usernameIn.placeholder = local.username;
+  onEnter(usernameIn, doLogin);
   loginBox.appendChild(usernameIn);
 
   const passwordIn = document.createElement("input");
   passwordIn.type = "password";
-  passwordIn.name = "password";
   passwordIn.placeholder = local.password;
+  onEnter(passwordIn, doLogin);
   loginBox.appendChild(passwordIn);
 
   const loginBtn = document.createElement("button");
   loginBtn.innerText = local.login;
+  loginBtn.onclick = doLogin;
   loginBox.appendChild(loginBtn);
+}
+
+async function submit(username: string, password: string): Promise<void> {
+  // Maybe do not perform query when we have an active token
+  // in our context.tokens for the given username?
+  const server = get("server");
+  const { data } = await axios.post(server + "/auth/login", {
+    username,
+    password
+  });
+  switch (data.code) {
+    case 200:
+      addToken(data.token);
+      break;
+    default:
+      // TODO(qti3e) Implement notification service.
+      emit("notification", local.error);
+  }
+}
+
+async function addToken(token: string): Promise<void> {
+  const tokens = get("tokens");
+  const server = get("server");
+  const { data: user } = await axios.post(server + "/auth/me", {}, {
+    headers: {
+      "hod-token": token
+    }
+  });
+  tokens[token] = user;
+  set("tokens", tokens);
+  set("currentToken", token);
+  // Emit events to let others know what we did.
+  emit("login");
+  emit("goto", "home");
 }

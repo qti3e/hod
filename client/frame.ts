@@ -17,9 +17,6 @@ export function renderFrame(wrapper: HTMLElement): void {
   div.id = "frame-wrapper";
 
   on("login", () => {
-    if (get("isLoggedIn")) {
-    } else {
-    }
   });
 
   wrapper.appendChild(div);
