@@ -7,14 +7,16 @@
  */
 
 import { get } from "./context";
-import { on } from "./ipc";
+import { emit, on } from "./ipc";
 import { delay } from "./util";
 
 // Import views.
 import { renderFrame } from "./frame";
+import { renderHome } from "./home";
 import { renderLogin } from "./login";
+import { renderMenu } from "./menu";
 
-export type Pages = "login" | "home" | "users.list";
+export type Pages = "login" | "home" | "menu";
 
 function renderApp(wrapper: HTMLElement) {
   // Remove all children.
@@ -51,13 +53,19 @@ function renderApp(wrapper: HTMLElement) {
       const currentToken = get("currentToken");
       const shouldLogin = !currentToken || !get("tokens")[currentToken];
       if (page === "login" || shouldLogin) {
+        page = "login";
         return renderLogin(app);
       }
 
       if (page === "home") {
-        console.log("Home");
+        return renderHome(app);
+      }
+
+      if (page === "menu") {
+        return renderMenu(app);
       }
     } finally {
+      emit("route-change", page);
       // To prevent a flush.
       await delay(50);
       // Remove the hide class.

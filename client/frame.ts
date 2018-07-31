@@ -8,7 +8,7 @@
 
 import { get } from "./context";
 import { save } from "./context";
-import { on } from "./ipc";
+import { emit, on } from "./ipc";
 import { frame as local } from "./local";
 import * as t from "./types";
 import { nodeRequire, prepend } from "./util";
@@ -29,11 +29,30 @@ export function renderFrame(wrapper: HTMLElement): void {
   div.id = "frame-wrapper";
 
   // Navbar
-  const navbar = document.createElement("div");
+  const navbar = document.createElement("button");
   navbar.id = "navbar";
   navbar.appendChild(document.createElement("div")).id = "b1";
   navbar.appendChild(document.createElement("div")).id = "b2";
   navbar.appendChild(document.createElement("div")).id = "b3";
+  let previousPage: string;
+  let isOpen = false;
+  on("route-change", (page) => {
+    if (page === "menu") {
+      navbar.classList.add("open");
+      isOpen = true;
+    } else {
+      previousPage = page;
+      navbar.classList.remove("open");
+      isOpen = false;
+    }
+  });
+  navbar.onclick = () => {
+    if (isOpen) {
+      emit("goto", previousPage);
+    } else {
+      emit("goto", "menu");
+    }
+  };
   // End of Navbar
 
   // Drop down menu

@@ -96,7 +96,7 @@ body #app * {
       width: $frame-height - 20px;
       background-color: $primary;
       position: absolute;
-      transition: transform 700ms ease-in, background 700ms ease-in;
+      transition: transform 500ms ease-in;
     }
     #b1 {
       transform: translateY(-$frame-height / 5);
@@ -107,10 +107,7 @@ body #app * {
     #b3 {
       transform: translateY($frame-height / 5);
     }
-    &:hover {
-      * {
-        background: $secondry;
-      }
+    &.open {
       #b1 {
         transform: rotate(45deg);
       }
