@@ -29,3 +29,10 @@ export function prepend(parent: HTMLElement, el: HTMLElement): void {
 export function nodeRequire(module: string): any {
   return require(module);
 }
+
+export function fa(icon: string): HTMLElement {
+  const span = document.createElement("span");
+  span.classList.add("fa");
+  span.classList.add("fa-" + icon);
+  return span;
+}
