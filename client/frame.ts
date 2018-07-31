@@ -60,7 +60,7 @@ export function renderFrame(wrapper: HTMLElement): void {
   const currentUserEl = document.createElement("div");
   const itemsEl = document.createElement("div");
   const actionsEl = document.createElement("div");
-  dropbox.id = "menu";
+  dropbox.id = "dropdown";
   dropbox.appendChild(currentUserEl);
   dropbox.appendChild(itemsEl);
   itemsEl.appendChild(actionsEl);

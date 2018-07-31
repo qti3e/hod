@@ -8,4 +8,5 @@
 
 export function renderMenu(wrapper: HTMLElement): void {
   console.log("menu");
+  wrapper.appendChild(document.createElement("div")).id = "menu";
 }
