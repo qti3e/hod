@@ -14,7 +14,7 @@ import btoa from "btoa";
 export function encrypt(data: string, key: Uint8Array): string {
   let ret = "";
   for (let i = 0; i < data.length; ++i) {
-    ret += String.fromCharCode(data.charCodeAt(i) ^ key[i]);
+    ret += String.fromCharCode(data.charCodeAt(i) ^ key[i % key.length]);
   }
   return btoa(ret);
 }
@@ -23,7 +23,7 @@ export function decrypt(data: string, key: Uint8Array): string {
   data = atob(data);
   let ret = "";
   for (let i = 0; i < data.length; ++i) {
-    ret += String.fromCharCode(data.charCodeAt(i) ^ key[i]);
+    ret += String.fromCharCode(data.charCodeAt(i) ^ key[i % key.length]);
   }
   return ret;
 }

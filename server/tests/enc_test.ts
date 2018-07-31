@@ -17,3 +17,13 @@ test(function test_enc() {
   const dec = decrypt(enc, ENC_KEY);
   assertEqual(dec, data);
 });
+
+test(function test_enc_short_key() {
+  const data = "Hello world!";
+  const key = ENC_KEY.slice(0, 5);
+  assertEqual(key.length, 5);
+  const enc = encrypt(data, key);
+  assertEqual(typeof enc, "string");
+  const dec = decrypt(enc, key);
+  assertEqual(dec, data);
+});

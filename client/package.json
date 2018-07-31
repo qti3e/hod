@@ -17,8 +17,10 @@
   "dependencies": {
     "@types/electron": "^1.6.10",
     "axios": "^0.18.0",
+    "btoa": "^1.2.1",
     "electron": "^2.0.5",
-    "eventemitter3": "^3.1.0"
+    "eventemitter3": "^3.1.0",
+    "node-machine-id": "^1.1.10"
   },
   "browserslist": [
     "chrome 69"

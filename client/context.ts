@@ -6,6 +6,9 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import fs from "fs";
+import { machineIdSync } from "node-machine-id";
+import { decrypt, encrypt } from "./enc";
 import * as t from "./types";
 
 // This file has two APIs, `set()` and `get()`.
@@ -13,6 +16,9 @@ import * as t from "./types";
 // It's better (cleaner) than using a global
 // variable.
 // And also type safer.
+
+const file = "~/.hod";
+const version = "v1";
 
 let context: ContextTypesMap;
 const defaultContext: ContextTypesMap = {
@@ -48,7 +54,7 @@ export function set<T extends keyof ContextTypesMap>(
 let numRequests = 0;
 
 // Wait for an idle time to save DB.
-// So we have no flush or hang on browser.
+// So we have no flush or hang on browser window.
 function requestSave(): void {
   numRequests++;
   // What if there is no idle time for a long time?
@@ -66,13 +72,37 @@ function requestSave(): void {
 }
 
 function save() {
-  // TODO(qti3e) Save context somewhere like localStorage or maybe
-  // a file as we use electron :D
+  context["__hod"] = version;
+  const str = JSON.stringify(context);
+  const data = encrypt(str, encKey());
+  fs.writeFileSync(file, data);
+  console.log("Saved context");
 }
 
 function load() {
-  // TODO(qti3e) Load context from where we saved in `save()`.
-  context = defaultContext;
+  try {
+    fs.statSync(file);
+    const data = fs.readFileSync(file).toString();
+    const str = decrypt(data, encKey());
+    const json = JSON.parse(str);
+    if (json["__hod"] !== version) throw null;
+    context = json;
+    console.log("Loaded context", context);
+  } catch (e) {
+    context = defaultContext;
+  }
+}
+
+let encKeyCache;
+function encKey(): Uint8Array {
+  if (encKeyCache) return encKeyCache;
+  const key = machineIdSync();
+  const ui8 = new Uint8Array(key.length);
+  for (let i = 0; i < key.length; ++i) {
+    ui8[i] = key.charCodeAt(i);
+  }
+  encKeyCache = ui8;
+  return ui8;
 }
 
 load();
