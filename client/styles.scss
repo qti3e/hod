@@ -53,6 +53,7 @@ body #app * {
     display: flex;
     justify-content: center;
     cursor: pointer;
+    border-right: 1px solid $primary;
     * {
       height: 2px;
       width: $frame-height - 30px;
@@ -69,6 +70,55 @@ body #app * {
       background: $primary;
       * {
         background: $background;
+      }
+    }
+  }
+  #menu {
+    float: right;
+    width: 300px;
+    height: $frame-height;
+    display: inline-block;
+    border-left: 1px solid $primary;
+  }
+  #navbar {
+    float: right;
+    width: $frame-height;
+    height: $frame-height;
+    margin: 0;
+    display: inline-block;
+    border-left: 1px solid $primary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    * {
+      height: 2px;
+      width: $frame-height - 20px;
+      background-color: $primary;
+      position: absolute;
+      transition: transform 700ms ease-in, background 700ms ease-in;
+    }
+    #b1 {
+      transform: translateY(-$frame-height / 5);
+    }
+    #b2 {
+      transform: transformY(0);
+    }
+    #b3 {
+      transform: translateY($frame-height / 5);
+    }
+    &:hover {
+      * {
+        background: $secondry;
+      }
+      #b1 {
+        transform: rotate(45deg);
+      }
+      #b2 {
+        transform: translateY($frame-height / 5 + 5px);
+      }
+      #b3 {
+        transform: rotate(-45deg);
       }
     }
   }

@@ -12,3 +12,9 @@ export const login = {
   "login": "ورود",
   "error": "نام کاربری یا رمز عبور اشتباه است."
 };
+
+export const frame = {
+  "admin": "Admin",
+  "login": "Login",
+  "logout": "Logout"
+};
