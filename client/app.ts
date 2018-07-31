@@ -86,3 +86,9 @@ function renderApp(wrapper: HTMLElement) {
 window.addEventListener("load", () => {
   renderApp(document.getElementById("root"));
 });
+
+on("notification", (text: string) => {
+  return new Notification("Hod Hod", {
+    body: text
+  });
+});

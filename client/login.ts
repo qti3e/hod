@@ -65,7 +65,6 @@ async function submit(username: string, password: string): Promise<void> {
       addToken(data.token);
       break;
     default:
-      // TODO(qti3e) Implement notification service.
       emit("notification", local.error);
   }
 }
