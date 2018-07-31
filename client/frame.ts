@@ -78,6 +78,8 @@ export function renderFrame(wrapper: HTMLElement): void {
     } else if (currentToken && !dropbox.parentNode) {
       prepend(div, dropbox);
       div.insertBefore(navbar, dropbox);
+    } else if (!currentToken) {
+      return;
     }
     // Update current user.
     currentUserEl.innerText = getUserName(tokens[currentToken]);

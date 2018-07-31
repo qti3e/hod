@@ -11,19 +11,23 @@ import btoa from "btoa";
 
 // Some simple encryption functions.
 
+const globalEval = eval;
+const global = globalEval("this");
+const IS_WEB = global.window !== undefined;
+
 export function encrypt(data: string, key: Uint8Array): string {
   let ret = "";
   for (let i = 0; i < data.length; ++i) {
     ret += String.fromCharCode(data.charCodeAt(i) ^ key[i % key.length]);
   }
-  if (window && window.btoa) {
+  if (IS_WEB && window.btoa) {
     return window.btoa(ret);
   }
   return btoa(ret);
 }
 
 export function decrypt(data: string, key: Uint8Array): string {
-  if (window && window.atob) {
+  if (IS_WEB && window.atob) {
     data = window.atob(data);
   } else {
     data = atob(data);
