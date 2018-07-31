@@ -88,6 +88,7 @@ body #app * {
     height: $frame-height;
     display: inline-block;
     border-left: 1px solid $primary;
+    color: $primary;
   }
   #navbar {
     float: right;
@@ -176,6 +177,17 @@ body #app * {
     font-size: 15pt;
     background-color: $primary;
     color: $fg;
+  }
+}
+
+#home {
+  p {
+    color: $primary;
+    font-size: 20pt;
+  }
+  h1 {
+    color: $secondry;
+    font-size: 15pt;
   }
 }
 

@@ -14,7 +14,7 @@ export const login = {
 };
 
 export const frame = {
-  "admin": "Admin",
-  "login": "Login",
-  "logout": "Logout"
+  "admin": "مدیریت",
+  "login": "ورود",
+  "logout": "خروج"
 };
