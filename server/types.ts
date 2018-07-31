@@ -13,5 +13,6 @@ export type UID = string | number;
 export interface User {
   uid: UID;
   name: string;
+  lastName: string;
   isRoot?: boolean;
 }
