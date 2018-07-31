@@ -6,10 +6,10 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import fs from "fs";
-import { machineIdSync } from "node-machine-id";
 import { decrypt, encrypt } from "./enc";
+import { machineIdSync } from "./mid";
 import * as t from "./types";
+import { nodeRequire } from "./util";
 
 // This file has two APIs, `set()` and `get()`.
 // They can be used to manage a global context.
@@ -17,7 +17,8 @@ import * as t from "./types";
 // variable.
 // And also type safer.
 
-const file = "~/.hod";
+const home = nodeRequire("os").homedir();
+const file = nodeRequire("path").join(home, ".hod");
 const version = "v1";
 
 let context: ContextTypesMap;
@@ -72,6 +73,7 @@ function requestSave(): void {
 }
 
 function save() {
+  const fs = nodeRequire("fs");
   context["__hod"] = version;
   const str = JSON.stringify(context);
   const data = encrypt(str, encKey());
@@ -80,6 +82,7 @@ function save() {
 }
 
 function load() {
+  const fs = nodeRequire("fs");
   try {
     fs.statSync(file);
     const data = fs.readFileSync(file).toString();

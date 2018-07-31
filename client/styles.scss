@@ -5,10 +5,8 @@ $fg: #fff;
 $frame-height: 50px;
 
 @font-face {
-  font-family: 'BBCNassim';
-  src: local('☺'),
-  local('BBCNassim'),
-  url("./assets/bbc.woff") format('woff');
+  font-family: "BBCNassim";
+  src: local("☺"), local("BBCNassim"), url("./assets/bbc.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -34,11 +32,40 @@ body #app * {
   width: 100vw;
   height: $frame-height - 1px;
   margin: 0;
-  background:$background;
+  background: $background;
   user-select: none;
   -webkit-user-select: none;
   -webkit-app-region: drag;
   border-bottom: 1px solid $primary;
+  button {
+    -webkit-app-region: no-drag;
+    border: none;
+    background: transparent;
+    margin: 0;
+    &:focus {
+      outline: none;
+    }
+  }
+  #close {
+    float: left;
+    width: $frame-height;
+    height: $frame-height;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    * {
+      height: 2px;
+      width: $frame-height - 20px;
+      background-color: $primary;
+      position: absolute;
+    }
+    #b1 {
+      transform: rotate(45deg);
+    }
+    #b2 {
+      transform: rotate(-45deg);
+    }
+  }
 }
 
 #app {

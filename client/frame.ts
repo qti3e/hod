@@ -8,16 +8,32 @@
 
 import { get } from "./context";
 import { on } from "./ipc";
+import { prepend } from "./util";
+
+let frameCache: HTMLElement;
 
 /**
  * Renders electron window's frame.
  */
 export function renderFrame(wrapper: HTMLElement): void {
+  if (frameCache) {
+    return void wrapper.appendChild(frameCache);
+  }
   const div = document.createElement("div");
+  frameCache = div;
   div.id = "frame-wrapper";
 
-  on("login", () => {
-  });
+  const dropbox = document.createElement("div");
+  const drropboxItems = new Map<string, HTMLElement>();
+
+  on("login", () => {});
+
+  const closeBtn = document.createElement("button");
+  closeBtn.id = "close";
+  closeBtn.appendChild(document.createElement("div")).id = "b1";
+  closeBtn.appendChild(document.createElement("div")).id = "b2";
+
+  div.appendChild(closeBtn);
 
   wrapper.appendChild(div);
 }

@@ -73,11 +73,21 @@ async function submit(username: string, password: string): Promise<void> {
 async function addToken(token: string): Promise<void> {
   const tokens = get("tokens");
   const server = get("server");
-  const { data: user } = await axios.post(server + "/auth/me", {}, {
-    headers: {
-      "hod-token": token
+  const { data: user } = await axios.post(
+    server + "/auth/me",
+    {},
+    {
+      headers: {
+        "hod-token": token
+      }
     }
-  });
+  );
+  // Remove current tokens for the user.
+  for (const key in tokens) {
+    if (tokens[token].uid === key) {
+      delete tokens[token];
+    }
+  }
   tokens[token] = user;
   set("tokens", tokens);
   set("currentToken", token);

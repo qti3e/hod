@@ -21,3 +21,11 @@ export function onEnter(el: HTMLElement, cb): void {
     }
   });
 }
+
+export function prepend(parent: HTMLElement, el: HTMLElement): void {
+  parent.insertBefore(el, parent.childNodes[0]);
+}
+
+export function nodeRequire(module: string): any {
+  return require(module);
+}
