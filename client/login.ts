@@ -16,6 +16,7 @@ import { onEnter } from "./util";
 let loginBoxCache: HTMLElement;
 
 export function renderLogin(wrapper: HTMLElement): void {
+  wrapper.classList.add("img-bg");
   if (loginBoxCache) {
     return void wrapper.appendChild(loginBoxCache);
   }
@@ -50,6 +51,10 @@ export function renderLogin(wrapper: HTMLElement): void {
   loginBtn.innerText = local.login;
   loginBtn.onclick = doLogin;
   loginBox.appendChild(loginBtn);
+
+  loginBox.addEventListener("component-will-unmount", () => {
+    wrapper.classList.remove("img-bg");
+  });
 }
 
 async function submit(username: string, password: string): Promise<void> {
