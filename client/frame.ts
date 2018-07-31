@@ -7,8 +7,11 @@
  */
 
 import { get } from "./context";
+import { save } from "./context";
 import { on } from "./ipc";
-import { prepend } from "./util";
+import { nodeRequire, prepend } from "./util";
+
+const { remote } = nodeRequire("electron");
 
 let frameCache: HTMLElement;
 
@@ -32,6 +35,11 @@ export function renderFrame(wrapper: HTMLElement): void {
   closeBtn.id = "close";
   closeBtn.appendChild(document.createElement("div")).id = "b1";
   closeBtn.appendChild(document.createElement("div")).id = "b2";
+  closeBtn.onclick = () => {
+    save();
+    const window = remote.getCurrentWindow();
+    window.close();
+  };
 
   div.appendChild(closeBtn);
 

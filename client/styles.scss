@@ -55,7 +55,7 @@ body #app * {
     cursor: pointer;
     * {
       height: 2px;
-      width: $frame-height - 20px;
+      width: $frame-height - 30px;
       background-color: $primary;
       position: absolute;
     }
@@ -64,6 +64,12 @@ body #app * {
     }
     #b2 {
       transform: rotate(-45deg);
+    }
+    &:hover {
+      background: $primary;
+      * {
+        background: $background;
+      }
     }
   }
 }

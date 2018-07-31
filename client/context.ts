@@ -72,7 +72,7 @@ function requestSave(): void {
   });
 }
 
-function save() {
+export function save() {
   const fs = nodeRequire("fs");
   context["__hod"] = version;
   const str = JSON.stringify(context);
