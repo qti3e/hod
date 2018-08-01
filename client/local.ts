@@ -18,3 +18,11 @@ export const frame = {
   "login": "ورود",
   "logout": "خروج"
 };
+
+export const menu = {
+  "users": "لیست کاربران"
+};
+
+export const common = {
+  "404": "صفحه مورد نظر یافت نشد."
+};

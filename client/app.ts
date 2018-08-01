@@ -8,6 +8,7 @@
 
 import { get } from "./context";
 import { emit, on } from "./ipc";
+import { common as local } from "./local";
 import { delay } from "./util";
 
 // Import views.
@@ -15,7 +16,17 @@ import { renderFrame } from "./frame";
 import { renderHome } from "./home";
 import { renderLogin } from "./login";
 import { renderMenu } from "./menu";
+import { renderUsersList } from "./users";
 
+// TODO(qti3e) User typescript like an expert :D
+export const pages = {
+  login: renderLogin,
+  home: renderHome,
+  menu: renderMenu,
+  usersList: renderUsersList
+};
+
+// TODO(qti3e) `keyof pages` should work here?
 export type Pages = "login" | "home" | "menu";
 
 function renderApp(wrapper: HTMLElement) {
@@ -57,12 +68,16 @@ function renderApp(wrapper: HTMLElement) {
         return renderLogin(app);
       }
 
-      if (page === "home") {
-        return renderHome(app);
-      }
-
-      if (page === "menu") {
-        return renderMenu(app);
+      if (pages[page]) {
+        return pages[page](app);
+      } else {
+        console.log("404", page);
+        emit("notification", local["404"]);
+        if (page !== "home") {
+          emit("goto", "home");
+        } else {
+          emit("notification", "Home page is lost!");
+        }
       }
     } finally {
       emit("route-change", page);

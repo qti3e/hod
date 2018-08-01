@@ -6,26 +6,32 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { get } from "./context";
+import { emit } from "./ipc";
+import { menu as local } from "./local";
 import { fa } from "./util";
 
-let menuCache: HTMLElement;
+const menuCache = new Map<string, HTMLElement>();
 
 export function renderMenu(wrapper: HTMLElement): void {
-  if (menuCache) {
-    return void wrapper.appendChild(menuCache);
+  const currentToken = get("currentToken");
+  if (menuCache.has(currentToken)) {
+    return void wrapper.appendChild(menuCache.get(currentToken));
   }
+
+  const user = get("tokens")[get("currentToken")];
   const menu = document.createElement("div");
-  menuCache = menu;
+  menuCache.set(currentToken, menu);
   menu.id = "menu";
 
-  for (let i = 0; i < 8; ++i) {
-    menu.appendChild(diamond("Hello", "user"));
+  if (user.uid === 1) {
+    menu.appendChild(diamond("users", "group", "usersList"));
   }
 
   wrapper.appendChild(menu);
 }
 
-function diamond(text: string, icon: string): HTMLElement {
+function diamond(text: string, icon: string, page?: string): HTMLElement {
   const el = document.createElement("div");
   const inner = document.createElement("div");
   el.className = "diamond";
@@ -33,7 +39,12 @@ function diamond(text: string, icon: string): HTMLElement {
   inner.appendChild(fa(icon));
   inner.className = "inner";
   const textEl = document.createElement("p");
-  textEl.innerText = text;
+  textEl.innerText = local[text] || text;
   inner.appendChild(textEl);
+  if (page) {
+    el.addEventListener("click", () => {
+      emit("goto", page);
+    });
+  }
   return el;
 }
