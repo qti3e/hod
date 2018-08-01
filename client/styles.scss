@@ -89,6 +89,9 @@ body #app * {
     height: $frame-height;
     display: inline-block;
     border-left: 1px solid $primary;
+    font-size: 24pt;
+    padding-right: 4px;
+    text-align: center;
     color: $primary;
   }
   #navbar {

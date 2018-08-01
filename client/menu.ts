@@ -23,6 +23,8 @@ export function renderMenu(app: HTMLElement): void {
   menuCache.set(currentToken, wrapper);
   wrapper.id = "menu";
 
+  wrapper.appendChild(diamond("home", "home", "home"));
+
   const user = get("tokens")[currentToken];
   if (user.uid === 1) {
     wrapper.appendChild(diamond("users", "group", "usersList"));

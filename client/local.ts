@@ -20,9 +20,9 @@ export const frame = {
 };
 
 export const menu = {
-  "users": "لیست کاربران"
+  "users": "لیست کاربران",
+  "home": "صفحه اصلی"
 };
 
 export const common = {
   "404": "صفحه مورد نظر یافت نشد."
-};
