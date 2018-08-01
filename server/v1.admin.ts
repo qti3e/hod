@@ -10,4 +10,11 @@ import express from "express";
 
 const router = express.Router();
 
+router.post("/users/new", async function(
+  req: express.Request,
+  res: express.Response
+): Promise<void> {
+  // TODO(qti3e)
+});
+
 export { router };

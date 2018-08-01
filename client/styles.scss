@@ -226,7 +226,7 @@ body #app * {
       }
     }
     &:hover {
-      box-shadow: -3px 3px 5px darken($background, 20%);
+      box-shadow: -5px 5px 5px lighten($background, 20%);
     }
   }
   .diamond:nth-child(even) {
@@ -249,4 +249,30 @@ body #app * {
 
 .img-bg {
   background: url("./assets/map.jpg");
+}
+
+#new-user {
+  input {
+    border: none;
+    border-bottom: 1px solid $primary;
+    font-size: 14pt;
+    width: 100%;
+    padding: 5px;
+    padding-top: 10px;
+    color: $primary;
+    background: rgba(0, 0, 0, 0);
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: $primary;
+    }
+  }
+  button {
+    width: 100%;
+    border: none;
+    font-size: 15pt;
+    background-color: $primary;
+    color: $fg;
+  }
 }

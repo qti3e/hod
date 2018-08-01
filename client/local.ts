@@ -21,8 +21,19 @@ export const frame = {
 
 export const menu = {
   "users": "لیست کاربران",
-  "home": "صفحه اصلی"
+  "home": "صفحه اصلی",
+  "new_user": "کاربر جدید"
 };
 
 export const common = {
   "404": "صفحه مورد نظر یافت نشد."
+};
+
+export const newUser = {
+  "submit": "ارسال",
+  "name": "نام...",
+  "lastName": "نام خانوادگی...",
+  "nationalCode": "کد ملی...",
+  "password": "رمز عبور...",
+  "repeatPassword": "تکرار رمز عبور...",
+};

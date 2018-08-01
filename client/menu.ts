@@ -28,6 +28,7 @@ export function renderMenu(app: HTMLElement): void {
   const user = get("tokens")[currentToken];
   if (user.uid === 1) {
     wrapper.appendChild(diamond("users", "group", "usersList"));
+    wrapper.appendChild(diamond("new_user", "user-plus", "newUser"));
   }
 
   app.appendChild(wrapper);

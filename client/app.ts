@@ -16,9 +16,10 @@ import { renderFrame } from "./frame";
 import { renderHome } from "./home";
 import { renderLogin } from "./login";
 import { renderMenu } from "./menu";
+import { renderNewUser } from "./new_user";
 import { renderUsersList } from "./users";
 
-export type PageName = "login" | "home" | "menu" | "usersList";
+export type PageName = "login" | "home" | "menu" | "usersList" | "newUser";
 export type Page = (app: HTMLElement) => void;
 export type Pages = {
   [key in PageName]: Page
@@ -28,7 +29,8 @@ export const pages: Pages = {
   login: renderLogin,
   home: renderHome,
   menu: renderMenu,
-  usersList: renderUsersList
+  usersList: renderUsersList,
+  newUser: renderNewUser
 };
 
 function renderApp(wrapper: HTMLElement) {
