@@ -6,6 +6,7 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { PageName } from "./app";
 import { get } from "./context";
 import { emit } from "./ipc";
 import { menu as local } from "./local";
@@ -13,25 +14,24 @@ import { fa } from "./util";
 
 const menuCache = new Map<string, HTMLElement>();
 
-export function renderMenu(wrapper: HTMLElement): void {
+export function renderMenu(app: HTMLElement): void {
   const currentToken = get("currentToken");
   if (menuCache.has(currentToken)) {
-    return void wrapper.appendChild(menuCache.get(currentToken));
+    return void app.appendChild(menuCache.get(currentToken));
   }
+  const wrapper = document.createElement("div");
+  menuCache.set(currentToken, wrapper);
+  wrapper.id = "menu";
 
-  const user = get("tokens")[get("currentToken")];
-  const menu = document.createElement("div");
-  menuCache.set(currentToken, menu);
-  menu.id = "menu";
-
+  const user = get("tokens")[currentToken];
   if (user.uid === 1) {
-    menu.appendChild(diamond("users", "group", "usersList"));
+    wrapper.appendChild(diamond("users", "group", "usersList"));
   }
 
-  wrapper.appendChild(menu);
+  app.appendChild(wrapper);
 }
 
-function diamond(text: string, icon: string, page?: string): HTMLElement {
+function diamond(text: string, icon: string, page?: PageName): HTMLElement {
   const el = document.createElement("div");
   const inner = document.createElement("div");
   el.className = "diamond";

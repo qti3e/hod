@@ -96,6 +96,6 @@ async function addToken(token: string): Promise<void> {
   set("tokens", tokens);
   set("currentToken", token);
   // Emit events to let others know what we did.
-  emit("login");
+  emit("login", user);
   emit("goto", "home");
 }

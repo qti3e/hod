@@ -16,24 +16,25 @@ let time = 0;
 
 const quotes = [];
 
-export function renderHome(wrapper: HTMLElement): void {
+export function renderHome(app: HTMLElement): void {
   if (homeElCache) {
     if (Date.now() - time >= 2e3 * 60) {
       update();
     }
-    return void wrapper.appendChild(homeElCache);
+    return void app.appendChild(homeElCache);
   }
-  const el = document.createElement("div");
-  el.id = "home";
-  wrapper.appendChild(el);
-  homeElCache = el;
+  const wrapper = document.createElement("div");
+  wrapper.id = "home";
+  homeElCache = wrapper;
   text = document.createElement("p");
   author = document.createElement("h1");
 
   update();
 
-  el.appendChild(text);
-  el.appendChild(author);
+  wrapper.appendChild(text);
+  wrapper.appendChild(author);
+
+  app.appendChild(wrapper);
 }
 
 function update(): void {

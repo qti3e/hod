@@ -6,6 +6,7 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { PageName } from "./app";
 import { get } from "./context";
 import { save } from "./context";
 import { emit, on } from "./ipc";
@@ -20,13 +21,13 @@ let frameCache: HTMLElement;
 /**
  * Renders electron window's frame.
  */
-export function renderFrame(wrapper: HTMLElement): void {
+export function renderFrame(app: HTMLElement): void {
   if (frameCache) {
-    return void wrapper.appendChild(frameCache);
+    return void app.appendChild(frameCache);
   }
-  const div = document.createElement("div");
-  frameCache = div;
-  div.id = "frame-wrapper";
+  const wrapper = document.createElement("div");
+  frameCache = wrapper;
+  wrapper.id = "frame-wrapper";
 
   // Navbar
   const navbar = document.createElement("button");
@@ -34,7 +35,7 @@ export function renderFrame(wrapper: HTMLElement): void {
   navbar.appendChild(document.createElement("div")).id = "b1";
   navbar.appendChild(document.createElement("div")).id = "b2";
   navbar.appendChild(document.createElement("div")).id = "b3";
-  let previousPage: string;
+  let previousPage: PageName;
   let isOpen = false;
   on("route-change", (page) => {
     if (page === "menu") {
@@ -76,8 +77,8 @@ export function renderFrame(wrapper: HTMLElement): void {
       navbar.parentNode.removeChild(navbar);
       return void dropbox.parentNode.removeChild(dropbox);
     } else if (currentToken && !dropbox.parentNode) {
-      prepend(div, dropbox);
-      div.insertBefore(navbar, dropbox);
+      prepend(wrapper, dropbox);
+      wrapper.insertBefore(navbar, dropbox);
     } else if (!currentToken) {
       return;
     }
@@ -122,10 +123,10 @@ export function renderFrame(wrapper: HTMLElement): void {
     window.close();
   };
 
-  div.appendChild(closeBtn);
+  wrapper.appendChild(closeBtn);
   // End of close button.
 
-  wrapper.appendChild(div);
+  app.appendChild(wrapper);
 }
 
 function getUserName(u: t.User): string {

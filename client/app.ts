@@ -18,16 +18,18 @@ import { renderLogin } from "./login";
 import { renderMenu } from "./menu";
 import { renderUsersList } from "./users";
 
-// TODO(qti3e) User typescript like an expert :D
-export const pages = {
+export type PageName = "login" | "home" | "menu" | "usersList";
+export type Page = (app: HTMLElement) => void;
+export type Pages = {
+  [key in PageName]: Page
+};
+
+export const pages: Pages = {
   login: renderLogin,
   home: renderHome,
   menu: renderMenu,
   usersList: renderUsersList
 };
-
-// TODO(qti3e) `keyof pages` should work here?
-export type Pages = "login" | "home" | "menu";
 
 function renderApp(wrapper: HTMLElement) {
   // Remove all children.
@@ -41,7 +43,7 @@ function renderApp(wrapper: HTMLElement) {
   app.id = "app";
   wrapper.appendChild(app);
 
-  const render = async (page: Pages) => {
+  const render = async (page: PageName) => {
     // Hide current content with a fade effect.
     app.classList.add("hide");
     await delay(200);
