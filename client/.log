@@ -1,0 +1,2 @@
+[7632:0801/221730.202006:ERROR:CONSOLE(6294)] "console.assert", source: chrome-devtools://devtools/bundled/inspector.js (6294)
+[7632:0801/221730.206612:ERROR:CONSOLE(6294)] "Uncaught (in promise) TypeError: Cannot read property '_rawLocationToUILocation' of null", source: chrome-devtools://devtools/bundled/inspector.js (6294)

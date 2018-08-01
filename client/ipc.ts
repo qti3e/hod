@@ -35,7 +35,10 @@ export type On = <T extends EventName>(
   cb: EventCallBack<T>
 ) => void;
 
-export const emit: Emit = EE.emit.bind(EE);
-export const on: On = EE.emit.bind(EE);
+export declare const emit: Emit;
+export declare const on: On;
+declare const module;
+
+module.exports = EE;
 
 window["ipc"] = EE;
