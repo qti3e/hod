@@ -23,9 +23,10 @@ export async function getUser(uid: t.UID): Promise<t.User> {
     };
   }
 
-  return null;
+  return await collections.users.findOne({ uid });
 }
 
+// TODO(qti3e) remove this function - we don't want to user username.
 export async function findUserByUsername(uid: t.UID): Promise<t.User> {
   if (uid === 1) {
     throw new Error("It should not happen." +
@@ -35,7 +36,7 @@ export async function findUserByUsername(uid: t.UID): Promise<t.User> {
 }
 
 export async function getPasswordByUID(uid: t.UID): Promise<string> {
-  return await collections.passwords.findOne({ uid }).password;
+  return (await collections.passwords.findOne({ uid })).password;
 }
 
 export async function newUser(data: t.User, password: string): Promise<void> {

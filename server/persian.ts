@@ -49,6 +49,8 @@ export function normalizeBody(
   for (const key in req.body) {
     if (typeof req.body[key] === "string") {
       req.body[key] = normalizeText(req.body[key]).trim();
+    } else if (typeof req.body[key] === "number") {
+      req.body[key] = String(req.body[key]);
     }
   }
   req.next();

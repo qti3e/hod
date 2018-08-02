@@ -92,6 +92,7 @@ function load() {
     context = json;
     console.log("Loaded context", context);
   } catch (e) {
+    console.log(e);
     context = defaultContext;
   }
 }

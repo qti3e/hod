@@ -6,32 +6,20 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import atob from "atob";
-import btoa from "btoa";
+import { Base64 } from "js-base64";
 
 // Some simple encryption functions.
-
-const globalEval = eval;
-const global = globalEval("this");
-const IS_WEB = global.window !== undefined;
 
 export function encrypt(data: string, key: Uint8Array): string {
   let ret = "";
   for (let i = 0; i < data.length; ++i) {
     ret += String.fromCharCode(data.charCodeAt(i) ^ key[i % key.length]);
   }
-  if (IS_WEB && window.btoa) {
-    return window.btoa(ret);
-  }
-  return btoa(ret);
+  return Base64.encode(ret);
 }
 
 export function decrypt(data: string, key: Uint8Array): string {
-  if (IS_WEB && window.atob) {
-    data = window.atob(data);
-  } else {
-    data = atob(data);
-  }
+  data = Base64.decode(data);
   let ret = "";
   for (let i = 0; i < data.length; ++i) {
     ret += String.fromCharCode(data.charCodeAt(i) ^ key[i % key.length]);

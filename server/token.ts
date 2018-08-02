@@ -62,7 +62,7 @@ export function parseToken(token: string): t.UID | PARSE_ERR_CODE {
     if (Date.now() / 1000 > data.expire) {
       return PARSE_ERR_CODE.EXPIRED;
     }
-    if (String(Number(data.uid)) === data.uid) {
+    if (data.uid === "1") {
       return Number(data.uid);
     }
     return data.uid;
