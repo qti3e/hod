@@ -10,7 +10,7 @@ import axios from "axios";
 import { get, set } from "./context";
 import { emit } from "./ipc";
 import { login as local } from "./local";
-import { onEnter } from "./util";
+import { onEnter, resetValue } from "./util";
 
 // Cache the elements.
 let loginBoxCache: HTMLElement;
@@ -55,6 +55,10 @@ export function renderLogin(wrapper: HTMLElement): void {
   loginBox.addEventListener("component-will-unmount", () => {
     wrapper.classList.remove("img-bg");
   });
+
+  loginBox.addEventListener("component-will-unmount", () => {
+    resetValue(usernameIn, passwordIn);
+  });
 }
 
 async function submit(username: string, password: string): Promise<void> {
@@ -88,7 +92,7 @@ async function addToken(token: string): Promise<void> {
   );
   // Remove current tokens for the user.
   for (const key in tokens) {
-    if (tokens[key].uid === key) {
+    if (tokens[key].uid === user.uid) {
       delete tokens[key];
     }
   }

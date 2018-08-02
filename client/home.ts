@@ -7,18 +7,20 @@
  */
 
 import { readFileSync } from "fs";
+import { get } from "./context";
 
 let homeElCache: HTMLElement;
 
 let text: HTMLElement;
 let author: HTMLElement;
 let time = 0;
+let lastToken: string;
 
 const quotes = [];
 
 export function renderHome(app: HTMLElement): void {
   if (homeElCache) {
-    if (Date.now() - time >= 2e3 * 60) {
+    if (Date.now() - time >= 2e3 * 60 || lastToken !== get("currentToken")) {
       update();
     }
     return void app.appendChild(homeElCache);
@@ -40,6 +42,7 @@ export function renderHome(app: HTMLElement): void {
 function update(): void {
   load();
   time = Date.now();
+  lastToken = get("currentToken");
   const id = Math.floor(Math.random() * quotes.length);
   const quote = quotes[id];
   text.innerText = quote.text;
