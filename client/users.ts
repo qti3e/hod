@@ -6,6 +6,10 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import axios from "axios";
+import { get } from "./context";
+import * as t from "./types";
+
 let elCache: HTMLElement;
 
 export function renderUsersList(app: HTMLElement): void {
@@ -18,5 +22,21 @@ export function renderUsersList(app: HTMLElement): void {
 
   // TODO
 
+  fetchData().then(console.log);
+
   app.appendChild(wrapper);
+}
+
+async function fetchData(): Promise<t.User[]> {
+  const token = get("currentToken");
+  const server = get("server");
+  const { data: res } = await axios.post(
+    server + "/admin/users/list",
+    {},
+    {
+    headers: {
+      "hod-token": token
+    }
+  });
+  return res.data;
 }

@@ -15,7 +15,7 @@ export const login = {
 
 export const frame = {
   admin: "مدیریت",
-  login: "ورود",
+  login: "افزودن حساب",
   logout: "خروج"
 };
 

@@ -14,21 +14,21 @@ export const collections = {
   passwords: new Datastore({ filename: ".db/passwords.db", autoload: true })
 };
 
-export async function getUser(uid: t.UID): Promise<t.User> {
-  if (uid === 1) {
+export async function getUser(id: t.UID): Promise<t.User> {
+  if (id === "1") {
     return {
-      uid: 1,
+      _id: "1",
+      uid: "1",
       name: "root",
       isRoot: true
     };
   }
 
-  return await collections.users.findOne({ uid });
+  return await collections.users.findOne({ _id: id });
 }
 
-// TODO(qti3e) remove this function - we don't want to user username.
-export async function findUserByUsername(uid: t.UID): Promise<t.User> {
-  if (uid === 1) {
+export async function findUserByNationalCode(uid: t.UID): Promise<t.User> {
+  if (uid === "1") {
     throw new Error(
       "It should not happen." +
         " (looking for root user using findUserByUsername)"
@@ -37,15 +37,15 @@ export async function findUserByUsername(uid: t.UID): Promise<t.User> {
   return await collections.users.findOne({ uid });
 }
 
-export async function getPasswordByUID(uid: t.UID): Promise<string> {
-  return (await collections.passwords.findOne({ uid })).password;
+export async function getPasswordByID(id: string): Promise<string> {
+  return (await collections.passwords.findOne({ _id: id })).password;
 }
 
-export async function newUser(data: t.User, password: string): Promise<void> {
+export async function newUser(data: t.User, password: string): Promise<string> {
   await collections.users.insert(data);
-  await collections.passwords.insert({ uid: data.uid, password });
+  return await collections.passwords.insert({ uid: data.uid, password });
 }
 
 export async function listUsers(): Promise<t.User[]> {
-  return await collections.users.find();
+  return await collections.users.find({});
 }

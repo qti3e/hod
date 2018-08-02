@@ -6,7 +6,7 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import { findUserByUsername, getPasswordByUID } from "./db";
+import { findUserByNationalCode, getPasswordByID } from "./db";
 import { createToken } from "./token";
 
 // This file manages authentication functionalities.
@@ -26,18 +26,18 @@ export async function login(
   if (username === ROOT_USERNAME) {
     if (password === ROOT_PASSWORD) {
       // 1 is root's UID.
-      return createToken(1);
+      return createToken("1");
     }
     return LOGIN_ERR_CODE.WRONG_PASSWORD;
   }
 
-  const user = await findUserByUsername(username);
+  const user = await findUserByNationalCode(username);
   if (!user) {
     return LOGIN_ERR_CODE.NOT_FOUND;
   }
 
-  if (password === (await getPasswordByUID(user.uid))) {
-    return createToken(user.uid);
+  if (password === (await getPasswordByID(user._id))) {
+    return createToken(user._id);
   }
 
   return LOGIN_ERR_CODE.WRONG_PASSWORD;

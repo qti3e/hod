@@ -9,7 +9,7 @@
 import express from "express";
 import { login, LOGIN_ERR_CODE } from "./auth";
 import * as db from "./db";
-import { parseToken } from "./token";
+import { PARSE_ERR_CODE, parseToken } from "./token";
 
 const router = express.Router();
 
@@ -48,6 +48,9 @@ router.post("/login", async function(
   });
 });
 
+/**
+ * Status code 555 means token is expired.
+ */
 export async function requestToken(
   req: express.Request,
   res: express.Response
@@ -55,8 +58,12 @@ export async function requestToken(
   const token = req.get("hod-token");
   const uid = token && parseToken(token);
 
-  if (!uid) {
+  if (uid === PARSE_ERR_CODE.INVALID) {
     return void res.status(403);
+  } else if (uid === PARSE_ERR_CODE.EXPIRED) {
+    return void res.send({
+      code: 555,
+    });
   }
 
   req.user = await db.getUser(uid);

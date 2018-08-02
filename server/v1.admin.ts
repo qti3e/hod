@@ -7,7 +7,7 @@
  */
 
 import express from "express";
-import { findUserByUsername, listUsers, newUser } from "./db";
+import { findUserByNationalCode, listUsers, newUser } from "./db";
 import * as t from "./types";
 
 const router = express.Router();
@@ -35,7 +35,7 @@ router.post("/users/new", async function(
     name: req.body.name,
     lastName: req.body.lastName
   };
-  const check = await findUserByUsername(user.uid);
+  const check = await findUserByNationalCode(user.uid);
   if (check) {
     return void res.send({
       code: 404
@@ -51,9 +51,10 @@ router.post("/users/list", async function(
   req: express.Request,
   res: express.Response
 ): Promise<void> {
+  const data = await listUsers();
   res.send({
     code: 200,
-    data: await listUsers
+    data
   });
 });
 
