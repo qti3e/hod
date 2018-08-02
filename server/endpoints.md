@@ -15,3 +15,12 @@ Data {
 ```
 Data {}
 ```
+### /v1/admin/users/new
+```
+Data {
+ natioanlCode,
+ name,
+ lastName,
+ password
+}
+```
