@@ -10,6 +10,7 @@ import bodyparser from "body-parser";
 import cors from "cors";
 import express from "express";
 import morgan from "morgan";
+import { normalizeBody } from "./persian";
 import { router as v1 } from "./v1";
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(morgan("tiny"));
+app.use(normalizeBody);
 
 app.get("/info", (req, res) => {
   res.send({
