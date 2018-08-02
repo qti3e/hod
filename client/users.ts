@@ -34,9 +34,10 @@ async function fetchData(): Promise<t.User[]> {
     server + "/admin/users/list",
     {},
     {
-    headers: {
-      "hod-token": token
+      headers: {
+        "hod-token": token
+      }
     }
-  });
+  );
   return res.data;
 }

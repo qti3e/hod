@@ -62,7 +62,7 @@ export async function requestToken(
     return void res.status(403);
   } else if (uid === PARSE_ERR_CODE.EXPIRED) {
     return void res.send({
-      code: 555,
+      code: 555
     });
   }
 
