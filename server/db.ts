@@ -45,3 +45,7 @@ export async function newUser(data: t.User, password: string): Promise<void> {
   await collections.users.insert(data);
   await collections.passwords.insert({ uid: data.uid, password });
 }
+
+export async function listUsers(): Promise<t.User[]> {
+  return await collections.users.find();
+}

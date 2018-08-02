@@ -7,7 +7,7 @@
  */
 
 import express from "express";
-import { findUserByUsername, newUser } from "./db";
+import { findUserByUsername, listUsers, newUser } from "./db";
 import * as t from "./types";
 
 const router = express.Router();
@@ -44,6 +44,16 @@ router.post("/users/new", async function(
   await newUser(user, req.body.password);
   res.send({
     code: 200
+  });
+});
+
+router.post("/users/list", async function(
+  req: express.Request,
+  res: express.Response
+): Promise<void> {
+  res.send({
+    code: 200,
+    data: await listUsers
   });
 });
 
