@@ -31,11 +31,11 @@ router.post("/users/new", async function(
   res: express.Response
 ): Promise<void> {
   const user: t.User = {
-    uid: req.body.nationalCode,
+    nationalCode: req.body.nationalCode,
     name: req.body.name,
     lastName: req.body.lastName
   };
-  const check = await findUserByNationalCode(user.uid);
+  const check = await findUserByNationalCode(user.nationalCode);
   if (check) {
     return void res.send({
       code: 404

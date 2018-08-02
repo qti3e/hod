@@ -8,11 +8,9 @@
 
 // Common types.
 
-export type UID = string;
-
 export interface User {
   readonly _id?: string;
-  uid: UID;
+  nationalCode: string;
   name: string;
   lastName?: string;
   isRoot?: boolean;

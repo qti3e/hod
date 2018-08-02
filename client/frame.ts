@@ -161,7 +161,7 @@ export function renderFrame(app: HTMLElement): void {
 }
 
 function getUserName(u: t.User): string {
-  if (u.uid === 1) {
+  if (u._id === "1") {
     return local.admin;
   }
   return u.name + " " + u.lastName;

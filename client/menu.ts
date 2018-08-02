@@ -26,7 +26,7 @@ export function renderMenu(app: HTMLElement): void {
   wrapper.appendChild(diamond("home", "home", "home"));
 
   const user = get("tokens")[currentToken];
-  if (user.uid === 1) {
+  if (user.isRoot) {
     wrapper.appendChild(diamond("users", "group", "usersList"));
     wrapper.appendChild(diamond("new_user", "user-plus", "newUser"));
   }

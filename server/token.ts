@@ -7,7 +7,6 @@
  */
 
 import { decrypt, encrypt } from "./enc";
-import * as t from "./types";
 
 const TOKEN_LENGTH = 300;
 const DEFAULT_EXPIRE = 2 * 24 * 3600;
@@ -22,7 +21,7 @@ const ENC_KEY = new Uint8Array(TOKEN_LENGTH * 2).map(
     ) % 256
 );
 
-export function createToken(uid: t.UID, expire = DEFAULT_EXPIRE): string {
+export function createToken(uid: string, expire = DEFAULT_EXPIRE): string {
   const token = JSON.stringify({
     uid,
     expire: Math.floor(Date.now() / 1000) + expire
@@ -48,7 +47,7 @@ export enum PARSE_ERR_CODE {
   EXPIRED = -2
 }
 
-export function parseToken(token: string): t.UID | PARSE_ERR_CODE {
+export function parseToken(token: string): string | PARSE_ERR_CODE {
   token = decrypt(token, ENC_KEY);
   const paddingLeft = token.charCodeAt(0);
   const len = token.charCodeAt(1);

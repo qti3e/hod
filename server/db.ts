@@ -14,11 +14,11 @@ export const collections = {
   passwords: new Datastore({ filename: ".db/passwords.db", autoload: true })
 };
 
-export async function getUser(id: t.UID): Promise<t.User> {
+export async function getUser(id: string): Promise<t.User> {
   if (id === "1") {
     return {
       _id: "1",
-      uid: "1",
+      nationalCode: null,
       name: "root",
       isRoot: true
     };
@@ -27,23 +27,24 @@ export async function getUser(id: t.UID): Promise<t.User> {
   return await collections.users.findOne({ _id: id });
 }
 
-export async function findUserByNationalCode(uid: t.UID): Promise<t.User> {
-  if (uid === "1") {
-    throw new Error(
-      "It should not happen." +
-        " (looking for root user using findUserByUsername)"
-    );
-  }
-  return await collections.users.findOne({ uid });
+export async function findUserByNationalCode(
+  nationalCode: string
+): Promise<t.User> {
+  return await collections.users.findOne({ nationalCode });
 }
 
 export async function getPasswordByID(id: string): Promise<string> {
-  return (await collections.passwords.findOne({ _id: id })).password;
+  return (await collections.passwords.findOne({ user: id })).password;
 }
 
 export async function newUser(data: t.User, password: string): Promise<string> {
-  await collections.users.insert(data);
-  return await collections.passwords.insert({ uid: data.uid, password });
+  const user = await collections.users.insert(data);
+  console.log("XXX", user._id);
+  await collections.passwords.insert({
+    user: user._id,
+    password
+  });
+  return user;
 }
 
 export async function listUsers(): Promise<t.User[]> {
