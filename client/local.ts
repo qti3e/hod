@@ -36,4 +36,8 @@ export const newUser = {
   "nationalCode": "کد ملی...",
   "password": "رمز عبور...",
   "repeatPassword": "تکرار رمز عبور...",
+  "successful": "کاربر مورد نظر با موفقیت در سیستم درج شد.",
+  "failed": "عملیات با شکست مواجه شد.",
+  "passwordCheck": "رمز عبور و تکرار آن میبایست یکی باشند.",
+  "nationalCodeCheck": "هم اکنون کاربر دیگری در سیستم با این کد ملی وجود دارد."
 };
