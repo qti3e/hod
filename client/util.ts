@@ -36,3 +36,9 @@ export function fa(icon: string): HTMLElement {
   span.classList.add("fa-" + icon);
   return span;
 }
+
+export function resetValue(...elements: HTMLInputElement[]) {
+  for (const element of elements) {
+    element.value = "";
+  }
+}

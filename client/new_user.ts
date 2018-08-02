@@ -10,7 +10,7 @@ import axios from "axios";
 import { get } from "./context";
 import { emit } from "./ipc";
 import { newUser as local } from "./local";
-import { onEnter } from "./util";
+import { onEnter, resetValue } from "./util";
 
 let newUserCache: HTMLElement;
 
@@ -36,6 +36,8 @@ export function renderNewUser(app: HTMLElement): void {
     );
     if (ret === 200) {
       emit("notification", local.successful);
+      resetValue(nameEl, lastNameEl, nationalCodeEl, passwordEl);
+      emit("goto", "home");
     } else if (ret === 404) {
       emit("notification", local.nationalCodeCheck);
     } else {
