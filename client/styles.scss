@@ -344,7 +344,8 @@ body #app * {
   text-align: center;
   color: $fg;
   padding-top: 100px;
-  .row, .head {
+  .row,
+  .head {
     display: flex;
     width: 100%;
     div {
@@ -355,7 +356,8 @@ body #app * {
   }
   #content {
     overflow-y: auto;
-    height: calc(100vh - 50px - 150px);
+    height: calc(100vh - 150px - 150px);
+    margin-bottom: 100px;
   }
   .head {
     border-bottom: 2px solid $secondry;
@@ -369,4 +371,12 @@ body #app * {
   .row:nth-child(odd) {
     background: $primary;
   }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  box-shadow: inset 0 0 6px darken($primary, 25%);
 }

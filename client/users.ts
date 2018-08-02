@@ -42,24 +42,21 @@ export function renderUsersList(app: HTMLElement): void {
 
     for (const key in users) {
       if (users[key]) {
-        for (let i = 0; i < 40; ++i) {
-          const user = users[key];
-          const row = document.createElement("div");
-          row.classList.add("row");
-          const name = document.createElement("div");
-          name.innerText = user.name;
-          const lastName = document.createElement("div");
-          lastName.innerText = user.lastName;
-          const nationalCode = document.createElement("div");
-          nationalCode.innerText = user.nationalCode;
-          row.appendChild(name);
-          row.appendChild(lastName);
-          row.appendChild(nationalCode);
-          content.appendChild(row);
-        }
+        const user = users[key];
+        const row = document.createElement("div");
+        row.classList.add("row");
+        const name = document.createElement("div");
+        name.innerText = user.name;
+        const lastName = document.createElement("div");
+        lastName.innerText = user.lastName;
+        const nationalCode = document.createElement("div");
+        nationalCode.innerText = user.nationalCode;
+        row.appendChild(name);
+        row.appendChild(lastName);
+        row.appendChild(nationalCode);
+        content.appendChild(row);
       }
     }
-
   }
 
   fetchData().then(render);
