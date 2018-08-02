@@ -58,16 +58,27 @@ export function renderFrame(app: HTMLElement): void {
 
   // Drop down menu
   const dropbox = document.createElement("div");
-  const currentUserEl = document.createElement("div");
+  const currentUserEl = document.createElement("button");
   const itemsEl = document.createElement("div");
   const actionsEl = document.createElement("div");
   dropbox.id = "dropdown";
+  itemsEl.id = "items";
+  actionsEl.id = "actions";
   dropbox.appendChild(currentUserEl);
   dropbox.appendChild(itemsEl);
   itemsEl.appendChild(actionsEl);
   const dropboxItems = new Map<string, HTMLElement>();
 
-  // TODO(qti3e) Render actions. (login with another account / logout)
+  // Render actions. (login with another account / logout)
+  const logoutBtn = document.createElement("button");
+  logoutBtn.id = "logout";
+  logoutBtn.innerText = local.logout;
+  actionsEl.appendChild(logoutBtn);
+
+  const loginBtn = document.createElement("button");
+  loginBtn.id = "login";
+  loginBtn.innerText = local.login;
+  actionsEl.appendChild(loginBtn);
 
   const updateDropbox = () => {
     const currentToken = get("currentToken");

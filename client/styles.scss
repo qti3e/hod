@@ -56,6 +56,7 @@ body #app * {
       outline: none;
     }
   }
+
   #close {
     float: left;
     width: $frame-height;
@@ -83,17 +84,51 @@ body #app * {
       }
     }
   }
+
   #dropdown {
     float: right;
     width: 300px;
     height: $frame-height;
     display: inline-block;
     border-left: 1px solid $primary;
-    font-size: 24pt;
     padding-right: 4px;
     text-align: center;
-    color: $primary;
+    z-index: 100;
+    & > button {
+      width: 100%;
+      font-size: 24pt;
+      color: $primary;
+    }
+    #items {
+      min-height: 50px;
+      border-left: 1px solid $primary;
+      border-right: 1px solid $primary;
+      margin-right: -5px;
+      margin-left: -1px;
+      display: none;
+    }
+    #actions {
+      display: flex;
+      height: 50px;
+      button {
+        font-size: 14pt;
+        cursor: pointer;
+        width: 100%;
+      }
+      #login {
+        background: $primary;
+        color: $fg;
+      }
+      #logout {
+        background: $secondry;
+        color: $fg;
+      }
+    }
+    &:hover #items {
+      display: block;
+    }
   }
+
   #navbar {
     float: right;
     width: $frame-height;
