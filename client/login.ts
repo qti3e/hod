@@ -88,8 +88,8 @@ async function addToken(token: string): Promise<void> {
   );
   // Remove current tokens for the user.
   for (const key in tokens) {
-    if (tokens[token].uid === key) {
-      delete tokens[token];
+    if (tokens[key].uid === key) {
+      delete tokens[key];
     }
   }
   tokens[token] = user;

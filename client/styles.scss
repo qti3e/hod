@@ -93,7 +93,7 @@ body #app * {
     border-left: 1px solid $primary;
     padding-right: 4px;
     text-align: center;
-    z-index: 100;
+    z-index: 10000000;
     & > button {
       width: 100%;
       font-size: 24pt;
@@ -106,10 +106,28 @@ body #app * {
       margin-right: -5px;
       margin-left: -1px;
       display: none;
+      position: relative;
+      top: -5px;
+      & > div:first-child {
+        margin-top: 5px;
+      }
+    }
+    .user {
+      font-size: 13pt;
+      color: $primary;
+      height: 40px;
+      line-height: 40px;
+      cursor: pointer;
+      transition: background 100ms ease-in;
+      &:hover {
+        background: $primary;
+        color: $fg;
+      }
     }
     #actions {
       display: flex;
       height: 50px;
+      border-top: solid 1px $background;
       button {
         font-size: 14pt;
         cursor: pointer;

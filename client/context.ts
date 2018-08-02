@@ -110,3 +110,6 @@ function encKey(): Uint8Array {
 }
 
 load();
+
+window["get"] = get;
+window["set"] = set;

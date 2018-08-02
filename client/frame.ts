@@ -7,7 +7,7 @@
  */
 
 import { PageName } from "./app";
-import { get } from "./context";
+import { get, set } from "./context";
 import { save } from "./context";
 import { emit, on } from "./ipc";
 import { frame as local } from "./local";
@@ -73,11 +73,23 @@ export function renderFrame(app: HTMLElement): void {
   const logoutBtn = document.createElement("button");
   logoutBtn.id = "logout";
   logoutBtn.innerText = local.logout;
+  logoutBtn.onclick = () => {
+    const currentToken = get("currentToken");
+    const tokens = get("tokens");
+    delete tokens[currentToken];
+    const tokenKeys = Object.keys(tokens);
+    set("currentToken", tokenKeys[0]);
+    emit("login", tokens[tokenKeys[0]]);
+    emit("goto", "home");
+  };
   actionsEl.appendChild(logoutBtn);
 
   const loginBtn = document.createElement("button");
   loginBtn.id = "login";
   loginBtn.innerText = local.login;
+  loginBtn.onclick = () => {
+    emit("goto", "login");
+  };
   actionsEl.appendChild(loginBtn);
 
   const updateDropbox = () => {
@@ -99,10 +111,18 @@ export function renderFrame(app: HTMLElement): void {
     for (const token in tokens) {
       if (!dropboxItems.has(token)) {
         const item = document.createElement("div");
+        item.classList.add("user");
+        item.innerText = getUserName(tokens[token]);
+        item.onclick = () => {
+          set("currentToken", token);
+          emit("login", tokens[token]);
+          emit("goto", "home");
+        };
         // Render and add to map.
         dropboxItems.set(token, item);
       }
     }
+
     dropboxItems.forEach((node, token) => {
       if (token === currentToken) {
         if (node.parentNode) {
