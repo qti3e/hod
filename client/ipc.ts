@@ -30,10 +30,7 @@ export type Emit = <T extends EventName>(
   data: EventDataTypeMap[T]
 ) => void;
 
-export type On = <T extends EventName>(
-  name: T,
-  cb: EventCallBack<T>
-) => void;
+export type On = <T extends EventName>(name: T, cb: EventCallBack<T>) => void;
 
 export declare const emit: Emit;
 export declare const on: On;

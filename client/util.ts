@@ -15,7 +15,7 @@ export function len(o: {}): number {
 }
 
 export function onEnter(el: HTMLElement, cb): void {
-  el.addEventListener("keyup", (e) => {
+  el.addEventListener("keyup", e => {
     if (e.keyCode === 13) {
       cb();
     }

@@ -13,7 +13,9 @@ function main() {
   const win = new BrowserWindow({
     minWidth: 1200,
     minHeight: 800,
-    frame: false
+    frame: false,
+    backgroundColor: "#111c24",
+    show: false
   });
   // Disable default menu bar.
   win.setMenu(null);
@@ -23,6 +25,10 @@ function main() {
 
   // Open devtools.
   win.webContents.toggleDevTools();
+
+  win.once("ready-to-show", () => {
+    win.show();
+  });
 }
 
 app.on("ready", main);

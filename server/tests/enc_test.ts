@@ -1,13 +1,15 @@
 import { assertEqual, test } from "liltest";
 import { decrypt, encrypt } from "../enc";
 
-const ENC_KEY = new Uint8Array(500).map((x, i) =>
-  Math.round(
-    1000 *
-    Math.abs(
-      Math.cos(i * Math.PI / 180) * Math.tan(i * Math.PI / 180 + Math.PI)
-    )
-  ) % 256
+const ENC_KEY = new Uint8Array(500).map(
+  (x, i) =>
+    Math.round(
+      1000 *
+        Math.abs(
+          Math.cos((i * Math.PI) / 180) *
+            Math.tan((i * Math.PI) / 180 + Math.PI)
+        )
+    ) % 256
 );
 
 test(function test_enc() {

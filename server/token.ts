@@ -11,13 +11,15 @@ import * as t from "./types";
 
 const TOKEN_LENGTH = 300;
 const DEFAULT_EXPIRE = 2 * 24 * 3600;
-const ENC_KEY = new Uint8Array(TOKEN_LENGTH * 2).map((x, i) =>
-  Math.round(
-    1000 *
-    Math.abs(
-      Math.cos(i * Math.PI / 180) * Math.tan(i * Math.PI / 180 + Math.PI)
-    )
-  ) % 256
+const ENC_KEY = new Uint8Array(TOKEN_LENGTH * 2).map(
+  (x, i) =>
+    Math.round(
+      1000 *
+        Math.abs(
+          Math.cos((i * Math.PI) / 180) *
+            Math.tan((i * Math.PI) / 180 + Math.PI)
+        )
+    ) % 256
 );
 
 export function createToken(uid: t.UID, expire = DEFAULT_EXPIRE): string {
@@ -27,10 +29,7 @@ export function createToken(uid: t.UID, expire = DEFAULT_EXPIRE): string {
   });
   const len = token.length;
   const padding = TOKEN_LENGTH - len;
-  const paddingLeft = Math.floor(
-    padding *
-    Math.min(Math.random(), 0.8)
-  );
+  const paddingLeft = Math.floor(padding * Math.min(Math.random(), 0.8));
   // -2: two -1, each due to the followings stuff:
   //  * str[0] = paddingLeft
   //  * str[1] = len

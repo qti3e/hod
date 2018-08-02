@@ -1,7 +1,16 @@
 #!/bin/bash
 ./node_modules/.bin/prettier --write \
-  token.ts \
-  auth.ts \
-  http.ts \
+  v1.admin.ts \
+  v1.ts \
   types.ts \
-  db.ts
+  token.ts \
+  tests/token_test.ts \
+  tests/enc_test.ts \
+  tests/tests.ts \
+  auth.ts \
+  db.ts \
+  express.d.ts \
+  persian.ts \
+  v1.auth.ts \
+  enc.ts \
+  http.ts

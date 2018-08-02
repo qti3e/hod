@@ -16,9 +16,7 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(
-  $background,
-  lighten($background, 10%) 70%);
+  background-image: linear-gradient($background, lighten($background, 10%) 70%);
   overflow-y: hidden;
 }
 
@@ -26,7 +24,16 @@ body {
   font-family: BBCNassim;
 }
 
-span, i, h1, h2, h3, h4, h5, h6, a, p {
+span,
+i,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p {
   color: $fg;
   cursor: default;
 }
@@ -302,6 +309,7 @@ body #app * {
 
 .img-bg {
   background: url("./assets/map.jpg");
+  background-position-x: center;
 }
 
 #new-user {

@@ -36,7 +36,7 @@ export async function login(
     return LOGIN_ERR_CODE.NOT_FOUND;
   }
 
-  if (password === await getPasswordByUID(user.uid)) {
+  if (password === (await getPasswordByUID(user.uid))) {
     return createToken(user.uid);
   }
 

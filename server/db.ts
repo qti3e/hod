@@ -11,7 +11,7 @@ import * as t from "./types";
 
 export const collections = {
   users: new Datastore({ filename: ".db/users.db", autoload: true }),
-  passwords: new Datastore({ filename: ".db/passwords.db", autoload: true})
+  passwords: new Datastore({ filename: ".db/passwords.db", autoload: true })
 };
 
 export async function getUser(uid: t.UID): Promise<t.User> {
@@ -29,8 +29,10 @@ export async function getUser(uid: t.UID): Promise<t.User> {
 // TODO(qti3e) remove this function - we don't want to user username.
 export async function findUserByUsername(uid: t.UID): Promise<t.User> {
   if (uid === 1) {
-    throw new Error("It should not happen." +
-      " (looking for root user using findUserByUsername)");
+    throw new Error(
+      "It should not happen." +
+        " (looking for root user using findUserByUsername)"
+    );
   }
   return await collections.users.findOne({ uid });
 }

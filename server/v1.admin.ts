@@ -12,10 +12,7 @@ import * as t from "./types";
 
 const router = express.Router();
 
-router.use(function (
-  req: express.Request,
-  res: express.Response
-): void {
+router.use(function(req: express.Request, res: express.Response): void {
   if (req.user.isRoot) {
     return req.next();
   }

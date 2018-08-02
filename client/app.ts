@@ -21,9 +21,7 @@ import { renderUsersList } from "./users";
 
 export type PageName = "login" | "home" | "menu" | "usersList" | "newUser";
 export type Page = (app: HTMLElement) => void;
-export type Pages = {
-  [key in PageName]: Page
-};
+export type Pages = { [key in PageName]: Page };
 
 export const pages: Pages = {
   login: renderLogin,

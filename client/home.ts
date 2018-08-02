@@ -8,6 +8,7 @@
 
 import { readFileSync } from "fs";
 import { get } from "./context";
+import { normalizeText } from "./persian";
 
 let homeElCache: HTMLElement;
 
@@ -51,7 +52,9 @@ function update(): void {
 
 function load(): void {
   if (quotes.length > 0) return;
-  const data = readFileSync("./quotes.txt").toString().split(/\r?\n\r?\n/g);
+  const data = readFileSync("./quotes.txt")
+    .toString()
+    .split(/\r?\n\r?\n/g);
   for (const e of data) {
     const q = e.split(/\r?\n/g).filter(a => a.trim().length > 0);
     const quote = {
@@ -62,9 +65,9 @@ function load(): void {
       console.error(q);
       throw new Error("quotes.txt is corrupted.");
     }
-    quote.text = q[0].trim();
+    quote.text = normalizeText(q[0]).trim();
     if (q[1]) {
-      quote.author = "- " + q[1].trim();
+      quote.author = "- " + normalizeText(q[1]).trim();
     }
     quotes.push(quote);
   }

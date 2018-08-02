@@ -37,7 +37,7 @@ export function renderFrame(app: HTMLElement): void {
   navbar.appendChild(document.createElement("div")).id = "b3";
   let previousPage: PageName;
   let isOpen = false;
-  on("route-change", (page) => {
+  on("route-change", page => {
     if (page === "menu") {
       navbar.classList.add("open");
       isOpen = true;

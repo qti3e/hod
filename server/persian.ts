@@ -1,4 +1,10 @@
-import express from "express";
+/**
+ *    ____ _   _ _____
+ *   /___ \ |_(_)___ /  ___
+ *  //  / / __| | |_ \ / _ \
+ * / \_/ /| |_| |___) |  __/
+ * \___,_\ \__|_|____/ \___|
+ */
 
 export function normalizeText(text: string): string {
   let tmp = "";
@@ -262,10 +268,7 @@ export function normalizeText(text: string): string {
   return tmp;
 }
 
-export function normalizeBody(
-  req: express.Request,
-  res: express.Response
-): void {
+export function normalizeBody(req, res): void {
   for (const key in req.body) {
     if (typeof req.body[key] === "string") {
       req.body[key] = normalizeText(req.body[key]).trim();

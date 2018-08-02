@@ -7,22 +7,22 @@
  */
 
 export const login = {
-  "username": "نام‌کاربری...",
-  "password": "رمز‌عبور...",
-  "login": "ورود",
-  "error": "نام کاربری یا رمز عبور اشتباه است."
+  username: "نام‌کاربری...",
+  password: "رمز‌عبور...",
+  login: "ورود",
+  error: "نام کاربری یا رمز عبور اشتباه است."
 };
 
 export const frame = {
-  "admin": "مدیریت",
-  "login": "ورود",
-  "logout": "خروج"
+  admin: "مدیریت",
+  login: "ورود",
+  logout: "خروج"
 };
 
 export const menu = {
-  "users": "لیست کاربران",
-  "home": "صفحه اصلی",
-  "new_user": "کاربر جدید"
+  users: "لیست کاربران",
+  home: "صفحه اصلی",
+  new_user: "کاربر جدید"
 };
 
 export const common = {
@@ -30,14 +30,14 @@ export const common = {
 };
 
 export const newUser = {
-  "submit": "ارسال",
-  "name": "نام...",
-  "lastName": "نام خانوادگی...",
-  "nationalCode": "کد ملی...",
-  "password": "رمز عبور...",
-  "repeatPassword": "تکرار رمز عبور...",
-  "successful": "کاربر مورد نظر با موفقیت در سیستم درج شد.",
-  "failed": "عملیات با شکست مواجه شد.",
-  "passwordCheck": "رمز عبور و تکرار آن میبایست یکی باشند.",
-  "nationalCodeCheck": "هم اکنون کاربر دیگری در سیستم با این کد ملی وجود دارد."
+  submit: "ارسال",
+  name: "نام...",
+  lastName: "نام خانوادگی...",
+  nationalCode: "کد ملی...",
+  password: "رمز عبور...",
+  repeatPassword: "تکرار رمز عبور...",
+  successful: "کاربر مورد نظر با موفقیت در سیستم درج شد.",
+  failed: "عملیات با شکست مواجه شد.",
+  passwordCheck: "رمز عبور و تکرار آن میبایست یکی باشند.",
+  nationalCodeCheck: "هم اکنون کاربر دیگری در سیستم با این کد ملی وجود دارد."
 };
