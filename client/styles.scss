@@ -337,3 +337,36 @@ body #app * {
     color: $fg;
   }
 }
+
+#users-list {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  color: $fg;
+  padding-top: 100px;
+  .row, .head {
+    display: flex;
+    width: 100%;
+    div {
+      margin: 5px;
+      width: 100%;
+      font-size: 17pt;
+    }
+  }
+  #content {
+    overflow-y: auto;
+    height: calc(100vh - 50px - 150px);
+  }
+  .head {
+    border-bottom: 2px solid $secondry;
+  }
+  .row {
+    border-bottom: 1px solid $background;
+  }
+  .row:nth-child(even) {
+    background: $secondry;
+  }
+  .row:nth-child(odd) {
+    background: $primary;
+  }
+}

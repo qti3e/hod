@@ -41,3 +41,9 @@ export const newUser = {
   passwordCheck: "رمز عبور و تکرار آن میبایست یکی باشند.",
   nationalCodeCheck: "هم اکنون کاربر دیگری در سیستم با این کد ملی وجود دارد."
 };
+
+export const usersList = {
+  name: "نام",
+  lastName: "نام خانوادگی",
+  nationalCode: "کد ملی"
+};
