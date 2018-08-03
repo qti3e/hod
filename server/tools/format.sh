@@ -13,4 +13,6 @@
   persian.ts \
   v1.auth.ts \
   enc.ts \
-  http.ts
+  http.ts \
+  v1.data.ts \
+  data.ts
