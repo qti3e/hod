@@ -6,6 +6,8 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { get } from "./context";
+
 export function delay(t: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, t));
 }
@@ -30,15 +32,47 @@ export function nodeRequire(module: string): any {
   return require(module);
 }
 
-export function fa(icon: string): HTMLElement {
-  const span = document.createElement("span");
-  span.classList.add("fa");
-  span.classList.add("fa-" + icon);
-  return span;
+export function fa(icon: string | string[]): HTMLElement {
+  if (typeof icon === "string") {
+    const span = document.createElement("span");
+    span.classList.add("fa");
+    span.classList.add("fa-" + icon);
+    return span;
+  } else {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("icon");
+    if (icon.length > 2) {
+      throw new Error(
+        "Icon group with more than 2 icons is not yet implemented."
+      );
+    }
+    icon.forEach(i => {
+      wrapper.appendChild(fa(i));
+    });
+    return wrapper;
+  }
 }
 
 export function resetValue(...elements: HTMLInputElement[]) {
   for (const element of elements) {
     element.value = "";
   }
+}
+
+export function cacheForUser<V>() {
+  const map = new Map<string, V>();
+  return {
+    get(): V {
+      const token = get("currentToken");
+      return map.get(token);
+    },
+    set(data: V): void {
+      const token = get("currentToken");
+      map.set(token, data);
+    },
+    has(): boolean {
+      const token = get("currentToken");
+      return map.has(token);
+    }
+  };
 }

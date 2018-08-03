@@ -16,10 +16,18 @@ import { renderFrame } from "./frame";
 import { renderHome } from "./home";
 import { renderLogin } from "./login";
 import { renderMenu } from "./menu";
+import { renderNewCharter } from "./new_charter";
 import { renderNewUser } from "./new_user";
 import { renderUsersList } from "./users";
 
-export type PageName = "login" | "home" | "menu" | "usersList" | "newUser";
+export type PageName =
+  | "login"
+  | "home"
+  | "menu"
+  | "usersList"
+  | "newUser"
+  | "newCharter";
+
 export type Page = (app: HTMLElement) => void;
 export type Pages = { [key in PageName]: Page };
 
@@ -28,7 +36,8 @@ export const pages: Pages = {
   home: renderHome,
   menu: renderMenu,
   usersList: renderUsersList,
-  newUser: renderNewUser
+  newUser: renderNewUser,
+  newCharter: renderNewCharter
 };
 
 function renderApp(wrapper: HTMLElement) {

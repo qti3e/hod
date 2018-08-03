@@ -22,7 +22,8 @@ export const frame = {
 export const menu = {
   users: "لیست کاربران",
   home: "صفحه اصلی",
-  new_user: "کاربر جدید"
+  new_user: "کاربر جدید",
+  new_charter: "چارتر جدید"
 };
 
 export const common = {
@@ -46,4 +47,8 @@ export const usersList = {
   name: "نام",
   lastName: "نام خانوادگی",
   nationalCode: "کد ملی"
+};
+
+export const newCharter = {
+  title: "چارتر جدید"
 };

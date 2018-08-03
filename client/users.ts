@@ -22,6 +22,8 @@ export function renderUsersList(app: HTMLElement): void {
   elCache = wrapper;
   wrapper.id = "users-list";
 
+  // TODO(qti3e) Add title and use #app > .full-page css class.
+
   function render(users: t.User[]) {
     wrapper.innerHTML = "";
     const head = document.createElement("div");

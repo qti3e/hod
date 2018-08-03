@@ -29,12 +29,19 @@ export function renderMenu(app: HTMLElement): void {
   if (user.isRoot) {
     wrapper.appendChild(diamond("users", "group", "usersList"));
     wrapper.appendChild(diamond("new_user", "user-plus", "newUser"));
+  } else {
+    // TODO(qti3e) Add user.role
+    wrapper.appendChild(diamond("new_charter", ["file", "plus"], "newCharter"));
   }
 
   app.appendChild(wrapper);
 }
 
-function diamond(text: string, icon: string, page?: PageName): HTMLElement {
+function diamond(
+  text: string,
+  icon: string | string[],
+  page?: PageName
+): HTMLElement {
   const el = document.createElement("div");
   const inner = document.createElement("div");
   el.className = "diamond";
