@@ -22,6 +22,7 @@ export function readAirlines(path: string): Promise<t.Airline[]> {
 
   rl.on("line", line => {
     line = "[" + line.replace(/\\N/g, "null") + "]";
+    line = cleanString(line);
     line = JSON.parse(line);
     data.push({
       id: line[0],
@@ -35,7 +36,7 @@ export function readAirlines(path: string): Promise<t.Airline[]> {
     });
   });
 
-  rl.on("end", () => resolve(data));
+  rl.on("close", () => resolve(data));
 
   return promise;
 }
@@ -52,6 +53,7 @@ export function readAirports(path: string): Promise<t.Airport[]> {
 
   rl.on("line", line => {
     line = "[" + line.replace(/\\N/g, "null") + "]";
+    line = cleanString(line);
     line = JSON.parse(line);
     data.push({
       id: line[0],
@@ -67,7 +69,20 @@ export function readAirports(path: string): Promise<t.Airport[]> {
     });
   });
 
-  rl.on("end", () => resolve(data));
+  rl.on("close", () => resolve(data));
 
   return promise;
+}
+
+function cleanString(s: string): string {
+  let ret = "";
+  for (let i = 0; i < s.length; ++i) {
+    const code = s.charCodeAt(i);
+    if (code === 27) {
+      i += 2;
+    } else if (code <= 127) {
+      ret += s[i];
+    }
+  }
+  return ret;
 }

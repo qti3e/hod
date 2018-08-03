@@ -5,6 +5,7 @@
   types.ts \
   token.ts \
   tests/token_test.ts \
+  tests/data.ts \
   tests/enc_test.ts \
   tests/tests.ts \
   auth.ts \

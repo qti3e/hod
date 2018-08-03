@@ -1,2 +1,3 @@
-import "./enc_test.ts";
-import "./token_test.ts";
+import "./data";
+import "./enc_test";
+import "./token_test";
