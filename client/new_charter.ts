@@ -7,7 +7,7 @@
  */
 
 import { newCharter as local } from "./local";
-import { cacheForUser } from "./util";
+import { cacheForUser, checkBox } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
 
@@ -27,4 +27,6 @@ export function renderNewCharter(app: HTMLElement): void {
   title.innerText = local.title;
   wrapper.appendChild(title);
 
+  const checkbox = checkBox("Test");
+  wrapper.appendChild(checkbox.parentElement);
 }

@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "tslint-eslint-rules"
-  ],
+  "extends": ["tslint-eslint-rules"],
   "rules": {
     "align": [
       true,
@@ -14,12 +12,14 @@
     "array-bracket-spacing": [true, "never"],
     "array-type": [true, "array-simple"],
     "arrow-return-shorthand": true,
-    "ban": [true,
-      {"name": "parseInt", "message": "tsstyle#type-coercion"},
-      {"name": "parseFloat", "message": "tsstyle#type-coercion"},
-      {"name": "Array", "message": "tsstyle#array-constructor"}
+    "ban": [
+      true,
+      { "name": "parseInt", "message": "tsstyle#type-coercion" },
+      { "name": "parseFloat", "message": "tsstyle#type-coercion" },
+      { "name": "Array", "message": "tsstyle#array-constructor" }
     ],
-    "ban-types": [true,
+    "ban-types": [
+      true,
       ["Object", "Use {} instead."],
       ["String", "Use 'string' instead."],
       ["Number", "Use 'number' instead."],
@@ -96,8 +96,8 @@
     ]
   },
   "jsRules": {
-      "max-line-length": { "options": [80] },
-      "linebreak-style": [true, "LF"],
-      "indent": [true, "spaces", 2]
+    "max-line-length": { "options": [80] },
+    "linebreak-style": [true, "LF"],
+    "indent": [true, "spaces", 2]
   }
 }

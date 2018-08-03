@@ -76,3 +76,19 @@ export function cacheForUser<V>() {
     }
   };
 }
+
+export function checkBox(text: string): HTMLInputElement {
+  const container = document.createElement("div");
+  container.classList.add("checkbox-container");
+  const label = document.createTextNode("S");
+  container.appendChild(label);
+
+  const input = document.createElement("input");
+  input.type = "checkbox";
+  container.appendChild(input);
+
+  const checkmark = document.createElement("span");
+  checkmark.classList.add("checkmark");
+  container.appendChild(checkmark);
+  return input;
+}
