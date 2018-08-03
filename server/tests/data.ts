@@ -11,5 +11,5 @@ test(async function test_airlines() {
 test(async function test_airports() {
   const data = await readAirports(__dirname + "/../airports.dat");
   assert(data.length > 0);
-  assert(data.filter(x => x.country === "Iran").length > 0);
+  assert(data.filter(x => x.country === "IR").length > 0);
 });

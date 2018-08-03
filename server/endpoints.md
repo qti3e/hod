@@ -24,3 +24,11 @@ Data {
  password
 }
 ```
+### /v1/admin/users/list
+
+### /v1/data/airlines
+```
+Data {
+ query
+}
+```

@@ -6,9 +6,65 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import { createReadStream } from "fs";
+import { createReadStream, readFileSync } from "fs";
 import { createInterface } from "readline";
 import * as t from "./types";
+
+export const countries: { [k: string]: string } = {};
+
+function loadContries() {
+  const data = readFileSync(__dirname + "/countries.dat").toString();
+  let skip = false;
+  let i = 0;
+  let nameA = "";
+  let nameB = "";
+  let x = 0;
+  while (true) {
+    const c = data[i++];
+
+    if (i === data.length) {
+      break;
+    }
+
+    if (c === "\n") {
+      countries[nameA] = nameB;
+      countries[nameB] = nameA;
+      nameA = "";
+      nameB = "";
+      skip = false;
+      x = 0;
+      continue;
+    } else if (skip) {
+      continue;
+    }
+
+    if (c === ",") {
+      if (x === 1) {
+        skip = true;
+      } else {
+        x = 1;
+      }
+      continue;
+    }
+
+    if (x === 0) {
+      nameA += c;
+    } else {
+      nameB += c;
+    }
+
+  }
+  countries[nameA] = nameB;
+  countries[nameB] = nameA;
+}
+
+export function toShortForm(name: string): string {
+  const name2 = countries[name];
+  if (name2 && name2.length < name.length) {
+    return name2;
+  }
+  return name;
+}
 
 export function readAirlines(path: string): Promise<t.Airline[]> {
   const data: t.Airline[] = [];
@@ -31,7 +87,7 @@ export function readAirlines(path: string): Promise<t.Airline[]> {
       IATA: line[3],
       ICAO: line[4],
       callsign: line[5],
-      country: line[6],
+      country: toShortForm(line[6]),
       active: line[7] === "Y"
     });
   });
@@ -59,7 +115,7 @@ export function readAirports(path: string): Promise<t.Airport[]> {
       id: line[0],
       name: line[1],
       city: line[2],
-      country: line[3],
+      country: toShortForm(line[3]),
       IATA: line[4],
       ICAO: line[5],
       lat: line[6],
@@ -86,3 +142,5 @@ function cleanString(s: string): string {
   }
   return ret;
 }
+
+loadContries();

@@ -9,6 +9,7 @@
 import express from "express";
 import { router as admin } from "./v1.admin";
 import { requestToken, router as auth } from "./v1.auth";
+import { router as data } from "./v1.data";
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ router.use("/auth", auth);
 // by default.
 router.use(requestToken);
 router.use("/admin", admin);
+router.use("/data", data);
 // TODO(qti3e)
 // router.use("/charter", charter);
 // router.use("/systemic", systemic);
