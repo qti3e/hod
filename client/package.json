@@ -15,14 +15,25 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
+    "@types/d3": "^5.0.0",
+    "@types/d3-geo": "^1.10.3",
     "@types/electron": "^1.6.10",
+    "add": "^2.0.6",
     "axios": "^0.18.0",
     "btoa": "^1.2.1",
+    "d3": "^5.5.0",
+    "d3-geo": "^1.10.0",
+    "d3-geo-projection": "^2.4.0",
     "electron": "^2.0.5",
     "eventemitter3": "^3.1.0",
     "font-awesome": "^4.7.0",
+    "jalaali-js": "^1.1.0",
+    "javascript-autocomplete": "^1.0.3",
     "js-base64": "^2.4.8",
-    "node-machine-id": "^1.1.10"
+    "moment-jalaali": "^0.7.4",
+    "node-machine-id": "^1.1.10",
+    "pikaday": "^1.7.0",
+    "yarn": "^1.9.2"
   },
   "browserslist": [
     "chrome 69"
