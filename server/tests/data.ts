@@ -1,15 +1,15 @@
 import { assert, test } from "liltest";
-import { readAirlines, readAirports } from "../data";
+import { airlines, airports } from "../data";
 
 test(async function test_airlines() {
-  const data = await readAirlines(__dirname + "/../airlines.dat");
-  assert(data.length > 0);
-  assert(data.filter(x => x.active).length > 0);
-  assert(data.filter(x => x.alias).length > 0);
+  assert(airlines.length > 0);
+  assert(airlines.filter(x => x.active).length > 0);
+  assert(airlines.filter(x => x.alias).length > 0);
+  assert(airlines.filter(x => x.id === 21317).length > 0);
 });
 
 test(async function test_airports() {
-  const data = await readAirports(__dirname + "/../airports.dat");
-  assert(data.length > 0);
-  assert(data.filter(x => x.country === "IR").length > 0);
+  assert(airports.length > 0);
+  assert(airports.filter(x => x.country === "IR").length > 0);
+  assert(airports.filter(x => x.id === 12057).length > 0);
 });

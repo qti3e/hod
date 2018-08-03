@@ -6,11 +6,12 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import { createReadStream, readFileSync } from "fs";
-import { createInterface } from "readline";
+import { openSync, readFileSync, readSync } from "fs";
 import * as t from "./types";
 
 export const countries: { [k: string]: string } = {};
+export const airlines: t.Airline[] = [];
+export const airports: t.Airport[] = [];
 
 function loadContries() {
   const data = readFileSync(__dirname + "/countries.dat").toString();
@@ -52,7 +53,6 @@ function loadContries() {
     } else {
       nameB += c;
     }
-
   }
   countries[nameA] = nameB;
   countries[nameB] = nameA;
@@ -66,68 +66,42 @@ export function toShortForm(name: string): string {
   return name;
 }
 
-export function readAirlines(path: string): Promise<t.Airline[]> {
-  const data: t.Airline[] = [];
-
-  let resolve;
-  const promise = new Promise<t.Airline[]>(r => (resolve = r));
-
-  const rl = createInterface({
-    input: createReadStream(path)
-  });
-
-  rl.on("line", line => {
+export function loadAirlines(): void {
+  readLineByLine(__dirname + "/airlines.dat", line => {
     line = "[" + line.replace(/\\N/g, "null") + "]";
     line = cleanString(line);
-    line = JSON.parse(line);
-    data.push({
-      id: line[0],
-      name: line[1],
-      alias: line[2],
-      IATA: line[3],
-      ICAO: line[4],
-      callsign: line[5],
-      country: toShortForm(line[6]),
-      active: line[7] === "Y"
+    const data = JSON.parse(line);
+    airlines.push({
+      id: data[0],
+      name: data[1],
+      alias: data[2],
+      IATA: data[3],
+      ICAO: data[4],
+      callsign: data[5],
+      country: toShortForm(data[6]),
+      active: data[7] === "Y"
     });
   });
-
-  rl.on("close", () => resolve(data));
-
-  return promise;
 }
 
-export function readAirports(path: string): Promise<t.Airport[]> {
-  const data: t.Airport[] = [];
-
-  let resolve;
-  const promise = new Promise<t.Airport[]>(r => (resolve = r));
-
-  const rl = createInterface({
-    input: createReadStream(path)
-  });
-
-  rl.on("line", line => {
+export function loadAirports(): void {
+  readLineByLine(__dirname + "/airports.dat", line => {
     line = "[" + line.replace(/\\N/g, "null") + "]";
     line = cleanString(line);
-    line = JSON.parse(line);
-    data.push({
-      id: line[0],
-      name: line[1],
-      city: line[2],
-      country: toShortForm(line[3]),
-      IATA: line[4],
-      ICAO: line[5],
-      lat: line[6],
-      lng: line[7],
-      alt: line[8],
-      timezone: line[9]
+    const data = JSON.parse(line);
+    airports.push({
+      id: data[0],
+      name: data[1],
+      city: data[2],
+      country: toShortForm(data[3]),
+      IATA: data[4],
+      ICAO: data[5],
+      lat: data[6],
+      lng: data[7],
+      alt: data[8],
+      timezone: data[9]
     });
   });
-
-  rl.on("close", () => resolve(data));
-
-  return promise;
 }
 
 function cleanString(s: string): string {
@@ -143,4 +117,27 @@ function cleanString(s: string): string {
   return ret;
 }
 
+function readLineByLine(path: string, cb: (line: string) => void): void {
+  const maxLen = 205;
+  const fd = openSync(path, "r");
+  const buffer = new ArrayBuffer(maxLen);
+  const ui8 = new Uint8Array(buffer);
+  let pos = 0;
+  while (true) {
+    ui8.fill(0);
+    const read = readSync(fd, ui8, 0, maxLen, pos);
+    if (read === 0) {
+      break;
+    }
+    const index = ui8.indexOf(0xa);
+    if (index < 0) {
+      throw new Error("Unexcpected line.");
+    }
+    pos += index + 1;
+    cb(String.fromCharCode(...ui8.slice(0, index)));
+  }
+}
+
 loadContries();
+loadAirlines();
+loadAirports();
