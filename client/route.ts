@@ -44,7 +44,7 @@ export function routeSelector(): HTMLElement {
 
 function renderMap(wrapper: HTMLElement): void {
   const width = 850;
-  const height = 500;
+  const height = 400;
 
   // TODO(qti3e)
   // wrapper.appendChild(document.createElement("div")).classList.add("circle");
@@ -56,9 +56,9 @@ function renderMap(wrapper: HTMLElement): void {
 
   const context = canvas.getContext('2d');
 
-  const projection = d3.geoOrthographic()
-  .scale(240)
-  .rotate([30, -48])
+  const projection = d3.geoMercator()
+  // .scale(240)
+  // .rotate([30, -48])
   .translate([width / 2, height / 2]);
 
   const geoGenerator = d3.geoPath()
@@ -73,7 +73,7 @@ function renderMap(wrapper: HTMLElement): void {
 
   let r = 0;
   function update() {
-  projection.rotate([30, -48 + r++ * 0.1]);
+  // projection.rotate([30, -48 + r++ * 0.1]);
     context.clearRect(0, 0, width, height);
 
     context.lineWidth = 0.5;
