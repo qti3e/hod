@@ -1,8 +1,5 @@
-$secondry: #87cefa;
-$primary: #ff9b26;
-$background: #111c24;
-$fg: #fff;
-$frame-height: 50px;
+@import "route";
+@import "colors";
 
 @font-face {
   font-family: "BBCNassim";

@@ -1,0 +1,36 @@
+@import "colors";
+
+#route-block {
+  position: fixed;
+  top: $frame-height;
+  left: 0;
+  height: calc(100vh - #{$frame-height});
+  width: 100vw;
+  z-index: 100000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#route-wrapper {
+  background: $background;
+  display: block;
+  width: 70vw;
+  height: 80vh;
+  cursor: default;
+  padding: 15px;
+  min-width: 850px;
+  min-height: 400px;
+}
+
+#map-wrapper {
+  border-bottom: 1px solid $primary;
+  border-radius: 80px;
+  text-align: center;
+  .circle {
+    width: 100px;
+    height: 10px;
+    background: $primary;
+  }
+}

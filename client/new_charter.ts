@@ -7,6 +7,7 @@
  */
 
 import { newCharter as local } from "./local";
+import { routeSelector } from "./route";
 import { cacheForUser, checkBox } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
@@ -26,6 +27,8 @@ export function renderNewCharter(app: HTMLElement): void {
   const title = document.createElement("h1");
   title.innerText = local.title;
   wrapper.appendChild(title);
+
+  wrapper.appendChild(routeSelector());
 
   const checkbox = checkBox("Test");
   wrapper.appendChild(checkbox.parentElement);
