@@ -21,4 +21,7 @@
   new_charter.ts \
   enc.ts \
   package.json \
-  mid.ts
+  mid.ts \
+  route.ts \
+  colors.scss \
+  route.scss
