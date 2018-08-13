@@ -10,6 +10,9 @@ import * as d3 from "d3";
 import * as geojson from "./assets/countries.geo.json";
 import { emit } from "./ipc";
 
+let canvasCache;
+let updateFnCache;
+
 export function routeSelector(): HTMLElement {
   const block = document.createElement("btn");
   block.id = "route-block";
@@ -44,11 +47,12 @@ export function routeSelector(): HTMLElement {
 }
 
 function renderMap(wrapper: HTMLElement): () => void {
+  if (canvasCache) {
+    wrapper.appendChild(canvasCache);
+    return updateFnCache;
+  }
   const width = 850;
   const height = 400;
-
-  // TODO(qti3e)
-  // wrapper.appendChild(document.createElement("div")).classList.add("circle");
 
   const canvas = document.createElement("canvas");
   wrapper.appendChild(canvas);
@@ -125,6 +129,7 @@ function renderMap(wrapper: HTMLElement): () => void {
     context.fill();
 
     u += 0.005;
+
     if (u > 1) {
       u = 0;
     }
@@ -132,6 +137,9 @@ function renderMap(wrapper: HTMLElement): () => void {
       requestAnimationFrame(update);
     }
   }
+
+  updateFnCache = update;
+  canvasCache = canvas;
 
   return update;
 }
