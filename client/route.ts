@@ -34,6 +34,9 @@ export interface RouteSelectorElement extends HTMLDivElement {
 }
 
 export function routeSelector(): RouteSelectorElement {
+  // Preload data.
+  fetchData();
+
   const route = [];
 
   const block = document.createElement("div");
@@ -70,8 +73,22 @@ export function routeSelector(): RouteSelectorElement {
   serachResultsWrapper.id = "route-search-results";
   mapWrapper.appendChild(serachResultsWrapper);
 
+  const routeWrapper = document.createElement("div");
+  routeWrapper.id = "route-route-wrapper";
+  wrapper.appendChild(routeWrapper);
+
   function updateRoute() {
-    console.log(route);
+    routeWrapper.innerHTML = "";
+    for (let i = 0; i < route.length; ++i) {
+      const city = route[i];
+      const tmp = document.createElement("div");
+      tmp.innerHTML = city.name;
+      routeWrapper.appendChild(tmp);
+      tmp.onclick = () => {
+        route.splice(i, 1);
+      };
+      // TODO(qti3e) A better UI for this part!
+    }
     updateBtn();
   }
 
@@ -372,9 +389,6 @@ async function fetchData(): Promise<t.City[]> {
   citiesCache = res.data;
   return res.data;
 }
-
-// Preload data.
-fetchData();
 
 setTimeout(() => {
   emit("goto", "newCharter");
