@@ -34,6 +34,8 @@ export interface RouteSelectorElement extends HTMLDivElement {
 }
 
 export function routeSelector(): RouteSelectorElement {
+  const route = [];
+
   const block = document.createElement("div");
   block.id = "route-block";
   block.onclick = e => {
@@ -66,6 +68,25 @@ export function routeSelector(): RouteSelectorElement {
   serachResultsWrapper.id = "route-search-results";
   mapWrapper.appendChild(serachResultsWrapper);
 
+  function updateRoute() {
+    console.log(route);
+  }
+
+  // Push city to route.
+  // ctrl+enter on searchInputEl.
+  // click on search result elements. (.result)
+  function select(city?: t.City) {
+    if (!city) {
+      city = data.results[0];
+    }
+    if (city) {
+      route.push(city);
+      updateRoute();
+    }
+    searchInputEl.value = "";
+    data.results.length = 0;
+  }
+
   function updateSearchResults() {
     serachResultsWrapper.innerHTML = "";
     data.hover = null;
@@ -82,11 +103,18 @@ export function routeSelector(): RouteSelectorElement {
       tmp.addEventListener("mouseout", () => {
         data.hover = null;
       });
+      tmp.onclick = () => {
+        select(city);
+      };
     }
   }
 
   let time = 0;
-  searchInputEl.addEventListener("keyup", () => {
+  let ctrl = false;
+  searchInputEl.addEventListener("keyup", e => {
+    if (e.keyCode === 17) {
+      ctrl = false;
+    }
     if (Date.now() - time < 150) {
       return;
     }
@@ -103,7 +131,7 @@ export function routeSelector(): RouteSelectorElement {
         data.results.push(cities[i]);
       }
     }
-    if (data.results.length < 50) {
+    if (data.results.length < 51) {
       // Sort results.
       data.results.sort((a, b) => {
         if (a.name.toLowerCase().startsWith(value)) {
@@ -117,13 +145,20 @@ export function routeSelector(): RouteSelectorElement {
     }
     updateSearchResults();
   });
+  searchInputEl.addEventListener("keydown", e => {
+    if (e.keyCode === 17) {
+      ctrl = true;
+    } else if (ctrl && e.keyCode === 13) {
+      select();
+    }
+  });
 
   // End of rendering view.
 
   // Toggle Button.
   const btn = document.createElement("div") as RouteSelectorElement;
   btn.classList.add("route-selector");
-  btn.route = [];
+  btn.route = route;
 
   const fromEl = document.createElement("div");
   fromEl.classList.add("city-name");
@@ -191,9 +226,6 @@ function renderMap(wrapper: HTMLElement): () => void {
     .pointRadius(4)
     .context(context);
 
-  const londonLonLat: [number, number] = [51.42434403, 35.67194277];
-  const newYorkLonLat: [number, number] = [-74.0059, 40.7128];
-  const geoInterpolator = d3.geoInterpolate(londonLonLat, newYorkLonLat);
   let u = 0;
 
   function update() {
@@ -231,34 +263,40 @@ function renderMap(wrapper: HTMLElement): () => void {
       });
       context.fill();
     } else {
-      // London - New York
-      context.beginPath();
-      context.strokeStyle = "#ff9b26";
-      context.lineWidth = 3;
-      geoGenerator({
-        type: "Feature",
-        features: undefined,
-        geometry: {
-          type: "LineString",
-          coordinates: [londonLonLat, newYorkLonLat]
-        }
-      });
-      context.stroke();
-
-      // Point
-      context.beginPath();
-      context.fillStyle = "#ff9b26";
-      geoGenerator.pointRadius(4);
-      geoGenerator({
-        type: "Feature",
-        features: undefined,
-        geometry: {
-          type: "Point",
-          coordinates: geoInterpolator(u)
-        }
-      });
-      context.fill();
-
+      // Draw paths.
+      for (let i = 1; i < data.route.length; ++i) {
+        const fromCity = data.route[i - 1];
+        const toCity = data.route[i];
+        const fromLonLat: [number, number] = [fromCity.lng, fromCity.lat];
+        const toLonLat: [number, number] = [toCity.lng, toCity.lat];
+        context.beginPath();
+        context.strokeStyle = "#ff9b26";
+        context.lineWidth = 3;
+        geoGenerator({
+          type: "Feature",
+          features: undefined,
+          geometry: {
+            type: "LineString",
+            coordinates: [fromLonLat, toLonLat]
+          }
+        });
+        context.stroke();
+        // Point
+        // TODO(qti3e) Render only one point at a time.
+        const geoInterpolator = d3.geoInterpolate(fromLonLat, toLonLat);
+        context.beginPath();
+        context.fillStyle = "#ff9b26";
+        geoGenerator.pointRadius(4);
+        geoGenerator({
+          type: "Feature",
+          features: undefined,
+          geometry: {
+            type: "Point",
+            coordinates: geoInterpolator(u)
+          }
+        });
+        context.fill();
+      }
       // Render search results.
       const len = Math.min(data.results.length, 50);
       for (let i = 0; i < len; ++i) {
