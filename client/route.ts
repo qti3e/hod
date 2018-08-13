@@ -17,7 +17,10 @@ let updateFnCache;
 
 // A global var to pass data data from routeSelector to update().
 const data = {
-  route: []
+  // Selected route.
+  route: [],
+  // Search results.
+  results: []
 };
 
 export interface RouteSelectorElement extends HTMLDivElement {
@@ -127,6 +130,7 @@ function renderMap(wrapper: HTMLElement): () => void {
 
   function update() {
     if (data.route === null) {
+      console.log("Stop rendering");
       return;
     }
 
@@ -158,6 +162,7 @@ function renderMap(wrapper: HTMLElement): () => void {
     // Point
     context.beginPath();
     context.fillStyle = "#ff9b26";
+    geoGenerator.pointRadius(4);
     geoGenerator({
       type: "Feature",
       features: undefined,
@@ -168,13 +173,16 @@ function renderMap(wrapper: HTMLElement): () => void {
     });
     context.fill();
 
-    // Point 2
+    // Point 2 - For search results.
     context.beginPath();
+    context.fillStyle = "#26ff5f";
+    geoGenerator.pointRadius(Math.abs((u - 0.5) * 15) + 5);
     geoGenerator({
       type: "Feature",
       features: undefined,
       geometry: {
         type: "Point",
+        radius: 340,
         coordinates: londonLonLat
       }
     });
