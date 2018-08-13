@@ -106,6 +106,7 @@ export function routeSelector(): RouteSelectorElement {
     }
     searchInputEl.value = "";
     data.results.length = 0;
+    updateSearchResults();
   }
 
   function updateSearchResults() {
