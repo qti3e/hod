@@ -4,14 +4,17 @@ import cities from "../cities";
 test(function test_cities() {
   const tehran = cities.filter(x => x.name === "Tehran")[0];
   assertEqual(!!tehran, true);
-  assertEqual(tehran.lat, 35.67194277);
-  assertEqual(tehran.lng, 51.42434403);
+  const lng = tehran.lngLat[0];
+  const lat = tehran.lngLat[1];
+  assertEqual(lng, 51.42434403);
+  assertEqual(lat, 35.67194277);
+  assertEqual(tehran.country, "Iran");
 
   // There should be no NaN in lat and lng.
   for (let i = 0; i < cities.length; ++i) {
     try {
-    assert(!isNaN(cities[i].lat));
-    assert(!isNaN(cities[i].lng));
+      assert(!isNaN(cities[i].lngLat[0]));
+      assert(!isNaN(cities[i].lngLat[1]));
     } catch (e) {
       console.log("City:");
       console.log(cities[i]);

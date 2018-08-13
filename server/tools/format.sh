@@ -5,7 +5,7 @@
   types.ts \
   token.ts \
   tests/token_test.ts \
-  tests/data.ts \
+  tests/cities.ts \
   tests/enc_test.ts \
   tests/tests.ts \
   auth.ts \
@@ -16,3 +16,4 @@
   enc.ts \
   http.ts \
   v1.data.ts \
+  cities.ts
