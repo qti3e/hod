@@ -9,20 +9,32 @@
 import * as d3 from "d3";
 import * as geojson from "./assets/countries.geo.json";
 import { emit } from "./ipc";
+import * as t from "./types";
 
 let canvasCache;
 let updateFnCache;
 
-export function routeSelector(): HTMLElement {
-  const block = document.createElement("btn");
+// A global var to pass data data from routeSelector to update().
+const data = {
+  route: []
+};
+
+export interface RouteSelectorElement extends HTMLDivElement {
+  route: t.City[];
+  show(): void;
+}
+
+export function routeSelector(): RouteSelectorElement {
+  const block = document.createElement("div");
   block.id = "route-block";
   block.onclick = e => {
     if (e.target === block) {
-      document.body.removeChild(block);
+      data.route = null;
+      block.parentElement.removeChild(block);
     }
   };
 
-  const wrapper = document.createElement("btn");
+  const wrapper = document.createElement("div");
   wrapper.id = "route-wrapper";
   block.appendChild(wrapper);
 
@@ -32,16 +44,29 @@ export function routeSelector(): HTMLElement {
   const update = renderMap(mapWrapper);
 
   // Toggle Button.
-  const btn = document.createElement("btn");
+  const btn = document.createElement("div") as RouteSelectorElement;
+  btn.route = [];
   btn.innerText = "Btn";
+
   btn.onclick = () => {
-    document.body.appendChild(block);
-    update();
+    show();
   };
 
+  btn.show = show;
+
+  // Function to show modal.
+  function show() {
+    const parent = btn.parentElement;
+    parent.appendChild(block);
+    data.route = btn.route;
+    // Start animation loop.
+    update();
+  }
+
   // For test
-  document.body.appendChild(block);
-  update();
+  setTimeout(() => {
+    show();
+  });
 
   return btn;
 }
@@ -78,6 +103,10 @@ function renderMap(wrapper: HTMLElement): () => void {
   let u = 0;
 
   function update() {
+    if (data.route === null) {
+      return;
+    }
+
     context.clearRect(0, 0, width, height);
 
     context.lineWidth = 0.5;
@@ -133,9 +162,8 @@ function renderMap(wrapper: HTMLElement): () => void {
     if (u > 1) {
       u = 0;
     }
-    if (canvas.offsetWidth) {
-      requestAnimationFrame(update);
-    }
+
+    requestAnimationFrame(update);
   }
 
   updateFnCache = update;
