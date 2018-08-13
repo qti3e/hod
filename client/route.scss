@@ -60,3 +60,16 @@
     background: $primary;
   }
 }
+
+#route-search-wrapper {
+  input {
+    -webkit-appearance: none;
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid $primary;
+    color: $primary;
+    &:focus {
+      outline-color: transparent;
+    }
+  }
+}

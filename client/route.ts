@@ -6,12 +6,15 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import axios from "axios";
 import * as d3 from "d3";
 import * as geojson from "./assets/countries.geo.json";
+import { get } from "./context";
 import { emit } from "./ipc";
 import { route as local } from "./local";
 import * as t from "./types";
 
+let citiesCache: t.City[];
 let canvasCache;
 let updateFnCache;
 
@@ -38,6 +41,8 @@ export function routeSelector(): RouteSelectorElement {
     }
   };
 
+  // Render view.
+
   const wrapper = document.createElement("div");
   wrapper.id = "route-wrapper";
   block.appendChild(wrapper);
@@ -46,6 +51,31 @@ export function routeSelector(): RouteSelectorElement {
   mapWrapper.id = "map-wrapper";
   wrapper.appendChild(mapWrapper);
   const update = renderMap(mapWrapper);
+
+  const searchWrapper = document.createElement("div");
+  searchWrapper.id = "route-search-wrapper";
+  wrapper.appendChild(searchWrapper);
+
+  const searchInputEl = document.createElement("input");
+  searchWrapper.appendChild(searchInputEl);
+
+  let time = 0;
+  searchInputEl.addEventListener("keyup", () => {
+    if (Date.now() - time < 150) {
+      return;
+    }
+    time = Date.now();
+    const value = searchInputEl.value.trim().toLowerCase();
+    const cities = citiesCache;
+    data.results = [];
+    for (let i = 0; i < cities.length; ++i) {
+      if (cities[i].name.toLowerCase().indexOf(value) > -1) {
+        data.results.push(cities[i]);
+      }
+    }
+  });
+
+  // End of rendering view.
 
   // Toggle Button.
   const btn = document.createElement("div") as RouteSelectorElement;
@@ -88,11 +118,6 @@ export function routeSelector(): RouteSelectorElement {
     fromEl.innerText = fromStr;
     toEl.innerText = toStr;
   }
-
-  // // For test
-  // setTimeout(() => {
-  //   show();
-  // });
 
   return btn;
 }
@@ -173,20 +198,26 @@ function renderMap(wrapper: HTMLElement): () => void {
     });
     context.fill();
 
-    // Point 2 - For search results.
-    context.beginPath();
-    context.fillStyle = "#26ff5f";
-    geoGenerator.pointRadius(Math.abs((u - 0.5) * 15) + 5);
-    geoGenerator({
-      type: "Feature",
-      features: undefined,
-      geometry: {
-        type: "Point",
-        radius: 340,
-        coordinates: londonLonLat
+    // Render search results.
+    if (data.results.length < 50) {
+      for (let i = 0; i < data.results.length; ++i) {
+        context.beginPath();
+        context.fillStyle = "#26ff5f";
+        geoGenerator.pointRadius(Math.abs((u - 0.5) * 15) + 5);
+        const lng = data.results[i].lng;
+        const lat = data.results[i].lat;
+        geoGenerator({
+          type: "Feature",
+          features: undefined,
+          geometry: {
+            type: "Point",
+            radius: 340,
+            coordinates: [lng, lat]
+          }
+        });
+        context.fill();
       }
-    });
-    context.fill();
+    }
 
     u += 0.005;
 
@@ -202,6 +233,28 @@ function renderMap(wrapper: HTMLElement): () => void {
 
   return update;
 }
+
+async function fetchData(): Promise<t.City[]> {
+  if (citiesCache) {
+    return citiesCache;
+  }
+  const token = get("currentToken");
+  const server = get("server");
+  const { data: res } = await axios.post(
+    server + "/data/cities",
+    {},
+    {
+      headers: {
+        "hod-token": token
+      }
+    }
+  );
+  citiesCache = res.data;
+  return res.data;
+}
+
+// Preload data.
+fetchData();
 
 setTimeout(() => {
   emit("goto", "newCharter");
