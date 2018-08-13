@@ -59,7 +59,6 @@ export function routeSelector(): RouteSelectorElement {
   const mapWrapper = document.createElement("div");
   mapWrapper.id = "map-wrapper";
   wrapper.appendChild(mapWrapper);
-  const update = renderMap(mapWrapper);
 
   const searchWrapper = document.createElement("div");
   searchWrapper.id = "route-search-wrapper";
@@ -229,6 +228,8 @@ export function routeSelector(): RouteSelectorElement {
     const parent = btn.parentElement;
     parent.appendChild(block);
     data.route = btn.route;
+    // Append map to wrapper.
+    const update = renderMap(mapWrapper);
     // Start animation loop.
     update();
   }
@@ -248,9 +249,11 @@ export function routeSelector(): RouteSelectorElement {
 
 function renderMap(wrapper: HTMLElement): () => void {
   if (canvasCache) {
+    canvasCache.parentElement.removeChild(canvasCache);
     wrapper.appendChild(canvasCache);
     return updateFnCache;
   }
+
   const width = 850;
   const height = 400;
 
@@ -373,10 +376,17 @@ function renderMap(wrapper: HTMLElement): () => void {
   return update;
 }
 
+let inProgress = false;
 async function fetchData(): Promise<t.City[]> {
+  if (inProgress) {
+    return null;
+  }
+
   if (citiesCache) {
     return citiesCache;
   }
+
+  inProgress = true;
   const token = get("currentToken");
   const server = get("server");
   const { data: res } = await axios.post(
@@ -389,6 +399,7 @@ async function fetchData(): Promise<t.City[]> {
     }
   );
   citiesCache = res.data;
+  inProgress = false;
   return res.data;
 }
 

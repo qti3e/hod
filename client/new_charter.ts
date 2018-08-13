@@ -32,4 +32,5 @@ export function renderNewCharter(app: HTMLElement): void {
   wrapper.appendChild(checkbox.parentElement);
 
   wrapper.appendChild(routeSelector());
+  wrapper.appendChild(routeSelector());
 }
