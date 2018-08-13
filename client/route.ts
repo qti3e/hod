@@ -23,7 +23,9 @@ const data = {
   // Selected route.
   route: [],
   // Search results.
-  results: []
+  results: [],
+  // Hovered item in search results.
+  hover: null
 };
 
 export interface RouteSelectorElement extends HTMLDivElement {
@@ -68,12 +70,18 @@ export function routeSelector(): RouteSelectorElement {
     serachResultsWrapper.innerHTML = "";
     const len = Math.min(6, data.results.length);
     for (let i = 0; i < len; ++i) {
+      const city = data.results[i];
       const tmp = document.createElement("div");
       tmp.className = "result";
-      tmp.innerText = data.results[i].name;
+      tmp.innerText = city.name;
       serachResultsWrapper.appendChild(tmp);
-      // TODO(qti3e) when user hovers this, only show
-      // that area in the map!
+      tmp.addEventListener("mouseover", () => {
+        console.log(city);
+        data.hover = city;
+      });
+      tmp.addEventListener("mouseout", () => {
+        data.hover = null;
+      });
     }
   }
 
@@ -174,7 +182,7 @@ function renderMap(wrapper: HTMLElement): () => void {
 
   const projection = d3
     .geoMercator()
-    .scale(150)
+    .scale(130)
     .translate([width / 2, height / 2]);
 
   const geoGenerator = d3
@@ -205,37 +213,55 @@ function renderMap(wrapper: HTMLElement): () => void {
     });
     context.stroke();
 
-    // London - New York
-    context.beginPath();
-    context.strokeStyle = "#ff9b26";
-    context.lineWidth = 3;
-    geoGenerator({
-      type: "Feature",
-      features: undefined,
-      geometry: {
-        type: "LineString",
-        coordinates: [londonLonLat, newYorkLonLat]
-      }
-    });
-    context.stroke();
+    if (data.hover) {
+      // Only show hovered city.
+      context.beginPath();
+      context.fillStyle = "#26ff5f";
+      geoGenerator.pointRadius(Math.abs((u - 0.5) * 15) + 5);
+      const lng = data.hover.lng;
+      const lat = data.hover.lat;
+      geoGenerator({
+        type: "Feature",
+        features: undefined,
+        geometry: {
+          type: "Point",
+          radius: 340,
+          coordinates: [lng, lat]
+        }
+      });
+      context.fill();
+    } else {
+      // London - New York
+      context.beginPath();
+      context.strokeStyle = "#ff9b26";
+      context.lineWidth = 3;
+      geoGenerator({
+        type: "Feature",
+        features: undefined,
+        geometry: {
+          type: "LineString",
+          coordinates: [londonLonLat, newYorkLonLat]
+        }
+      });
+      context.stroke();
 
-    // Point
-    context.beginPath();
-    context.fillStyle = "#ff9b26";
-    geoGenerator.pointRadius(4);
-    geoGenerator({
-      type: "Feature",
-      features: undefined,
-      geometry: {
-        type: "Point",
-        coordinates: geoInterpolator(u)
-      }
-    });
-    context.fill();
+      // Point
+      context.beginPath();
+      context.fillStyle = "#ff9b26";
+      geoGenerator.pointRadius(4);
+      geoGenerator({
+        type: "Feature",
+        features: undefined,
+        geometry: {
+          type: "Point",
+          coordinates: geoInterpolator(u)
+        }
+      });
+      context.fill();
 
-    // Render search results.
-    if (data.results.length < 50) {
-      for (let i = 0; i < data.results.length; ++i) {
+      // Render search results.
+      const len = Math.min(data.results.length, 50);
+      for (let i = 0; i < len; ++i) {
         context.beginPath();
         context.fillStyle = "#26ff5f";
         geoGenerator.pointRadius(Math.abs((u - 0.5) * 15) + 5);
