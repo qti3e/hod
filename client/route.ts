@@ -297,8 +297,8 @@ function renderMap(wrapper: HTMLElement): () => void {
     if (data.hover) {
       // Only show hovered city.
       context.beginPath();
-      context.fillStyle = "#26ff5f";
-      geoGenerator.pointRadius(Math.abs((u - 0.5) * 15) + 5);
+      context.strokeStyle = "#26ff5f";
+      geoGenerator.pointRadius(Math.sin(Math.PI * u) * 10);
       geoGenerator({
         type: "Feature",
         features: undefined,
@@ -308,7 +308,18 @@ function renderMap(wrapper: HTMLElement): () => void {
           coordinates: data.hover.lngLat
         }
       });
-      context.fill();
+      context.stroke();
+      geoGenerator.pointRadius(Math.sin(Math.PI * (u - 0.5)) ** 2 * 10);
+      geoGenerator({
+        type: "Feature",
+        features: undefined,
+        geometry: {
+          type: "Point",
+          radius: 340,
+          coordinates: data.hover.lngLat
+        }
+      });
+      context.stroke();
     } else {
       // Draw paths.
       for (let i = 1; i < data.route.length; ++i) {
@@ -346,8 +357,8 @@ function renderMap(wrapper: HTMLElement): () => void {
       const len = Math.min(data.results.length, 50);
       for (let i = 0; i < len; ++i) {
         context.beginPath();
-        context.fillStyle = "#26ff5f";
-        geoGenerator.pointRadius(Math.abs((u - 0.5) * 15) + 5);
+        context.strokeStyle = "#26ff5f";
+        geoGenerator.pointRadius(Math.sin(Math.PI * u) * 10);
         geoGenerator({
           type: "Feature",
           features: undefined,
@@ -357,7 +368,18 @@ function renderMap(wrapper: HTMLElement): () => void {
             coordinates: data.results[i].lngLat
           }
         });
-        context.fill();
+        context.stroke();
+        geoGenerator.pointRadius(Math.sin(Math.PI * (u - 0.5)) ** 2 * 10);
+        geoGenerator({
+          type: "Feature",
+          features: undefined,
+          geometry: {
+            type: "Point",
+            radius: 340,
+            coordinates: data.results[i].lngLat
+          }
+        });
+        context.stroke();
       }
     }
 
