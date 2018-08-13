@@ -9,6 +9,7 @@
 import * as d3 from "d3";
 import * as geojson from "./assets/countries.geo.json";
 import { emit } from "./ipc";
+import { route as local } from "./local";
 import * as t from "./types";
 
 let canvasCache;
@@ -45,8 +46,20 @@ export function routeSelector(): RouteSelectorElement {
 
   // Toggle Button.
   const btn = document.createElement("div") as RouteSelectorElement;
+  btn.classList.add("route-selector");
   btn.route = [];
-  btn.innerText = "Btn";
+
+  const fromEl = document.createElement("div");
+  fromEl.classList.add("city-name");
+  const toEl = document.createElement("div");
+  toEl.classList.add("city-name");
+
+  btn.appendChild(fromEl);
+  btn.appendChild(document.createElement("div")).className = "dot";
+  btn.appendChild(document.createElement("div")).className = "dot";
+  btn.appendChild(document.createElement("div")).className = "dot";
+  btn.appendChild(toEl);
+  updateBtn();
 
   btn.onclick = () => {
     show();
@@ -63,10 +76,20 @@ export function routeSelector(): RouteSelectorElement {
     update();
   }
 
-  // For test
-  setTimeout(() => {
-    show();
-  });
+  // Updates btn.
+  function updateBtn() {
+    const route = btn.route;
+    const len = route.length;
+    const fromStr = len > 0 ? route[0].name : local.unknown;
+    const toStr = len > 1 ? route[len - 1].name : local.unknown;
+    fromEl.innerText = fromStr;
+    toEl.innerText = toStr;
+  }
+
+  // // For test
+  // setTimeout(() => {
+  //   show();
+  // });
 
   return btn;
 }

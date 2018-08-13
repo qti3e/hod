@@ -36,3 +36,27 @@
     background: $primary;
   }
 }
+
+.route-selector {
+  display: inline-block;
+  cursor: pointer;
+  .city-name {
+    display: inline-block;
+    cursor: pointer;
+    margin: 10px;
+    width: 75px;
+    font-size: 14pt;
+    color: $primary;
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-color: $secondry;
+  }
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 3px;
+    border-radius: 5px;
+    background: $primary;
+  }
+}

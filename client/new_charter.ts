@@ -28,8 +28,8 @@ export function renderNewCharter(app: HTMLElement): void {
   title.innerText = local.title;
   wrapper.appendChild(title);
 
-  wrapper.appendChild(routeSelector());
-
   const checkbox = checkBox("Test");
   wrapper.appendChild(checkbox.parentElement);
+
+  wrapper.appendChild(routeSelector());
 }

@@ -52,3 +52,7 @@ export const usersList = {
 export const newCharter = {
   title: "چارتر جدید"
 };
+
+export const route = {
+  unknown: "Unknown"
+};
