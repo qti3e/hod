@@ -86,6 +86,7 @@ export function routeSelector(): RouteSelectorElement {
       routeWrapper.appendChild(tmp);
       tmp.onclick = () => {
         route.splice(i, 1);
+        updateRoute();
       };
       // TODO(qti3e) A better UI for this part!
     }
