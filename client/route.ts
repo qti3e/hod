@@ -21,7 +21,7 @@ let updateFnCache;
 // A global var to pass data data from routeSelector to update().
 const data = {
   // Selected route.
-  route: [],
+  route: null,
   // Search results.
   results: [],
   // Hovered item in search results.
@@ -41,6 +41,8 @@ export function routeSelector(): RouteSelectorElement {
   block.onclick = e => {
     if (e.target === block) {
       data.route = null;
+      data.hover = null;
+      data.results.length = 0;
       block.parentElement.removeChild(block);
     }
   };
@@ -70,6 +72,7 @@ export function routeSelector(): RouteSelectorElement {
 
   function updateRoute() {
     console.log(route);
+    updateBtn();
   }
 
   // Push city to route.
@@ -95,7 +98,7 @@ export function routeSelector(): RouteSelectorElement {
       const city = data.results[i];
       const tmp = document.createElement("div");
       tmp.className = "result";
-      tmp.innerText = city.name;
+      tmp.innerText = city.name + " - " + city.country;
       serachResultsWrapper.appendChild(tmp);
       tmp.addEventListener("mouseover", () => {
         data.hover = city;
@@ -250,25 +253,21 @@ function renderMap(wrapper: HTMLElement): () => void {
       context.beginPath();
       context.fillStyle = "#26ff5f";
       geoGenerator.pointRadius(Math.abs((u - 0.5) * 15) + 5);
-      const lng = data.hover.lng;
-      const lat = data.hover.lat;
       geoGenerator({
         type: "Feature",
         features: undefined,
         geometry: {
           type: "Point",
           radius: 340,
-          coordinates: [lng, lat]
+          coordinates: data.hover.lngLat
         }
       });
       context.fill();
     } else {
       // Draw paths.
       for (let i = 1; i < data.route.length; ++i) {
-        const fromCity = data.route[i - 1];
-        const toCity = data.route[i];
-        const fromLonLat: [number, number] = [fromCity.lng, fromCity.lat];
-        const toLonLat: [number, number] = [toCity.lng, toCity.lat];
+        const fromLngLat = data.route[i - 1].lngLat;
+        const toLngLat = data.route[i].lngLat;
         context.beginPath();
         context.strokeStyle = "#ff9b26";
         context.lineWidth = 3;
@@ -277,13 +276,13 @@ function renderMap(wrapper: HTMLElement): () => void {
           features: undefined,
           geometry: {
             type: "LineString",
-            coordinates: [fromLonLat, toLonLat]
+            coordinates: [fromLngLat, toLngLat]
           }
         });
         context.stroke();
         // Point
         // TODO(qti3e) Render only one point at a time.
-        const geoInterpolator = d3.geoInterpolate(fromLonLat, toLonLat);
+        const geoInterpolator = d3.geoInterpolate(fromLngLat, toLngLat);
         context.beginPath();
         context.fillStyle = "#ff9b26";
         geoGenerator.pointRadius(4);
@@ -303,15 +302,13 @@ function renderMap(wrapper: HTMLElement): () => void {
         context.beginPath();
         context.fillStyle = "#26ff5f";
         geoGenerator.pointRadius(Math.abs((u - 0.5) * 15) + 5);
-        const lng = data.results[i].lng;
-        const lat = data.results[i].lat;
         geoGenerator({
           type: "Feature",
           features: undefined,
           geometry: {
             type: "Point",
             radius: 340,
-            coordinates: [lng, lat]
+            coordinates: data.results[i].lngLat
           }
         });
         context.fill();

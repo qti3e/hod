@@ -44,6 +44,6 @@ export interface City {
   // md5(lat.format(6) + "-" + lng.format(6))
   readonly id: string;
   readonly name: string;
-  readonly lat: number;
-  readonly lng: number;
+  readonly country: string;
+  readonly lngLat: [number, number];
 }

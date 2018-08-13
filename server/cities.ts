@@ -29,11 +29,12 @@ for (let i = 1; i < lines.length; ++i) {
   const name = cols[1];
   const lat = Number(cols[2]);
   const lng = Number(cols[3]);
+  const country = cols[5];
   cities.push({
     id: md5(lat.toFixed(4) + "-" + lng.toFixed(4)),
     name,
-    lat,
-    lng
+    country,
+    lngLat: [lng, lat]
   });
 }
 console.log("Loading cities is done.");
