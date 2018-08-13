@@ -44,7 +44,7 @@
     display: inline-block;
     cursor: pointer;
     margin: 10px;
-    width: 75px;
+    min-width: 100px;
     font-size: 14pt;
     color: $primary;
     text-align: center;
@@ -81,6 +81,7 @@
     }
     &::-webkit-input-placeholder {
       color: $secondry;
+      direction: rtl;
     }
   }
 }
