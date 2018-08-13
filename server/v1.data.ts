@@ -10,12 +10,16 @@ import express from "express";
 import cities from "./cities";
 
 const router = express.Router();
+const citiesRes = JSON.stringify({
+  code: 200,
+  data: cities
+});
 
 router.post("/cities", function(
   req: express.Request,
   res: express.Response
 ): void {
-  res.send(cities);
+  res.send(citiesRes);
 });
 
 export { router };
