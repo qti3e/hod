@@ -68,6 +68,7 @@ export function routeSelector(): RouteSelectorElement {
 
   function updateSearchResults() {
     serachResultsWrapper.innerHTML = "";
+    data.hover = null;
     const len = Math.min(6, data.results.length);
     for (let i = 0; i < len; ++i) {
       const city = data.results[i];
