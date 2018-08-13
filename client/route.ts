@@ -26,22 +26,24 @@ export function routeSelector(): HTMLElement {
   const mapWrapper = document.createElement("div");
   mapWrapper.id = "map-wrapper";
   wrapper.appendChild(mapWrapper);
-  renderMap(mapWrapper);
+  const update = renderMap(mapWrapper);
 
   // Toggle Button.
   const btn = document.createElement("btn");
   btn.innerText = "Btn";
   btn.onclick = () => {
     document.body.appendChild(block);
+    update();
   };
 
   // For test
   document.body.appendChild(block);
+  update();
 
   return btn;
 }
 
-function renderMap(wrapper: HTMLElement): void {
+function renderMap(wrapper: HTMLElement): () => void {
   const width = 850;
   const height = 400;
 
@@ -58,7 +60,6 @@ function renderMap(wrapper: HTMLElement): void {
   const projection = d3
     .geoMercator()
     .scale(150)
-    // .rotate([30, -48])
     .translate([width / 2, height / 2]);
 
   const geoGenerator = d3
@@ -73,12 +74,10 @@ function renderMap(wrapper: HTMLElement): void {
   let u = 0;
 
   function update() {
-    // projection.rotate([30, -48 + r++ * 0.1]);
     context.clearRect(0, 0, width, height);
 
     context.lineWidth = 0.5;
-    context.strokeStyle = "#ccc";
-
+    context.strokeStyle = "#213747";
     context.beginPath();
     geoGenerator({
       type: "FeatureCollection",
@@ -86,17 +85,10 @@ function renderMap(wrapper: HTMLElement): void {
     });
     context.stroke();
 
-    // Graticule
-    // var graticule = d3.geoGraticule();
-    // context.beginPath();
-    // context.strokeStyle = '#ccc';
-    // geoGenerator(graticule());
-    // context.stroke();
-
     // London - New York
     context.beginPath();
     context.strokeStyle = "#ff9b26";
-
+    context.lineWidth = 3;
     geoGenerator({
       type: "Feature",
       features: undefined,
@@ -120,14 +112,28 @@ function renderMap(wrapper: HTMLElement): void {
     });
     context.fill();
 
+    // Point 2
+    context.beginPath();
+    geoGenerator({
+      type: "Feature",
+      features: undefined,
+      geometry: {
+        type: "Point",
+        coordinates: londonLonLat
+      }
+    });
+    context.fill();
+
     u += 0.005;
     if (u > 1) {
       u = 0;
     }
-    requestAnimationFrame(update);
+    if (canvas.offsetWidth) {
+      requestAnimationFrame(update);
+    }
   }
 
-  requestAnimationFrame(update);
+  return update;
 }
 
 setTimeout(() => {
