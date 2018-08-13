@@ -62,14 +62,44 @@
 }
 
 #route-search-wrapper {
+  position: relative;
+  text-align: center;
+  top: -30px;
   input {
+    direction: ltr;
     -webkit-appearance: none;
     border: none;
     background: transparent;
     border-bottom: 1px solid $primary;
     color: $primary;
+    height: 30px;
+    font-size: 14pt;
+    text-align: center;
+    width: 60%;
     &:focus {
       outline-color: transparent;
+    }
+    &::-webkit-input-placeholder {
+      color: $secondry;
+    }
+  }
+}
+
+#route-search-results {
+  position: absolute;
+  width: 200px;
+  height: 400px;
+  margin-top: -380px;
+  left: calc(15vw + 40px);
+  .result {
+    color: $primary;
+    text-align: left;
+    border-right: 1px solid $primary;
+    margin-top: 3px;
+    height: 50px;
+    transition: color 240ms;
+    &:hover {
+      color: $secondry;
     }
   }
 }

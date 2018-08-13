@@ -54,5 +54,6 @@ export const newCharter = {
 };
 
 export const route = {
-  unknown: "Unknown"
+  unknown: "Unknown",
+  search: "Search..."
 };

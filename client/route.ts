@@ -58,6 +58,24 @@ export function routeSelector(): RouteSelectorElement {
 
   const searchInputEl = document.createElement("input");
   searchWrapper.appendChild(searchInputEl);
+  searchInputEl.placeholder = local.search;
+
+  const serachResultsWrapper = document.createElement("div");
+  serachResultsWrapper.id = "route-search-results";
+  mapWrapper.appendChild(serachResultsWrapper);
+
+  function updateSearchResults() {
+    serachResultsWrapper.innerHTML = "";
+    const len = Math.min(6, data.results.length);
+    for (let i = 0; i < len; ++i) {
+      const tmp = document.createElement("div");
+      tmp.className = "result";
+      tmp.innerText = data.results[i].name;
+      serachResultsWrapper.appendChild(tmp);
+      // TODO(qti3e) when user hovers this, only show
+      // that area in the map!
+    }
+  }
 
   let time = 0;
   searchInputEl.addEventListener("keyup", () => {
@@ -68,11 +86,28 @@ export function routeSelector(): RouteSelectorElement {
     const value = searchInputEl.value.trim().toLowerCase();
     const cities = citiesCache;
     data.results = [];
+    if (value.length < 2) {
+      updateSearchResults();
+      return;
+    }
     for (let i = 0; i < cities.length; ++i) {
       if (cities[i].name.toLowerCase().indexOf(value) > -1) {
         data.results.push(cities[i]);
       }
     }
+    if (data.results.length < 50) {
+      // Sort results.
+      data.results.sort((a, b) => {
+        if (a.name.toLowerCase().startsWith(value)) {
+          return -1;
+        }
+        if (b.name.toLowerCase().startsWith(value)) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    updateSearchResults();
   });
 
   // End of rendering view.
