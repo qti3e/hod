@@ -77,7 +77,6 @@ export function routeSelector(): RouteSelectorElement {
       tmp.innerText = city.name;
       serachResultsWrapper.appendChild(tmp);
       tmp.addEventListener("mouseover", () => {
-        console.log(city);
         data.hover = city;
       });
       tmp.addEventListener("mouseout", () => {
