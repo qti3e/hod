@@ -7,6 +7,7 @@
  */
 
 import express from "express";
+import cities from "./cities";
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ router.post("/cities", function(
   req: express.Request,
   res: express.Response
 ): void {
-  res.send({});
+  res.send(cities);
 });
 
 export { router };

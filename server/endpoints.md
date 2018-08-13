@@ -26,9 +26,7 @@ Data {
 ```
 ### /v1/admin/users/list
 
-### /v1/data/airlines
+### /v1/data/cities
 ```
-Data {
- query
-}
+Data {}
 ```
