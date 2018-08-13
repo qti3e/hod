@@ -10,11 +10,11 @@ import express from "express";
 
 const router = express.Router();
 
-router.post("/airlines", function(
+router.post("/cities", function(
   req: express.Request,
   res: express.Response
 ): void {
-  const { query } = req.body;
+  res.send({});
 });
 
 export { router };
