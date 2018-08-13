@@ -136,11 +136,35 @@ export function routeSelector(): RouteSelectorElement {
     }
     if (data.results.length < 51) {
       // Sort results.
-      data.results.sort((a, b) => {
-        if (a.name.toLowerCase().startsWith(value)) {
+      data.results.sort((a: t.City, b: t.City) => {
+        const aStarts = a.name.toLowerCase().startsWith(value);
+        const bStarts = b.name.toLowerCase().startsWith(value);
+        if (aStarts && bStarts) {
+          if (a.name.length < b.name.length) {
+            return -1;
+          } else {
+            return 1;
+          }
+        }
+        if (aStarts) {
           return -1;
         }
-        if (b.name.toLowerCase().startsWith(value)) {
+        if (bStarts) {
+          return 1;
+        }
+        const aIran = a.country === "Iran";
+        const bIran = b.country === "Iran";
+        if (aIran && bIran) {
+          if (a.name.length < b.name.length) {
+            return -1;
+          } else {
+            return 1;
+          }
+        }
+        if (aIran) {
+          return -1;
+        }
+        if (bIran) {
           return 1;
         }
         return 0;
