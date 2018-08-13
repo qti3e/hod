@@ -8,7 +8,7 @@ test(function test_cities() {
   const lat = tehran.lngLat[1];
   assertEqual(lng, 51.42434403);
   assertEqual(lat, 35.67194277);
-  assertEqual(tehran.country, "Iran");
+  assertEqual(tehran.country, "IR");
 
   // There should be no NaN in lat and lng.
   for (let i = 0; i < cities.length; ++i) {

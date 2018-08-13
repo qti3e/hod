@@ -170,8 +170,8 @@ export function routeSelector(): RouteSelectorElement {
         if (bStarts) {
           return 1;
         }
-        const aIran = a.country === "Iran";
-        const bIran = b.country === "Iran";
+        const aIran = a.country === "IR";
+        const bIran = b.country === "IR";
         if (aIran && bIran) {
           if (a.name.length < b.name.length) {
             return -1;
