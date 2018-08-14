@@ -333,6 +333,10 @@ function renderMap(wrapper: HTMLElement): () => void {
       context.stroke();
     } else {
       // Draw paths.
+      const n = data.route.length - 1;
+      const turn = Math.ceil(u * n);
+      const left = turn - 1;
+      const newU = ((u * n) - left) / (turn - left);
       for (let i = 1; i < data.route.length; ++i) {
         const fromLngLat = data.route[i - 1].lngLat;
         const toLngLat = data.route[i].lngLat;
@@ -349,20 +353,21 @@ function renderMap(wrapper: HTMLElement): () => void {
         });
         context.stroke();
         // Point
-        // TODO(qti3e) Render only one point at a time.
-        const geoInterpolator = d3.geoInterpolate(fromLngLat, toLngLat);
-        context.beginPath();
-        context.fillStyle = "#ff9b26";
-        geoGenerator.pointRadius(4);
-        geoGenerator({
-          type: "Feature",
-          features: undefined,
-          geometry: {
-            type: "Point",
-            coordinates: geoInterpolator(u)
-          }
-        });
-        context.fill();
+        if (turn === i) {
+          const geoInterpolator = d3.geoInterpolate(fromLngLat, toLngLat);
+          context.beginPath();
+          context.fillStyle = "#ff9b26";
+          geoGenerator.pointRadius(4);
+          geoGenerator({
+            type: "Feature",
+            features: undefined,
+            geometry: {
+              type: "Point",
+              coordinates: geoInterpolator(newU)
+            }
+          });
+          context.fill();
+        }
       }
       // Render search results.
       const len = Math.min(data.results.length, 50);
