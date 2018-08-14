@@ -26,3 +26,17 @@ test(function test_cities() {
   // The current CSV has 7322 cities.
   assertEqual(cities.length, 7322);
 });
+
+test(function test_cities_uniqId() {
+  const ids = [];
+  for (let i = 0; i < cities.length; ++i) {
+    const id = cities[i].id;
+    const index = ids.indexOf(id);
+    if (index > -1) {
+      console.log(cities[i], cities[index]);
+      assert(false);
+    }
+    ids.push(id);
+  }
+  assert(true);
+});

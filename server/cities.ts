@@ -31,7 +31,7 @@ for (let i = 1; i < lines.length; ++i) {
   const lng = Number(cols[3]);
   const country = cols[6]; // ISO-2
   cities.push({
-    id: md5(lat.toFixed(4) + "-" + lng.toFixed(4)),
+    id: md5(toFixed(lat, 2) + "-" + toFixed(lng, 2)),
     name,
     country,
     lngLat: [lng, lat]
@@ -60,4 +60,8 @@ function parseCSVLine(line: string): string[] {
     }
   }
   return cols;
+}
+
+function toFixed(n: number, p: number): number {
+  return Math.floor(n * 10 ** p) / (10 ** p);
 }
