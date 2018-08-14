@@ -10,7 +10,6 @@ import axios from "axios";
 import * as d3 from "d3";
 import * as geojson from "./assets/countries.geo.json";
 import { get } from "./context";
-import { emit } from "./ipc";
 import { route as local } from "./local";
 import * as t from "./types";
 import { fa } from "./util";
@@ -321,7 +320,7 @@ function renderMap(wrapper: HTMLElement): () => void {
       const n = data.route.length - 1;
       const turn = Math.ceil(u * n);
       const left = turn - 1;
-      const newU = ((u * n) - left) / (turn - left);
+      const newU = (u * n - left) / (turn - left);
       for (let i = 1; i < data.route.length; ++i) {
         const fromLngLat = data.route[i - 1].lngLat;
         const toLngLat = data.route[i].lngLat;
@@ -454,7 +453,3 @@ async function fetchData(): Promise<t.City[]> {
   inProgress = false;
   return res.data;
 }
-
-setTimeout(() => {
-  emit("goto", "newCharter");
-});

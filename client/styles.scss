@@ -510,7 +510,6 @@ p {
 }
 
 #new-charter {
-
   .view {
     display: flex;
     height: calc(100% - 100px);
@@ -522,7 +521,7 @@ p {
       margin: 10px;
     }
 
-    .left-split  {
+    .left-split {
       display: inline-block;
       width: 100%;
       margin: 10px;
@@ -530,7 +529,7 @@ p {
       overflow-y: auto;
     }
 
-    .right-split > input {
+    :-webkit-any(.right-split, .ticket-wrapper) > input{
       width: 100%;
       height: 30px;
       font-size: 14pt;
@@ -564,6 +563,19 @@ p {
     }
   }
 
+  .ticket-wrapper {
+    background: $background;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 0 0 25px 25px;
+    min-height: 150px;
+    .route-selector {
+      float: left;
+    }
+    input {
+      width: auto !important;
+    }
+  }
 }
 
 input.ltr,
@@ -574,4 +586,10 @@ input[type="password"] {
   &::-webkit-input-placeholder {
     direction: rtl;
   }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

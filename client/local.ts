@@ -58,7 +58,16 @@ export const newCharter = {
   nameOfPayer: "نام طرف حساب...",
   nationalCode: "کد ملی...",
   phoneNumber: "شماره تلفن...",
-  submit: "ارسال"
+  submit: "ارسال",
+  id: "Ticket id...",
+  date: "Date...",
+  route: "Route...",
+  passengerName: "Passenger name...",
+  passengerLastname: "Passenger lastname...",
+  paid: "Paid...",
+  received: "Received...",
+  outline: "Outline...",
+  turnline: "Turnline..."
 };
 
 export const route = {

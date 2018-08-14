@@ -6,6 +6,7 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { emit } from "./ipc";
 import { newCharter as local } from "./local";
 import { routeSelector } from "./route";
 import { cacheForUser, checkBox } from "./util";
@@ -119,6 +120,65 @@ export function renderNewCharter(app: HTMLElement): void {
   left.className = "left-split";
   view.appendChild(left);
 
-  left.appendChild(routeSelector());
-  left.appendChild(routeSelector());
+  left.appendChild(ticket());
+  left.appendChild(ticket());
 }
+
+interface Ticket {}
+
+interface TicketElement extends HTMLDivElement {
+  data(): Ticket;
+}
+
+function ticket(): TicketElement {
+  const data: Ticket = {};
+
+  const wrapper = document.createElement("div") as TicketElement;
+  wrapper.className = "ticket-wrapper";
+
+  const idInput = document.createElement("input");
+  idInput.placeholder = local.id;
+  wrapper.appendChild(idInput);
+
+  const dateInput = document.createElement("input");
+  dateInput.placeholder = local.date;
+  wrapper.appendChild(dateInput);
+
+  const passengerNameInput = document.createElement("input");
+  passengerNameInput.placeholder = local.passengerName;
+  wrapper.appendChild(passengerNameInput);
+
+  const passengerLastnameInput = document.createElement("input");
+  passengerLastnameInput.placeholder = local.passengerLastname;
+  wrapper.appendChild(passengerLastnameInput);
+
+  const paidInput = document.createElement("input");
+  paidInput.placeholder = local.paid;
+  paidInput.type = "number";
+  wrapper.appendChild(paidInput);
+
+  const receivedInput = document.createElement("input");
+  receivedInput.placeholder = local.received;
+  receivedInput.type = "number";
+  wrapper.appendChild(receivedInput);
+
+  const outlineInput = document.createElement("input");
+  outlineInput.placeholder = local.outline;
+  wrapper.appendChild(outlineInput);
+
+  const turnlineInput = document.createElement("input");
+  turnlineInput.placeholder = local.turnline;
+  wrapper.appendChild(turnlineInput);
+
+  const routeInput = routeSelector();
+  wrapper.appendChild(routeInput);
+
+  // TODO(qti3e) Collect data from routeSelector.
+  wrapper.data = () => data;
+
+  return wrapper;
+}
+
+setTimeout(() => {
+  emit("goto", "newCharter");
+});
