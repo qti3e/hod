@@ -51,13 +51,13 @@ export const usersList = {
 
 export const newCharter = {
   title: "چارتر جدید",
-  serviceKind: "Type of service:",
-  internal: "Internal",
-  international: "International",
-  payer: "Payer....",
-  nameOfPayer: "Name of payer...",
-  nationalCode: "National Code...",
-  phoneNumber: "Phone number..."
+  serviceKind: "نوع خدمات:",
+  internal: "داخلی",
+  international: "خارجی",
+  payer: "طرف حساب...",
+  nameOfPayer: "نام طرف حساب...",
+  nationalCode: "کد ملی...",
+  phoneNumber: "شماره تلفن..."
 };
 
 export const route = {
