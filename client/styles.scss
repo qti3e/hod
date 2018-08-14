@@ -529,8 +529,49 @@ p {
       border-right: 1px solid $primary;
       overflow-y: auto;
     }
+
+    .right-split > input {
+      width: 100%;
+      height: 30px;
+      font-size: 14pt;
+      margin: 3px;
+      border: none;
+      background: transparent;
+      border-bottom: 1px solid $primary;
+      color: $primary;
+
+      &::-webkit-input-placeholder {
+        color: $fg;
+      }
+
+      &:focus {
+        outline-color: transparent;
+      }
+    }
+
+    .right-split > button {
+      -webkit-appearance: none;
+      width: 100%;
+      border: none;
+      background: $primary;
+      color: $background;
+      font-size: 17pt;
+      cursor: pointer;
+
+      &:focus {
+        outline-color: transparent;
+      }
+    }
   }
 
-  .right-split {
+}
+
+input.ltr,
+input[type="number"],
+input[type="password"] {
+  direction: ltr;
+
+  &::-webkit-input-placeholder {
+    direction: rtl;
   }
 }

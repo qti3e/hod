@@ -94,6 +94,7 @@ export function renderNewCharter(app: HTMLElement): void {
 
   const nationalCodeInput = document.createElement("input");
   nationalCodeInput.placeholder = local.nationalCode;
+  nationalCodeInput.className = "ltr";
   right.appendChild(nationalCodeInput);
   nationalCodeInput.onchange = () => {
     form.nationalCode = nationalCodeInput.value.trim();
@@ -101,9 +102,17 @@ export function renderNewCharter(app: HTMLElement): void {
 
   const phoneInput = document.createElement("input");
   phoneInput.placeholder = local.phoneNumber;
+  phoneInput.className = "ltr";
   right.appendChild(phoneInput);
   phoneInput.onchange = () => {
     form.phone = phoneInput.value.trim();
+  };
+
+  const submitBtn = document.createElement("button");
+  submitBtn.innerText = local.submit;
+  right.appendChild(submitBtn);
+  submitBtn.onclick = () => {
+    console.log(form);
   };
 
   const left = document.createElement("div");

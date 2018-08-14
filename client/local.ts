@@ -57,7 +57,8 @@ export const newCharter = {
   payer: "طرف حساب...",
   nameOfPayer: "نام طرف حساب...",
   nationalCode: "کد ملی...",
-  phoneNumber: "شماره تلفن..."
+  phoneNumber: "شماره تلفن...",
+  submit: "ارسال"
 };
 
 export const route = {
