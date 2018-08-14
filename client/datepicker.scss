@@ -25,22 +25,42 @@
 
     .prev-month-btn {
       width: 30px;
+      font-family: FontAwesome;
+
+      &::before {
+        color: $background;
+        content: "\f060";
+      }
     }
 
     .month-name {
       width: 140px;
       position: relative;
-      top: -15px;
     }
 
     .next-month-btn {
       width: 30px;
+      font-family: FontAwesome;
+
+      &::before {
+        color: $background;
+        content: "\f061";
+      }
     }
 
     .year-name {
       width: 50px;
       position: relative;
-      top: -15px;
+    }
+
+    button {
+      background: $primary;
+      color: $background;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
     }
   }
 
@@ -51,7 +71,8 @@
       width: 35.7px;
 
       .day-name {
-        color: $primary;
+        color: $secondry;
+        border-bottom: 1px solid $primary;
       }
 
       div {
