@@ -316,7 +316,7 @@ function renderMap(wrapper: HTMLElement): () => void {
     });
     context.stroke();
 
-    if (data.route.length > 1) {
+    if (!data.hover && data.route.length > 1) {
       // Draw paths.
       const n = data.route.length - 1;
       const turn = Math.ceil(u * n);
