@@ -49,6 +49,35 @@ export const usersList = {
   nationalCode: "کد ملی"
 };
 
+export const pikaday = {
+  previousMonth: "ماه قبلی",
+  nextMonth: "ماه بعدی",
+  months: [
+    "فروردین",
+    "اردیبهشت",
+    "خرداد",
+    "تیر",
+    "مرداد",
+    "شهریور",
+    "مهر",
+    "آبان",
+    "آذر",
+    "دی",
+    "بهمن",
+    "اسفند"
+  ],
+  weekdays: [
+    "یکشنبه",
+    "دوشنبه",
+    "سه‌شنبه",
+    "چهار‌شنبه",
+    "پنج‌شنبه",
+    "جمعه",
+    "شنبه"
+  ],
+  weekdaysShort: ["ی", "د", "س", "چ", "پ", "ج", "ش"]
+};
+
 export const newCharter = {
   title: "چارتر جدید",
   serviceKind: "نوع خدمات:",
@@ -59,15 +88,16 @@ export const newCharter = {
   nationalCode: "کد ملی...",
   phoneNumber: "شماره تلفن...",
   submit: "ارسال",
-  id: "Ticket id...",
-  date: "Date...",
-  route: "Route...",
-  passengerName: "Passenger name...",
-  passengerLastname: "Passenger lastname...",
-  paid: "Paid...",
-  received: "Received...",
-  outline: "Outline...",
-  turnline: "Turnline..."
+  id: "شماره بلیط...",
+  date: "تاریخ",
+  route: "مسیر",
+  passengerName: "نام مسافر...",
+  passengerLastname: "نام خانوادگی مسافر...",
+  paid: "پرداخت شده...",
+  received: "دریافتی...",
+  outline: "ایرلاین رفت...",
+  turnline: "ایرلاین بازگشت...",
+  pikaday
 };
 
 export const route = {

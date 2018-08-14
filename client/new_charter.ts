@@ -6,6 +6,8 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import moment from "moment-jalaali";
+import Pikaday from "pikaday";
 import { emit } from "./ipc";
 import { newCharter as local } from "./local";
 import { routeSelector } from "./route";
@@ -13,6 +15,13 @@ import { cacheForUser, checkBox } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
 const forms = cacheForUser<NewCharterFormType>();
+
+moment.loadPersian({
+  usePersianDigits: true,
+  dialect: "persian-modern"
+});
+
+window["m"] = moment;
 
 interface NewCharterFormType {
   kind: "internal" | "international";
@@ -120,7 +129,7 @@ export function renderNewCharter(app: HTMLElement): void {
   left.className = "left-split";
   view.appendChild(left);
 
-  left.appendChild(ticket());
+  // left.appendChild(ticket());
   left.appendChild(ticket());
 }
 
@@ -139,10 +148,6 @@ function ticket(): TicketElement {
   const idInput = document.createElement("input");
   idInput.placeholder = local.id;
   wrapper.appendChild(idInput);
-
-  const dateInput = document.createElement("input");
-  dateInput.placeholder = local.date;
-  wrapper.appendChild(dateInput);
 
   const passengerNameInput = document.createElement("input");
   passengerNameInput.placeholder = local.passengerName;
@@ -170,6 +175,19 @@ function ticket(): TicketElement {
   turnlineInput.placeholder = local.turnline;
   wrapper.appendChild(turnlineInput);
 
+  const dateInput = document.createElement("input");
+  dateInput.placeholder = local.date;
+  wrapper.appendChild(dateInput);
+
+  np(
+    new Pikaday({
+      field: dateInput,
+      isRTL: true,
+      i18n: local.pikaday,
+      format: "jYYYY/jMM/jDD"
+    })
+  );
+
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);
 
@@ -182,3 +200,5 @@ function ticket(): TicketElement {
 setTimeout(() => {
   emit("goto", "newCharter");
 });
+
+function np(...args: any[]): void {}
