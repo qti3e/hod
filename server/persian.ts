@@ -278,3 +278,44 @@ export function normalizeBody(req, res): void {
   }
   req.next();
 }
+
+export function toPersianDigits(n: number | string): string {
+  const str: string = String(n);
+  let txt = "";
+  for (let i = 0; i < str.length; ++i) {
+    const ch = str[i];
+    switch (ch) {
+      case "1":
+        txt += "۱";
+        break;
+      case "2":
+        txt += "۲";
+        break;
+      case "3":
+        txt += "۳";
+        break;
+      case "4":
+        txt += "۴";
+        break;
+      case "5":
+        txt += "۵";
+        break;
+      case "6":
+        txt += "۶";
+        break;
+      case "7":
+        txt += "۷";
+        break;
+      case "8":
+        txt += "۸";
+        break;
+      case "9":
+        txt += "۹";
+        break;
+      case "0":
+        txt += "۰";
+        break;
+    }
+  }
+  return txt;
+}
