@@ -6,6 +6,9 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import jalaali from "jalaali-js";
+import { toPersianDigits } from "./persian";
+
 const i18n = {
   previousMonth: "ماه قبلی",
   nextMonth: "ماه بعدی",
@@ -55,7 +58,7 @@ export function datepicker(
   const daysWrappers: HTMLDivElement[] = [];
 
   const wrapper = document.createElement("div");
-  wrapper.className = "qti3e-datepicker";
+  wrapper.className = "qti3e-datepicker is-hidden";
 
   const head = document.createElement("div");
   head.className = "head";
@@ -77,6 +80,28 @@ export function datepicker(
     daysWrappers.push(daysWrapper);
   }
 
+  // Render actions.
+  const nextMonthBtn = document.createElement("button");
+  nextMonthBtn.className = "next-month-btn";
+  const prevMonthBtn = document.createElement("button");
+  prevMonthBtn.className = "prev-month-btn";
+
+  // Render Information Nodes.
+  const monthName = document.createElement("div");
+  monthName.className = "month-name";
+  const yearName = document.createElement("div");
+  yearName.className = "year-name";
+
+  // Add elements to DOM with respect to our designed layout.
+  head.appendChild(prevMonthBtn);
+  head.appendChild(monthName);
+  head.appendChild(nextMonthBtn);
+  head.appendChild(yearName);
+
+  // Bind events.
+  nextMonthBtn.onclick = () => nextMonth();
+  prevMonthBtn.onclick = () => prevMonth();
+
   // End of view.
 
   // TODO(qti3e) Maybe use input.value instead?
@@ -84,32 +109,53 @@ export function datepicker(
   let month = 0;
   let day = 0;
 
-  function updateValue() {
-    // TODO(qti3e) set input.value.
-  }
-
-  function nextMonth() {
-    month++;
-    if (month > 11) {
-      month = 0;
-      year++;
-    }
-    updateValue();
-  }
-
-  function prevMonth() {
+  function prevMonth(): void {
     month--;
     if (month < 0) {
       month = 11;
       year--;
     }
+    // Re-render month;
+    render();
     updateValue();
   }
 
-  const nextMonthBtn = document.createElement("button");
-  nextMonthBtn.className = "next-month-btn";
-  const prevMonthBtn = document.createElement("button");
-  prevMonthBtn.className = "prevMonthBtn";
+  function nextMonth(): void {
+    month++;
+    if (month > 11) {
+      month = 0;
+      year++;
+    }
+    // Re-render month;
+    render();
+    updateValue();
+  }
+
+  function selectDay(d: number): void {
+    day = d;
+    updateValue();
+    // Note: No need to re-render body.
+    // renderMonth already handles changes of .is-selected class.
+  }
+
+  function updateValue() {
+    input.value = `${year}/${month}/${year}`;
+    monthName.innerText = i18n.months[month];
+    yearName.innerText = toPersianDigits(year);
+  }
+
+  function render() {
+    renderMonth(
+      year,
+      month,
+      day,
+      daysWrappers,
+      selectDay
+    );
+  }
+
+  // Initial rendering step.
+  render();
 }
 
 function renderDayName(i: number): HTMLElement {
@@ -122,6 +168,66 @@ function renderDayName(i: number): HTMLElement {
 function renderMonth(
   year: number,
   month: number,
-  daysWrappers: HTMLDivElement[]
+  // Selected day.
+  day: number,
+  daysWrappers: HTMLDivElement[],
+  selectDayCb: (d: number) => void
 ): void {
+  // Remove all of contents in days wrappers.
+  for (let i = 0; i < 7; ++i) {
+    daysWrappers[i].innerHTML = "";
+  }
+
+  // Insert empty div elements.
+  const firstDay = getWeekDay(year, month, 0);
+  for (let i = 0; i < firstDay; ++i) {
+    const tmp = document.createElement("div");
+    tmp.className = "day is-empty";
+    daysWrappers[i].appendChild(tmp);
+  }
+
+  // Now let's insert days.
+  const isLeap: boolean = jalaali.isLeapJalaaliYear(year);
+  const numberOfDaysInMonth = getNumberOfDaysInMonth(isLeap, month);
+  let dayIndex = firstDay;
+  let selected = null;
+  for (let i = 0; i < numberOfDaysInMonth; ++i) {
+    const dayElement = document.createElement("div");
+    dayElement.className = "day";
+    if (day === i) {
+      dayElement.classList.add("is-selected");
+      selected = dayElement;
+    }
+    // TODO(qti3e) Support is-today.
+    dayElement.innerText = toPersianDigits(i + 1);
+    dayElement.onclick = () => {
+      selectDayCb(i);
+      if (selected) {
+        selected.classList.remove("is-selected");
+      }
+      dayElement.classList.add("is-selected");
+      selected = dayElement;
+    };
+    daysWrappers[dayIndex].appendChild(dayElement);
+    dayIndex++;
+    if (dayIndex > 6) {
+      dayIndex = 0;
+    }
+  }
+}
+
+function getWeekDay(y: number, m: number, d: number): number {
+  const { gy, gm, gd } = jalaali.toGregorian(y, m + 1, d + 1);
+  const date = new Date(gy, gm, gd);
+  return date.getDay();
+}
+
+function getNumberOfDaysInMonth(isLeap: boolean, m: number): number {
+  if (m < 6) {
+    return 31;
+  }
+  if (m === 11 && isLeap) {
+    return 29;
+  }
+  return 30;
 }

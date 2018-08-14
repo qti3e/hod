@@ -102,5 +102,5 @@ export const newCharter = {
 
 export const route = {
   unknown: "مشخص نشده",
-  search: "جستوجو..."
+  search: "جست و جو..."
 };
