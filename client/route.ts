@@ -66,6 +66,7 @@ export function routeSelector(): RouteSelectorElement {
   wrapper.appendChild(searchWrapper);
 
   const searchInputEl = document.createElement("input");
+  searchInputEl.autofocus = true;
   searchWrapper.appendChild(searchInputEl);
   searchInputEl.placeholder = local.search;
 
