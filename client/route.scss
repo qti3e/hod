@@ -30,6 +30,7 @@
   border-bottom: 1px solid $primary;
   border-radius: 80px;
   text-align: center;
+
   .circle {
     width: 100px;
     height: 10px;
@@ -40,6 +41,7 @@
 .route-selector {
   display: inline-block;
   cursor: pointer;
+
   .city-name {
     direction: ltr;
     display: inline-block;
@@ -52,6 +54,7 @@
     text-decoration: underline;
     text-decoration-color: $secondry;
   }
+
   .dot {
     display: inline-block;
     width: 10px;
@@ -66,6 +69,7 @@
   position: relative;
   text-align: center;
   top: -30px;
+
   input {
     direction: ltr;
     -webkit-appearance: none;
@@ -77,9 +81,11 @@
     font-size: 14pt;
     text-align: center;
     width: 60%;
+
     &:focus {
       outline-color: transparent;
     }
+
     &::-webkit-input-placeholder {
       color: $secondry;
       direction: rtl;
@@ -92,6 +98,7 @@
   width: 250px;
   height: 400px;
   left: calc(15vw + 40px);
+
   .result {
     color: $primary;
     text-align: left;
@@ -111,7 +118,49 @@
   padding-left: 50px;
   color: $primary;
   font-size: 24pt;
-  div {
+
+  .route-city {
+    display: inline-block;
+    color: $primary;
+    margin: 10px;
+    height: 30px;
+  }
+
+  .rm-btn {
+    display: inline-block;
+    height: 30px;
+    width: 100%;
+    background: $primary;
+    position: relative;
+    bottom: 40px;
     cursor: pointer;
+    text-align: center;
+    font-family: FontAwesome;
+    border-radius: 5px;
+    padding: 2px;
+
+    &::before {
+      color: $background;
+      content: "\f057";
+    }
+
+    transition: opacity 200ms;
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .route-arrow {
+    display: inline-block;
+    height: 30px;
+    margin: 10px;
+    position: relative;
+    bottom: 40px;
+
+    * {
+      color: $primary;
+    }
   }
 }

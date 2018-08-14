@@ -13,6 +13,7 @@ import { get } from "./context";
 import { emit } from "./ipc";
 import { route as local } from "./local";
 import * as t from "./types";
+import { fa } from "./util";
 
 let citiesCache: t.City[];
 let canvasCache;
@@ -79,15 +80,24 @@ export function routeSelector(): RouteSelectorElement {
   function updateRoute() {
     routeWrapper.innerHTML = "";
     for (let i = 0; i < route.length; ++i) {
+      if (i > 0) {
+        const tmp = document.createElement("div");
+        tmp.className = "route-arrow";
+        tmp.appendChild(fa("arrow-left"));
+        routeWrapper.appendChild(tmp);
+      }
       const city = route[i];
       const tmp = document.createElement("div");
+      tmp.className = "route-city";
       tmp.innerHTML = city.name;
       routeWrapper.appendChild(tmp);
-      tmp.onclick = () => {
+      const rmBtn = document.createElement("div");
+      rmBtn.className = "rm-btn";
+      tmp.appendChild(rmBtn);
+      rmBtn.onclick = () => {
         route.splice(i, 1);
         updateRoute();
       };
-      // TODO(qti3e) A better UI for this part!
     }
     updateBtn();
   }
