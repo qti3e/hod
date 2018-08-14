@@ -80,7 +80,7 @@ export function cacheForUser<V>() {
 export function checkBox(text: string): HTMLInputElement {
   const container = document.createElement("div");
   container.classList.add("checkbox-container");
-  const label = document.createTextNode("S");
+  const label = document.createTextNode(text);
   container.appendChild(label);
 
   const input = document.createElement("input");

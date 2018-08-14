@@ -510,4 +510,27 @@ p {
 }
 
 #new-charter {
+
+  .view {
+    display: flex;
+    height: calc(100% - 100px);
+
+    .right-split {
+      display: inline-block;
+      width: 30%;
+      max-width: 350px;
+      margin: 10px;
+    }
+
+    .left-split  {
+      display: inline-block;
+      width: 100%;
+      margin: 10px;
+      border-right: 1px solid $primary;
+      overflow-y: auto;
+    }
+  }
+
+  .right-split {
+  }
 }

@@ -50,7 +50,14 @@ export const usersList = {
 };
 
 export const newCharter = {
-  title: "چارتر جدید"
+  title: "چارتر جدید",
+  serviceKind: "Type of service:",
+  internal: "Internal",
+  international: "International",
+  payer: "Payer....",
+  nameOfPayer: "Name of payer...",
+  nationalCode: "National Code...",
+  phoneNumber: "Phone number..."
 };
 
 export const route = {
