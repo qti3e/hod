@@ -47,6 +47,8 @@ export function routeSelector(): RouteSelectorElement {
       data.route = null;
       data.hover = null;
       data.results.length = 0;
+      updateSearchResults();
+      searchInputEl.value = "";
       block.parentElement.removeChild(block);
     }
   };
