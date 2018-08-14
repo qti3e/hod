@@ -48,17 +48,20 @@ const defaultOptions: Options = {
 
 export function datepicker(
   input: HTMLInputElement,
-  opts: Partial<Options>
+  opts: Partial<Options> = {}
 ): void {
   const options: Options = {
     ...defaultOptions,
     ...opts
   };
 
+  let changed = false;
   const daysWrappers: HTMLDivElement[] = [];
 
   const wrapper = document.createElement("div");
   wrapper.className = "qti3e-datepicker is-hidden";
+  wrapper.style.position = "fixed";
+  wrapper.onclick = () => changed = true;
 
   const head = document.createElement("div");
   head.className = "head";
@@ -139,9 +142,12 @@ export function datepicker(
   }
 
   function updateValue() {
-    input.value = `${year}/${month}/${year}`;
+    console.log(input.value);
+    input.value = toPersianDigits(`${year}/${month + 1}/${day + 1}`);
     monthName.innerText = i18n.months[month];
     yearName.innerText = toPersianDigits(year);
+    changed = true;
+    input.focus();
   }
 
   function render() {
@@ -154,8 +160,36 @@ export function datepicker(
     );
   }
 
+  function show() {
+    wrapper.classList.remove("is-hidden");
+    const top = input.offsetTop + input.offsetHeight;
+    const left = input.offsetLeft;
+    wrapper.style.top = top + "px";
+    wrapper.style.left = left + "px";
+  }
+
+  function hide() {
+    wrapper.classList.add("is-hidden");
+  }
+
   // Initial rendering step.
   render();
+  updateValue();
+
+  // Bind date picker with the input element.
+  document.body.appendChild(wrapper);
+  input.onfocus = () => {
+    show();
+  };
+
+  input.onblur = () => {
+    changed = false;
+    setTimeout(() => {
+      if (!changed) {
+        hide();
+      }
+    }, 200);
+  };
 }
 
 function renderDayName(i: number): HTMLElement {
@@ -218,8 +252,11 @@ function renderMonth(
 
 function getWeekDay(y: number, m: number, d: number): number {
   const { gy, gm, gd } = jalaali.toGregorian(y, m + 1, d + 1);
-  const date = new Date(gy, gm, gd);
-  return date.getDay();
+  const date = new Date(gy, gm - 1, gd);
+  const day = date.getDay();
+  // Iran starts from Saturday but when `day` is zero,
+  // it means it's Sunday.
+  return (day + 1) % 7;
 }
 
 function getNumberOfDaysInMonth(isLeap: boolean, m: number): number {

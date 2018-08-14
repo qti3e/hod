@@ -6,8 +6,7 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import moment from "moment-jalaali";
-import Pikaday from "pikaday";
+import { datepicker } from "./datepicker";
 import { emit } from "./ipc";
 import { newCharter as local } from "./local";
 import { routeSelector } from "./route";
@@ -15,13 +14,6 @@ import { cacheForUser, checkBox } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
 const forms = cacheForUser<NewCharterFormType>();
-
-moment.loadPersian({
-  usePersianDigits: true,
-  dialect: "persian-modern"
-});
-
-window["m"] = moment;
 
 interface NewCharterFormType {
   kind: "internal" | "international";
@@ -178,15 +170,7 @@ function ticket(): TicketElement {
   const dateInput = document.createElement("input");
   dateInput.placeholder = local.date;
   wrapper.appendChild(dateInput);
-
-  np(
-    new Pikaday({
-      field: dateInput,
-      isRTL: true,
-      i18n: local.pikaday,
-      format: "jYYYY/jMM/jDD"
-    })
-  );
+  datepicker(dateInput);
 
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);
@@ -200,5 +184,3 @@ function ticket(): TicketElement {
 setTimeout(() => {
   emit("goto", "newCharter");
 });
-
-function np(...args: any[]): void {}

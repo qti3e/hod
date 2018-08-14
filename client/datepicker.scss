@@ -1,0 +1,80 @@
+@import "colors";
+
+.qti3e-datepicker {
+  background: $background;
+  border: 1px solid $primary;
+  width: 250px;
+  * {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+  .head {
+    height: 30px;
+    border-bottom: 1px solid $primary;
+
+    div, button {
+      display: inline-block;
+      height: 30px;
+      text-align: center;
+      color: $primary;
+      margin: 0;
+      border: none;
+      padding: 0;
+    }
+
+    .prev-month-btn {
+      width: 30px;
+    }
+
+    .month-name {
+      width: 140px;
+      position: relative;
+      top: -15px;
+    }
+
+    .next-month-btn {
+      width: 30px;
+    }
+
+    .year-name {
+      width: 50px;
+      position: relative;
+      top: -15px;
+    }
+  }
+
+  .body {
+    .col {
+      float: right;
+      display: inline-block;
+      width: 35.7px;
+
+      .day-name {
+        color: $primary;
+      }
+
+      div {
+        text-align: center;
+      }
+
+      .day {
+        height: 35.7px;
+        width: 35.7px;
+        line-height: 35.7px;
+        color: $primary;
+        cursor: pointer;
+        border-radius: 17.6px;
+
+        &.is-selected {
+          background: $primary;
+          color: $background;
+        }
+      }
+    }
+  }
+}
+
+.qti3e-datepicker.is-hidden {
+  display: none;
+}
