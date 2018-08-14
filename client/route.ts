@@ -99,8 +99,17 @@ export function routeSelector(): RouteSelectorElement {
       tmp.appendChild(rmBtn);
       rmBtn.onclick = () => {
         route.splice(i, 1);
+        if (data.hover && data.hover.id === city.id) {
+          data.hover = null;
+        }
         updateRoute();
       };
+      rmBtn.addEventListener("mouseover", () => {
+        data.hover = city;
+      });
+      rmBtn.addEventListener("mouseout", () => {
+        data.hover = null;
+      });
     }
     updateBtn();
   }
