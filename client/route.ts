@@ -316,33 +316,7 @@ function renderMap(wrapper: HTMLElement): () => void {
     });
     context.stroke();
 
-    if (data.hover) {
-      // Only show hovered city.
-      context.beginPath();
-      context.strokeStyle = "#26ff5f";
-      geoGenerator.pointRadius(Math.sin(Math.PI * u) * 10);
-      geoGenerator({
-        type: "Feature",
-        features: undefined,
-        geometry: {
-          type: "Point",
-          radius: 340,
-          coordinates: data.hover.lngLat
-        }
-      });
-      context.stroke();
-      geoGenerator.pointRadius(Math.sin(Math.PI * (u - 0.5)) ** 2 * 10);
-      geoGenerator({
-        type: "Feature",
-        features: undefined,
-        geometry: {
-          type: "Point",
-          radius: 340,
-          coordinates: data.hover.lngLat
-        }
-      });
-      context.stroke();
-    } else {
+    if (data.route.length > 1) {
       // Draw paths.
       const n = data.route.length - 1;
       const turn = Math.ceil(u * n);
@@ -380,6 +354,35 @@ function renderMap(wrapper: HTMLElement): () => void {
           context.fill();
         }
       }
+    }
+
+    if (data.hover) {
+      // Only show the hovered city.
+      context.beginPath();
+      context.strokeStyle = "#26ff5f";
+      geoGenerator.pointRadius(Math.sin(Math.PI * u) * 10);
+      geoGenerator({
+        type: "Feature",
+        features: undefined,
+        geometry: {
+          type: "Point",
+          radius: 340,
+          coordinates: data.hover.lngLat
+        }
+      });
+      context.stroke();
+      geoGenerator.pointRadius(Math.sin(Math.PI * (u - 0.5)) ** 2 * 10);
+      geoGenerator({
+        type: "Feature",
+        features: undefined,
+        geometry: {
+          type: "Point",
+          radius: 340,
+          coordinates: data.hover.lngLat
+        }
+      });
+      context.stroke();
+    } else {
       // Render search results.
       const len = Math.min(data.results.length, 50);
       for (let i = 0; i < len; ++i) {
