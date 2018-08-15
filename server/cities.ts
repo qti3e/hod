@@ -63,5 +63,5 @@ function parseCSVLine(line: string): string[] {
 }
 
 function toFixed(n: number, p: number): number {
-  return Math.floor(n * 10 ** p) / (10 ** p);
+  return Math.floor(n * 10 ** p) / 10 ** p;
 }

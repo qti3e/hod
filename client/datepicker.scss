@@ -5,15 +5,16 @@
   border: 1px solid $primary;
   width: 250px;
   * {
-  user-select: none;
-  -webkit-user-drag: none;
-}
+    user-select: none;
+    -webkit-user-drag: none;
+  }
 
   .head {
     height: 30px;
     border-bottom: 1px solid $primary;
 
-    div, button {
+    div,
+    button {
       display: inline-block;
       height: 30px;
       text-align: center;

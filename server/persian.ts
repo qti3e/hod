@@ -315,6 +315,9 @@ export function toPersianDigits(n: number | string): string {
       case "0":
         txt += "۰";
         break;
+      default:
+        txt += ch;
+        break;
     }
   }
   return txt;

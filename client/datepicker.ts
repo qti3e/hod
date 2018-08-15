@@ -61,7 +61,7 @@ export function datepicker(
   const wrapper = document.createElement("div");
   wrapper.className = "qti3e-datepicker is-hidden";
   wrapper.style.position = "fixed";
-  wrapper.onclick = () => changed = true;
+  wrapper.onclick = () => (changed = true);
 
   const head = document.createElement("div");
   head.className = "head";
@@ -151,13 +151,7 @@ export function datepicker(
   }
 
   function render() {
-    renderMonth(
-      year,
-      month,
-      day,
-      daysWrappers,
-      selectDay
-    );
+    renderMonth(year, month, day, daysWrappers, selectDay);
   }
 
   function show() {
