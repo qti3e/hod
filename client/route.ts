@@ -35,7 +35,7 @@ const data: Data = {
   hover: null
 };
 
-export interface RouteSelectorElement extends HTMLDivElement {
+export interface RouteSelectorElement extends HTMLButtonElement {
   route: t.City[];
   show(): void;
   getDBRoute(): t.DBCity[];
@@ -245,7 +245,7 @@ export function routeSelector(): RouteSelectorElement {
   // End of rendering view.
 
   // Toggle Button.
-  const btn = document.createElement("div") as RouteSelectorElement;
+  const btn = document.createElement("button") as RouteSelectorElement;
   btn.classList.add("route-selector");
   btn.route = route;
   btn.getDBRoute = () =>

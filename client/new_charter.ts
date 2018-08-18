@@ -131,6 +131,7 @@ export function renderNewCharter(app: HTMLElement): void {
 
   const tickets: TicketElement[] = [];
   const ticketsWrapper = document.createElement("div");
+  ticketsWrapper.className = "tickets-wrapper";
   left.appendChild(ticketsWrapper);
 
   function newTicket() {
@@ -157,40 +158,54 @@ function ticket(): TicketElement {
   const wrapper = document.createElement("div") as TicketElement;
   wrapper.className = "ticket-wrapper";
 
+  // Create input groups.
+  const g1 = document.createElement("div");
+  g1.className = "group g1";
+  wrapper.appendChild(g1);
+  const g2 = document.createElement("div");
+  g2.className = "group g2";
+  wrapper.appendChild(g2);
+  const g3 = document.createElement("div");
+  g3.className = "group g3";
+  wrapper.appendChild(g3);
+  const g4 = document.createElement("div");
+  g4.className = "group g4";
+  wrapper.appendChild(g4);
+
   const idInput = document.createElement("input");
   idInput.placeholder = local.id;
-  wrapper.appendChild(idInput);
+  g1.appendChild(idInput);
+
+  const dateInput = document.createElement("input");
+  dateInput.placeholder = local.date;
+  g1.appendChild(dateInput);
+  datepicker(dateInput);
 
   const passengerNameInput = document.createElement("input");
   passengerNameInput.placeholder = local.passengerName;
-  wrapper.appendChild(passengerNameInput);
+  g2.appendChild(passengerNameInput);
 
   const passengerLastnameInput = document.createElement("input");
   passengerLastnameInput.placeholder = local.passengerLastname;
-  wrapper.appendChild(passengerLastnameInput);
+  g2.appendChild(passengerLastnameInput);
 
   const paidInput = document.createElement("input");
   paidInput.placeholder = local.paid;
   paidInput.type = "number";
-  wrapper.appendChild(paidInput);
+  g3.appendChild(paidInput);
 
   const receivedInput = document.createElement("input");
   receivedInput.placeholder = local.received;
   receivedInput.type = "number";
-  wrapper.appendChild(receivedInput);
+  g3.appendChild(receivedInput);
 
   const outlineInput = document.createElement("input");
   outlineInput.placeholder = local.outline;
-  wrapper.appendChild(outlineInput);
+  g4.appendChild(outlineInput);
 
   const turnlineInput = document.createElement("input");
   turnlineInput.placeholder = local.turnline;
-  wrapper.appendChild(turnlineInput);
-
-  const dateInput = document.createElement("input");
-  dateInput.placeholder = local.date;
-  wrapper.appendChild(dateInput);
-  datepicker(dateInput);
+  g4.appendChild(turnlineInput);
 
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);

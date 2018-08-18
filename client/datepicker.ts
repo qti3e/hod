@@ -212,6 +212,10 @@ export function datepicker(
       }
     }, 200);
   };
+
+  input.onkeydown = (e) => {
+    e.preventDefault();
+  };
 }
 
 function renderDayName(i: number): HTMLElement {
