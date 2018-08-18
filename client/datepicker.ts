@@ -137,12 +137,15 @@ export function datepicker(
   function selectDay(d: number): void {
     day = d;
     updateValue();
+    // Auto close data picker on selection.
+    changed = false;
+    hide();
+    input.blur();
     // Note: No need to re-render body.
     // renderMonth already handles changes of .is-selected class.
   }
 
   function updateValue() {
-    console.log(input.value);
     input.value = toPersianDigits(`${year}/${month + 1}/${day + 1}`);
     monthName.innerText = i18n.months[month];
     yearName.innerText = toPersianDigits(year);

@@ -11,6 +11,7 @@ import * as d3 from "d3";
 import * as geojson from "./assets/countries.geo.json";
 import { get } from "./context";
 import { route as local } from "./local";
+import { normalizeText } from "./persian";
 import * as t from "./types";
 import { fa } from "./util";
 
@@ -18,8 +19,14 @@ let citiesCache: t.City[];
 let canvasCache;
 let updateFnCache;
 
+interface Data {
+  route: t.City[];
+  results: t.City[];
+  hover: t.City;
+}
+
 // A global var to pass data data from routeSelector to update().
-const data = {
+const data: Data = {
   // Selected route.
   route: null,
   // Search results.
@@ -37,7 +44,7 @@ export function routeSelector(): RouteSelectorElement {
   // Preload data.
   fetchData();
 
-  const route = [];
+  const route: t.City[] = [];
 
   const block = document.createElement("div");
   block.id = "route-block";
@@ -88,7 +95,7 @@ export function routeSelector(): RouteSelectorElement {
         tmp.appendChild(fa("arrow-left"));
         routeWrapper.appendChild(tmp);
       }
-      const city = route[i];
+      const city: t.City = route[i];
       const tmp = document.createElement("div");
       tmp.className = "route-city";
       tmp.innerHTML = city.name;
@@ -136,8 +143,12 @@ export function routeSelector(): RouteSelectorElement {
     for (let i = 0; i < len; ++i) {
       const city = data.results[i];
       const tmp = document.createElement("div");
+      tmp.setAttribute("data-city", JSON.stringify(city));
       tmp.className = "result";
-      tmp.innerText = city.name + " - " + city.country;
+      tmp.innerText = city.name;
+      if (city.country) {
+        tmp.innerText += " - " + city.country;
+      }
       serachResultsWrapper.appendChild(tmp);
       tmp.addEventListener("mouseover", () => {
         data.hover = city;
@@ -161,7 +172,7 @@ export function routeSelector(): RouteSelectorElement {
       return;
     }
     time = Date.now();
-    const value = searchInputEl.value.trim().toLowerCase();
+    const value = normalizeText(searchInputEl.value.trim().toLowerCase());
     const cities = citiesCache;
     data.results = [];
     if (value.length < 2) {
@@ -169,17 +180,26 @@ export function routeSelector(): RouteSelectorElement {
       return;
     }
     for (let i = 0; i < cities.length; ++i) {
-      if (cities[i].name.toLowerCase().indexOf(value) > -1) {
-        data.results.push(cities[i]);
+      for (const name of cities[i].names) {
+        if (name.toLowerCase().indexOf(value) > -1) {
+          data.results.push(cities[i]);
+          const s = cities[i].names.filter(
+            x => x.toLowerCase().startsWith(value)
+          );
+          cities[i].name = s[0] || name;
+          break;
+        }
       }
     }
     if (data.results.length < 51) {
       // Sort results.
       data.results.sort((a: t.City, b: t.City) => {
-        const aStarts = a.name.toLowerCase().startsWith(value);
-        const bStarts = b.name.toLowerCase().startsWith(value);
+        const aStarts = a.names.filter(x => x.toLowerCase().startsWith(value));
+        const bStarts = b.names.filter(x => x.toLowerCase().startsWith(value));
         if (aStarts && bStarts) {
-          if (a.name.length < b.name.length) {
+          const aLen = Math.min(...aStarts.map(x => x.length));
+          const bLen = Math.min(...bStarts.map(x => x.length));
+          if (aLen < bLen) {
             return -1;
           } else {
             return 1;
@@ -193,8 +213,10 @@ export function routeSelector(): RouteSelectorElement {
         }
         const aIran = a.country === "IR";
         const bIran = b.country === "IR";
+        const aLen = Math.min(...a.names.map(x => x.length));
+        const bLen = Math.min(...b.names.map(x => x.length));
         if (aIran && bIran) {
-          if (a.name.length < b.name.length) {
+          if (aLen < bLen) {
             return -1;
           } else {
             return 1;

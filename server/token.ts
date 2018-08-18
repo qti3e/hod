@@ -9,7 +9,7 @@
 import { decrypt, encrypt } from "./enc";
 
 const TOKEN_LENGTH = 300;
-const DEFAULT_EXPIRE = 2 * 24 * 3600;
+const DEFAULT_EXPIRE = 30 * 24 * 3600;
 const ENC_KEY = new Uint8Array(TOKEN_LENGTH * 2).map(
   (x, i) =>
     Math.round(

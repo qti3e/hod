@@ -41,9 +41,10 @@ export interface User {
 // }
 
 export interface City {
-  // md5(lat.format(6) + "-" + lng.format(6))
   readonly id: string;
-  readonly name: string;
-  readonly country: string;
+  readonly names: ReadonlyArray<string>;
   readonly lngLat: [number, number];
+  readonly country?: string;
+  // Matched result.
+  name?: string;
 }

@@ -6,62 +6,96 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import * as fs from "fs";
 import md5 from "md5";
+import { data } from "./cities.data";
+import { isPersian, normalizeText } from "./persian";
 import * as t from "./types";
 
-// This file is here to parse cities.csv
+// This file is here to parse cities.
 
 const cities: t.City[] = [];
 
 export = cities;
 
-const csv = fs.readFileSync(__dirname + "/cities.csv").toString();
-const lines = csv.split(/\n/g);
+const seen: Map<string, any> = new Map();
+
+interface Name {
+  str: string;
+  acc: number;
+}
 
 console.log("Loading cities...");
-for (let i = 1; i < lines.length; ++i) {
-  const line = lines[i];
-  if (line.trim().length === 0) {
-    continue;
+for (let i = 0; i < data.length; ++i) {
+  const city = data[i] as any;
+  city.id = md5(city.lng.toFixed(2) + "-" + city.lat.toFixed(2));
+  city.names = city.names.map(x => ({
+    str: x,
+    acc: Math.max(acc(city.lng) + acc(city.lat))
+  }));
+  if (!seen.has(city.id)) {
+    seen.set(city.id, city);
+    cities.push(city);
+    city.lngLat = [city.lng, city.lat];
+    delete city.lng;
+    delete city.lat;
+  } else {
+    const org = seen.get(city.id);
+    org.names.push(...city.names);
+    if (city.country) {
+      org.country = city.country;
+    }
   }
-  const cols = parseCSVLine(line);
-  const name = cols[1];
-  const lat = Number(cols[2]);
-  const lng = Number(cols[3]);
-  const country = cols[6]; // ISO-2
-  cities.push({
-    id: md5(toFixed(lat, 2) + "-" + toFixed(lng, 2)),
-    name,
-    country,
-    lngLat: [lng, lat]
-  });
 }
+
+for (let i = 0; i < cities.length; ++i) {
+  const city = cities[i] as any;
+  city.names.sort((a: Name, b: Name) => {
+    const aPersian = isPersian(a.str);
+    const bPersian = isPersian(b.str);
+    if (!aPersian || !bPersian) {
+      if (aPersian) {
+        return -1;
+      }
+      if (bPersian) {
+        return 1;
+      }
+    }
+    if (a.acc < b.acc) {
+      return -1;
+    }
+    if (b.acc < a.acc) {
+      return 1;
+    }
+    return 0;
+  });
+  city.names = city.names.map(x => normalizeText(x.str));
+  city.names = city.names.map(x => removeP(x));
+  city.names = city.names.filter((x, i) => city.names.indexOf(x) === i);
+}
+
 console.log("Loading cities is done.");
 
-function parseCSVLine(line: string): string[] {
-  const cols = [];
-  let col = "";
-  // Number of `"`.
-  let nQ = 0;
-  for (let i = 0; i < line.length; ++i) {
-    if (line[i] === `"` && (i === 0 || line[i - 1] !== "\\")) {
-      nQ++;
-      continue;
-    }
-    if (nQ % 2 === 1) {
-      // We are inside a quotation mark.
-      col += line[i];
-    } else if (line[i] === ",") {
-      cols.push(col.trim());
-      col = "";
-    } else {
-      col += line[i];
-    }
-  }
-  return cols;
+function acc(n: number): number {
+  const p = n - Math.floor(n);
+  return String(p).length - 2;
 }
 
-function toFixed(n: number, p: number): number {
-  return Math.floor(n * 10 ** p) / 10 ** p;
+function removeP(s: string): string {
+  let ret = "";
+  let p = 0;
+  for (let i = 0; i < s.length; ++i) {
+    const c = s[i];
+    if (c === "(") {
+      p++;
+      continue;
+    }
+    if (c === ")") {
+      p--;
+      continue;
+    }
+    if (p % 2 === 0) {
+      ret += c;
+    }
+  }
+  return ret;
 }

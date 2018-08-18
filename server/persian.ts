@@ -11,6 +11,9 @@ export function normalizeText(text: string): string {
   const len = text.length;
   for (let i = 0; i < len; ++i) {
     switch (text[i]) {
+      case "‌":
+        tmp += " ";
+        break;
       case "۰":
         tmp += "0";
         break;
@@ -321,4 +324,176 @@ export function toPersianDigits(n: number | string): string {
     }
   }
   return txt;
+}
+
+export function isPersian(text: string): boolean {
+  const len = text.length;
+  for (let i = 0; i < len; ++i) {
+    switch (text[i]) {
+      case "۰":
+      case "۱":
+      case "۲":
+      case "۳":
+      case "۴":
+      case "۵":
+      case "۶":
+      case "۷":
+      case "۸":
+      case "۹":
+      case "ي":
+      case "ی":
+      case "ﯾ":
+      case "ﯽ":
+      case "ﯿ":
+      case "ﻳ":
+      case "ى":
+      case "ﯾ":
+      case "ﯽ":
+      case "ﯿ":
+      case "ئ":
+      case "ﺋ":
+      case "ﺊ":
+      case "ﺌ":
+      case "ي":
+      case "ﯾ":
+      case "ﯽ":
+      case "ﯿ":
+      case "ﻴ":
+      case "ﻲ":
+      case "ب":
+      case "ﺑ":
+      case "ﺐ":
+      case "ﺒ":
+      case "پ":
+      case "ﭘ":
+      case "ﭗ":
+      case "ﭙ":
+      case "ت":
+      case "ﺗ":
+      case "ﺖ":
+      case "ﺘ":
+      case "ث":
+      case "ﺛ":
+      case "ﺚ":
+      case "ﺜ":
+      case "ج":
+      case "ﺟ":
+      case "ﺞ":
+      case "ﺠ":
+      case "چ":
+      case "ﭼ":
+      case "ﭻ":
+      case "ﭽ":
+      case "ح":
+      case "ﺣ":
+      case "ﺢ":
+      case "ﺤ":
+      case "خ":
+      case "ﺧ":
+      case "ﺦ":
+      case "ﺨ":
+      case "س":
+      case "ﺳ":
+      case "ﺲ":
+      case "ﺴ":
+      case "ش":
+      case "ﺷ":
+      case "ﺶ":
+      case "ﺸ":
+      case "ص":
+      case "ﺻ":
+      case "ﺺ":
+      case "ﺼ":
+      case "ض":
+      case "ﺿ":
+      case "ﺾ":
+      case "ﻀ":
+      case "ط":
+      case "ﻃ":
+      case "ﻂ":
+      case "ﻄ":
+      case "ظ":
+      case "ﻇ":
+      case "ﻆ":
+      case "ﻈ":
+      case "ع":
+      case "ﻋ":
+      case "ﻊ":
+      case "ﻌ":
+      case "غ":
+      case "ﻏ":
+      case "ﻎ":
+      case "ﻐ":
+      case "ف":
+      case "ﻓ":
+      case "ﻒ":
+      case "ﻔ":
+      case "ق":
+      case "ﻗ":
+      case "ﻖ":
+      case "ﻘ":
+      case "ک":
+      case "ﮐ":
+      case "ﮏ":
+      case "ﮑ":
+      case "ﻛ":
+      case "ﻜ":
+      case "ك":
+      case "ﮐ":
+      case "ﮏ":
+      case "ﮑ":
+      case "ﻚ":
+      case "گ":
+      case "ﮔ":
+      case "ﮓ":
+      case "ﮕ":
+      case "ل":
+      case "ﻟ":
+      case "ﻞ":
+      case "ﻠ":
+      case "م":
+      case "ﻣ":
+      case "ﻢ":
+      case "ﻤ":
+      case "ن":
+      case "ﻧ":
+      case "ﻦ":
+      case "ﻨ":
+      case "ﻻ":
+      case "ﻼ":
+      case "ﺎ":
+      case "أ":
+      case "إ":
+      case "ا":
+      case "ﺄ":
+      case "ﺆ":
+      case "ﻮ":
+      case "و":
+      case "ؤ":
+      case "ﺪ":
+      case "د":
+      case "ذ":
+      case "ﺬ":
+      case "ر":
+      case "ﺮ":
+      case "ز":
+      case "ﺰ":
+      case "ﮋ":
+      case "ژ":
+      case "ة":
+      case "ﮥ":
+      case "ه":
+      case "ه":
+      case "ﻪ":
+      case "ﻬ":
+      case "ﻩ":
+      case "ﻬ":
+      case "ﻫ":
+      case "ﻪ":
+      case "ﻬ":
+      case "ﷲ":
+        return true;
+    }
+  }
+  return false;
 }
