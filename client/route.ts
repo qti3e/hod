@@ -184,8 +184,8 @@ export function routeSelector(): RouteSelectorElement {
       for (const name of cities[i].names) {
         if (name.toLowerCase().indexOf(value) > -1) {
           data.results.push(cities[i]);
-          const s = cities[i].names.filter(
-            x => x.toLowerCase().startsWith(value)
+          const s = cities[i].names.filter(x =>
+            x.toLowerCase().startsWith(value)
           );
           cities[i].name = s[0] || name;
           break;
@@ -248,11 +248,12 @@ export function routeSelector(): RouteSelectorElement {
   const btn = document.createElement("div") as RouteSelectorElement;
   btn.classList.add("route-selector");
   btn.route = route;
-  btn.getDBRoute = () => route.map(c => ({
-    id: c.id,
-    displayName: c.name || c.name[0],
-    lngLat: c.lngLat
-  }));
+  btn.getDBRoute = () =>
+    route.map(c => ({
+      id: c.id,
+      displayName: c.name || c.name[0],
+      lngLat: c.lngLat
+    }));
 
   const fromEl = document.createElement("div");
   fromEl.classList.add("city-name");
