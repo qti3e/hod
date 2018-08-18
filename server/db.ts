@@ -12,11 +12,18 @@ import * as t from "./types";
 export const collections = {
   users: new Datastore({ filename: ".db/users.db", autoload: true }),
   passwords: new Datastore({ filename: ".db/passwords.db", autoload: true }),
+  // Charter.
   charter_tickets: new Datastore({
     filename: "./db/c_tickets.db",
     autoload: true
   }),
-  charters: new Datastore({ filename: "./db/charters.db", autoload: true })
+  charters: new Datastore({ filename: "./db/charters.db", autoload: true }),
+  // Systemic.
+  systemic_tickets: new Datastore({
+    filename: "./db/s_tickets.db",
+    autoload: true
+  }),
+  systemics: new Datastore({ filename: "./db/systemics.db", autoload: true })
 };
 
 export async function getUser(id: string): Promise<t.User> {
@@ -74,6 +81,35 @@ export async function storeCharter(doc: t.CharterDoc): Promise<t.CharterDoc> {
   }
 
   const insertedDoc = await collections.charters.insert(doc);
+
+  // Prepare insertedDoc for sending to client.
+  delete insertedDoc.ticketIds;
+  insertedDoc.tickets = tickets;
+
+  return insertedDoc;
+}
+
+export async function storeSystemicTicket(
+  ticket: t.SystemicTicket
+): Promise<t.SystemicTicket> {
+  return collections.systemic_tickets.insert(ticket);
+}
+
+export async function storeSystemic(
+  doc: t.SystemicDoc
+): Promise<t.SystemicDoc> {
+  // Prepare doc for database.
+  const tickets = doc.tickets;
+  doc.tickets = undefined;
+  doc.ticketIds = [];
+
+  for (let i = 0; i < tickets.length; ++i) {
+    const ticket = await storeSystemicTicket(tickets[i]);
+    doc.ticketIds.push(ticket._id);
+    tickets[i] = ticket;
+  }
+
+  const insertedDoc = await collections.systemics.insert(doc);
 
   // Prepare insertedDoc for sending to client.
   delete insertedDoc.ticketIds;

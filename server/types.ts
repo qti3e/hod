@@ -31,9 +31,9 @@ export interface DBCity {
   lngLat: [number, number];
 }
 
-export interface Ticket {
+export interface TicketBase {
   // DB id.
-  readonly _id: string;
+  readonly _id?: string;
   // Ticket No.
   id: string;
   passengerName: string;
@@ -45,11 +45,7 @@ export interface Ticket {
   route: DBCity[];
 }
 
-export interface CharterTicket extends Ticket {
-  paid: number;
-}
-
-export interface CharterDoc {
+export interface DocBase<T extends TicketBase> {
   readonly _id?: string;
   kind: "internal" | "international";
   payer: string;
@@ -57,7 +53,17 @@ export interface CharterDoc {
   nationalCode: string;
   phone: string;
   // What we send for the client.
-  tickets?: CharterTicket[];
+  tickets?: T[];
   // What we store in the database.
   ticketIds?: string[];
 }
+
+export interface CharterTicket extends TicketBase {
+  paid: number;
+}
+
+export interface CharterDoc extends DocBase<CharterTicket> {}
+
+export interface SystemicTicket extends TicketBase {}
+
+export interface SystemicDoc extends DocBase<SystemicTicket> {}

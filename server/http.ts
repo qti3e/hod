@@ -25,7 +25,7 @@ app.get("/info", (req, res) => {
   res.send({
     name: "Hod Hod Co",
     version: "v1",
-    author: "Qti3e"
+    author: "Parsa Ghadimi <me@qti3e.com>"
   });
 });
 

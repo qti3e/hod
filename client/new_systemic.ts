@@ -10,20 +10,21 @@ import axios from "axios";
 import { get } from "./context";
 import { datepicker } from "./datepicker";
 import { emit } from "./ipc";
-import { newCharter as local } from "./local";
+import { newSystemic as local } from "./local";
 import { routeSelector } from "./route";
 import * as t from "./types";
 import { cacheForUser, checkBox } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
-const forms = cacheForUser<t.CharterDoc>();
-export function renderNewCharter(app: HTMLElement): void {
+const forms = cacheForUser<t.SystemicDoc>();
+
+export function renderNewSystemic(app: HTMLElement): void {
   // Check DOM cache for current user.
   if (domCache.has()) {
     return void app.appendChild(domCache.get());
   }
 
-  const form: t.CharterDoc = {
+  const form: t.SystemicDoc = {
     kind: "internal",
     payer: "",
     payerName: "",
@@ -152,7 +153,7 @@ export function renderNewCharter(app: HTMLElement): void {
 }
 
 interface TicketElement extends HTMLDivElement {
-  data(): t.CharterTicket;
+  data(): t.SystemicTicket;
 }
 
 function ticket(): TicketElement {
@@ -182,11 +183,6 @@ function ticket(): TicketElement {
   g1.appendChild(dateInput);
   datepicker(dateInput);
 
-  const paidInput = document.createElement("input");
-  paidInput.placeholder = local.paid;
-  paidInput.type = "number";
-  g2.appendChild(paidInput);
-
   const receivedInput = document.createElement("input");
   receivedInput.placeholder = local.received;
   receivedInput.type = "number";
@@ -215,7 +211,6 @@ function ticket(): TicketElement {
     id: idInput.value,
     passengerName: passengerNameInput.value,
     passengerLastname: passengerLastnameInput.value,
-    paid: Number(paidInput.value),
     received: Number(receivedInput.value),
     outline: outlineInput.value,
     turnline: turnlineInput.value,
@@ -226,11 +221,11 @@ function ticket(): TicketElement {
   return wrapper;
 }
 
-async function submit(doc: t.CharterDoc): Promise<void> {
+async function submit(doc: t.SystemicDoc): Promise<void> {
   const token = get("currentToken");
   const server = get("server");
   await axios.post(
-    server + "/charter/new",
+    server + "/systemic/new",
     { doc },
     {
       headers: {
@@ -239,3 +234,7 @@ async function submit(doc: t.CharterDoc): Promise<void> {
     }
   );
 }
+
+setTimeout(() => {
+  emit("goto", "newSystemic");
+});

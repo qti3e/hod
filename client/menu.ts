@@ -30,8 +30,9 @@ export function renderMenu(app: HTMLElement): void {
     wrapper.appendChild(diamond("users", "group", "usersList"));
     wrapper.appendChild(diamond("new_user", "user-plus", "newUser"));
   } else {
-    // TODO(qti3e) Add user.role
-    wrapper.appendChild(diamond("new_charter", ["file", "plus"], "newCharter"));
+    const newDocIcon = ["file", "plus"];
+    wrapper.appendChild(diamond("new_charter", newDocIcon, "newCharter"));
+    wrapper.appendChild(diamond("new_systemic", newDocIcon, "newSystemic"));
   }
 
   app.appendChild(wrapper);

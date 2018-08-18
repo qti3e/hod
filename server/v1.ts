@@ -11,6 +11,7 @@ import { router as admin } from "./v1.admin";
 import { requestToken, router as auth } from "./v1.auth";
 import { router as charter } from "./v1.charter";
 import { router as data } from "./v1.data";
+import { router as systemic } from "./v1.systemic";
 
 const router = express.Router();
 
@@ -22,7 +23,6 @@ router.use(requestToken);
 router.use("/admin", admin);
 router.use("/data", data);
 router.use("/charter", charter);
-// TODO(qti3e)
-// router.use("/systemic", systemic);
+router.use("/systemic", systemic);
 
 export { router };

@@ -23,7 +23,8 @@ export const menu = {
   users: "لیست کاربران",
   home: "صفحه اصلی",
   new_user: "کاربر جدید",
-  new_charter: "چارتر جدید"
+  new_charter: "چارتر جدید",
+  new_systemic: "سیستمی جدید"
 };
 
 export const common = {
@@ -69,6 +70,11 @@ export const newCharter = {
   outline: "ایرلاین رفت...",
   turnline: "ایرلاین بازگشت...",
   newTicket: "افزودن بلیط جدید"
+};
+
+export const newSystemic = {
+  ...newCharter,
+  title: "سیستمی جدید"
 };
 
 export const route = {
