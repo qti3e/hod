@@ -126,6 +126,7 @@ export function renderNewCharter(app: HTMLElement): void {
   function newTicket() {
     tickets.push(ticket());
     renderTickets();
+    left.scrollTop = left.scrollHeight;
   }
 
   function renderTickets() {
