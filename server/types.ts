@@ -48,3 +48,24 @@ export interface City {
   // Matched result.
   name?: string;
 }
+
+export interface DBCity {
+  id: string;
+  displayName: string;
+  lngLat: [number, number];
+}
+
+export interface Ticket {
+  id: string;
+  passengerName: string;
+  passengerLastname: string;
+  received: number;
+  outline: string;
+  turnline: string;
+  date: string;
+  route: DBCity[];
+}
+
+export interface CharterTicket extends Ticket {
+  paid: number;
+}

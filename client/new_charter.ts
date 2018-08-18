@@ -10,6 +10,7 @@ import { datepicker } from "./datepicker";
 import { emit } from "./ipc";
 import { newCharter as local } from "./local";
 import { routeSelector } from "./route";
+import * as t from "./types";
 import { cacheForUser, checkBox } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
@@ -124,16 +125,11 @@ export function renderNewCharter(app: HTMLElement): void {
   // left.appendChild(ticket());
   left.appendChild(ticket());
 }
-
-interface Ticket {}
-
 interface TicketElement extends HTMLDivElement {
-  data(): Ticket;
+  data(): t.CharterTicket;
 }
 
 function ticket(): TicketElement {
-  const data: Ticket = {};
-
   const wrapper = document.createElement("div") as TicketElement;
   wrapper.className = "ticket-wrapper";
 
@@ -175,8 +171,17 @@ function ticket(): TicketElement {
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);
 
-  // TODO(qti3e) Collect data from routeSelector.
-  wrapper.data = () => data;
+  wrapper.data = () => ({
+    id: idInput.value,
+    passengerName: passengerNameInput.value,
+    passengerLastname: passengerLastnameInput.value,
+    paid: Number(paidInput.value),
+    received: Number(receivedInput.value),
+    outline: outlineInput.value,
+    turnline: turnlineInput.value,
+    date: dateInput.value,
+    route: routeInput.getDBRoute()
+  });
 
   return wrapper;
 }

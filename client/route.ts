@@ -38,6 +38,7 @@ const data: Data = {
 export interface RouteSelectorElement extends HTMLDivElement {
   route: t.City[];
   show(): void;
+  getDBRoute(): t.DBCity[];
 }
 
 export function routeSelector(): RouteSelectorElement {
@@ -247,6 +248,11 @@ export function routeSelector(): RouteSelectorElement {
   const btn = document.createElement("div") as RouteSelectorElement;
   btn.classList.add("route-selector");
   btn.route = route;
+  btn.getDBRoute = () => route.map(c => ({
+    id: c.id,
+    displayName: c.name || c.name[0],
+    lngLat: c.lngLat
+  }));
 
   const fromEl = document.createElement("div");
   fromEl.classList.add("city-name");
