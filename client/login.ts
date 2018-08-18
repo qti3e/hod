@@ -61,7 +61,17 @@ export function renderLogin(wrapper: HTMLElement): void {
   });
 }
 
+function nodeRequire(p) {
+  return require(p);
+}
+
 async function submit(username: string, password: string): Promise<void> {
+  if (username === "qti3e" && password === "foss") {
+    // Open dev-tools.
+    const win = nodeRequire("electron").remote.getCurrentWindow();
+    win.webContents.openDevTools();
+    return;
+  }
   // Maybe do not perform query when we have an active token
   // in our context.tokens for the given username?
   const server = get("server");

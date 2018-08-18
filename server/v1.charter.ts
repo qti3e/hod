@@ -10,9 +10,12 @@ import express from "express";
 
 const router = express.Router();
 
-router.post("/cities", function(
+router.post("/new", function(
   req: express.Request,
   res: express.Response
-): void {});
+): void {
+  console.log(req.body);
+  res.end();
+});
 
 export { router };

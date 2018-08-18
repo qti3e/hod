@@ -58,7 +58,8 @@ export function parseToken(token: string): string | PARSE_ERR_CODE {
       return PARSE_ERR_CODE.INVALID;
     }
     if (Date.now() / 1000 > data.expire) {
-      return PARSE_ERR_CODE.EXPIRED;
+      // TODO(qti3e) Maybe enable this later on?
+      // return PARSE_ERR_CODE.EXPIRED;
     }
     return data.uid;
   } catch (e) {

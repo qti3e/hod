@@ -9,8 +9,8 @@
 import express from "express";
 import { router as admin } from "./v1.admin";
 import { requestToken, router as auth } from "./v1.auth";
-import { router as data } from "./v1.data";
 import { router as charter } from "./v1.charter";
+import { router as data } from "./v1.data";
 
 const router = express.Router();
 

@@ -6,6 +6,8 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import axios from "axios";
+import { get } from "./context";
 import { datepicker } from "./datepicker";
 import { emit } from "./ipc";
 import { newCharter as local } from "./local";
@@ -109,10 +111,18 @@ export function renderNewCharter(app: HTMLElement): void {
   const submitBtn = document.createElement("button");
   submitBtn.innerText = local.submit;
   right.appendChild(submitBtn);
-  submitBtn.onclick = () => {
+  submitBtn.onclick = async () => {
     form.tickets = tickets.map(t => t.data());
-    // TODO(qti3e) Send to the server side.
-    console.log(form);
+    console.log("sending form", form);
+    await submit(form);
+    // Reset form.
+    form.payer = "";
+    form.payerName = "";
+    form.nationalCode = "";
+    form.phone = "";
+    form.tickets = [];
+    // TODO(qti3e) show the saved doc.
+    emit("goto", "home");
   };
 
   const left = document.createElement("div");
@@ -198,6 +208,20 @@ function ticket(): TicketElement {
   });
 
   return wrapper;
+}
+
+async function submit(doc: t.CharterDoc): Promise<void> {
+  const token = get("currentToken");
+  const server = get("server");
+  await axios.post(
+    server + "/charter/new",
+    { doc },
+    {
+      headers: {
+        "hod-token": token
+      }
+    }
+  );
 }
 
 // TODO(qti3e) Remove this when we're done.
