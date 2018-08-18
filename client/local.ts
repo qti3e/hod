@@ -69,7 +69,13 @@ export const newCharter = {
   received: "دریافتی...",
   outline: "ایرلاین رفت...",
   turnline: "ایرلاین بازگشت...",
-  newTicket: "افزودن بلیط جدید"
+  newTicket: "افزودن بلیط جدید",
+  ICI: "دریافت ICI...",
+  cache: "دریافت نقدی...",
+  companyCost: "هزینه شرکت...",
+  credit: "مابه‌التفاوت نقدی...",
+  installmentBase: "مبلغ مبنای اقساط",
+  wage: "مبلغ کارمزد"
 };
 
 export const newSystemic = {
