@@ -7,6 +7,7 @@
  */
 
 import jalaali from "jalaali-js";
+import { on } from "./ipc";
 import { toPersianDigits } from "./persian";
 
 const i18n = {
@@ -46,6 +47,8 @@ const defaultOptions: Options = {
   startYear: 1397
 };
 
+const gcData: Map<HTMLInputElement, HTMLDivElement> = new Map();
+
 export function datepicker(
   input: HTMLInputElement,
   opts: Partial<Options> = {}
@@ -57,53 +60,72 @@ export function datepicker(
 
   let changed = false;
   const daysWrappers: HTMLDivElement[] = [];
+  let monthName: HTMLDivElement;
+  let yearName: HTMLDivElement;
+  let wrapper: HTMLDivElement;
 
-  const wrapper = document.createElement("div");
-  wrapper.className = "qti3e-datepicker is-hidden";
-  wrapper.style.position = "fixed";
-  wrapper.onclick = () => (changed = true);
+  function lazyLoadWrapper() {
+    wrapper = document.createElement("div");
+    wrapper.className = "qti3e-datepicker is-hidden";
+    wrapper.style.position = "fixed";
+    wrapper.onclick = () => (changed = true);
 
-  const head = document.createElement("div");
-  head.className = "head";
-  wrapper.appendChild(head);
+    const head = document.createElement("div");
+    head.className = "head";
+    wrapper.appendChild(head);
 
-  const body = document.createElement("div");
-  body.className = "body";
-  wrapper.appendChild(body);
+    const body = document.createElement("div");
+    body.className = "body";
+    wrapper.appendChild(body);
 
-  for (let i = 0; i < 7; ++i) {
-    const col = document.createElement("div");
-    col.className = "col";
-    body.appendChild(col);
+    for (let i = 0; i < 7; ++i) {
+      const col = document.createElement("div");
+      col.className = "col";
+      body.appendChild(col);
 
-    const day = renderDayName(i);
-    const daysWrapper = document.createElement("div");
-    col.appendChild(day);
-    col.appendChild(daysWrapper);
-    daysWrappers.push(daysWrapper);
+      const day = renderDayName(i);
+      const daysWrapper = document.createElement("div");
+      col.appendChild(day);
+      col.appendChild(daysWrapper);
+      daysWrappers.push(daysWrapper);
+    }
+
+    // Render actions.
+    const nextMonthBtn = document.createElement("button");
+    nextMonthBtn.className = "next-month-btn";
+    const prevMonthBtn = document.createElement("button");
+    prevMonthBtn.className = "prev-month-btn";
+
+    // Render Information Nodes.
+    monthName = document.createElement("div");
+    monthName.className = "month-name";
+    yearName = document.createElement("div");
+    yearName.className = "year-name";
+
+    // Add elements to DOM with respect to our designed layout.
+    head.appendChild(prevMonthBtn);
+    head.appendChild(monthName);
+    head.appendChild(nextMonthBtn);
+    head.appendChild(yearName);
+
+    // Bind events.
+    nextMonthBtn.onclick = () => nextMonth();
+    prevMonthBtn.onclick = () => prevMonth();
+
+    // Make it visible.
+    document.body.appendChild(wrapper);
+    gcData.set(input, wrapper);
+
+    // Initial rendering.
+    render();
+    updateValue();
   }
 
-  // Render actions.
-  const nextMonthBtn = document.createElement("button");
-  nextMonthBtn.className = "next-month-btn";
-  const prevMonthBtn = document.createElement("button");
-  prevMonthBtn.className = "prev-month-btn";
-
-  // Render Information Nodes.
-  const monthName = document.createElement("div");
-  monthName.className = "month-name";
-  const yearName = document.createElement("div");
-  yearName.className = "year-name";
-
-  // Add elements to DOM with respect to our designed layout.
-  head.appendChild(prevMonthBtn);
-  head.appendChild(monthName);
-  head.appendChild(nextMonthBtn);
-  head.appendChild(yearName);
-
-  // Bind events.
-  nextMonthBtn.onclick = () => nextMonth();
-  prevMonthBtn.onclick = () => prevMonth();
+  function ensureWrapper() {
+    if (!wrapper) {
+      lazyLoadWrapper();
+    }
+  }
 
   // End of view.
 
@@ -147,8 +169,10 @@ export function datepicker(
 
   function updateValue() {
     input.value = toPersianDigits(`${year}/${month + 1}/${day + 1}`);
-    monthName.innerText = i18n.months[month];
-    yearName.innerText = toPersianDigits(year);
+    if (monthName) {
+      monthName.innerText = i18n.months[month];
+      yearName.innerText = toPersianDigits(year);
+    }
     changed = true;
     input.focus();
   }
@@ -158,6 +182,7 @@ export function datepicker(
   }
 
   function show() {
+    ensureWrapper();
     wrapper.classList.remove("is-hidden");
     const top = input.offsetTop + input.offsetHeight;
     const left = input.offsetLeft;
@@ -166,15 +191,14 @@ export function datepicker(
   }
 
   function hide() {
+    ensureWrapper();
     wrapper.classList.add("is-hidden");
   }
 
-  // Initial rendering step.
-  render();
+  // Call this to update input's value.
   updateValue();
 
   // Bind date picker with the input element.
-  document.body.appendChild(wrapper);
   input.onfocus = () => {
     show();
   };
@@ -265,3 +289,31 @@ function getNumberOfDaysInMonth(isLeap: boolean, m: number): number {
   }
   return 30;
 }
+
+function inScreen(e: HTMLElement): boolean {
+  while (e.parentElement) {
+    if (e === document.body) {
+      return true;
+    }
+    e = e.parentElement;
+  }
+  return false;
+}
+
+function doGC() {
+  console.log("Run datepicker gc...");
+  const keys = gcData.keys();
+  for (const key of keys) {
+    if (!inScreen(key)) {
+      const w = gcData.get(key);
+      if (w.parentElement) {
+        w.parentElement.removeChild(w);
+      }
+      gcData.delete(key);
+    }
+  }
+}
+
+on("goto", () => doGC());
+
+setInterval(doGC, 20000);

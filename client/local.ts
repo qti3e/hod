@@ -68,7 +68,7 @@ export const newCharter = {
   received: "دریافتی...",
   outline: "ایرلاین رفت...",
   turnline: "ایرلاین بازگشت...",
-  newTicket: "New ticket"
+  newTicket: "افزودن بلیط جدید"
 };
 
 export const route = {
