@@ -14,31 +14,21 @@ import * as t from "./types";
 import { cacheForUser, checkBox } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
-const forms = cacheForUser<NewCharterFormType>();
-
-interface NewCharterFormType {
-  kind: "internal" | "international";
-  payer: string;
-  payerName: string;
-  nationalCode: string;
-  phone: string;
-}
-
+const forms = cacheForUser<t.CharterDoc>();
 export function renderNewCharter(app: HTMLElement): void {
   // Check DOM cache for current user.
   if (domCache.has()) {
     return void app.appendChild(domCache.get());
   }
 
-  const form: NewCharterFormType = {
+  const form: t.CharterDoc = {
     kind: "internal",
     payer: "",
     payerName: "",
     nationalCode: "",
-    phone: ""
+    phone: "",
+    tickets: []
   };
-  // Debug.
-  window["charterForm"] = form;
 
   forms.set(form);
 
@@ -60,6 +50,11 @@ export function renderNewCharter(app: HTMLElement): void {
   const right = document.createElement("div");
   right.className = "right-split";
   view.appendChild(right);
+
+  const newTicketBtn = document.createElement("button");
+  newTicketBtn.innerText = local.newTicket;
+  right.appendChild(newTicketBtn);
+  newTicketBtn.onclick = () => newTicket();
 
   const serviceKindText = document.createElement("h3");
   serviceKindText.innerText = local.serviceKind;
@@ -115,6 +110,8 @@ export function renderNewCharter(app: HTMLElement): void {
   submitBtn.innerText = local.submit;
   right.appendChild(submitBtn);
   submitBtn.onclick = () => {
+    form.tickets = tickets.map(t => t.data());
+    // TODO(qti3e) Send to the server side.
     console.log(form);
   };
 
@@ -122,8 +119,24 @@ export function renderNewCharter(app: HTMLElement): void {
   left.className = "left-split";
   view.appendChild(left);
 
-  // left.appendChild(ticket());
-  left.appendChild(ticket());
+  const tickets: TicketElement[] = [];
+  const ticketsWrapper = document.createElement("div");
+  left.appendChild(ticketsWrapper);
+
+  function newTicket() {
+    tickets.push(ticket());
+    renderTickets();
+  }
+
+  function renderTickets() {
+    for (let i = 0; i < tickets.length; ++i) {
+      if (!tickets[i].parentElement) {
+        ticketsWrapper.appendChild(tickets[i]);
+      }
+    }
+  }
+
+  newTicket();
 }
 interface TicketElement extends HTMLDivElement {
   data(): t.CharterTicket;
@@ -186,6 +199,7 @@ function ticket(): TicketElement {
   return wrapper;
 }
 
+// TODO(qti3e) Remove this when we're done.
 setTimeout(() => {
   emit("goto", "newCharter");
 });

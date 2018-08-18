@@ -562,9 +562,10 @@ p {
       color: $background;
       font-size: 17pt;
       cursor: pointer;
+      margin: 4px;
 
       &:focus {
-        outline-color: transparent;
+        outline: none;
       }
     }
   }

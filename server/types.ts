@@ -69,3 +69,13 @@ export interface Ticket {
 export interface CharterTicket extends Ticket {
   paid: number;
 }
+
+export interface CharterDoc {
+  id?: string;
+  kind: "internal" | "international";
+  payer: string;
+  payerName: string;
+  nationalCode: string;
+  phone: string;
+  tickets: CharterTicket[];
+}
