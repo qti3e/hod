@@ -16,30 +16,6 @@ export interface User {
   isRoot?: boolean;
 }
 
-// export interface Airline {
-//   id: number;
-//   name: string;
-//   alias: string;
-//   IATA: string;
-//   ICAO: string;
-//   callsign: string;
-//   country: string;
-//   active: boolean;
-// }
-
-// export interface Airport {
-//   id: number;
-//   name: string;
-//   city: string;
-//   country: string;
-//   IATA: string;
-//   ICAO: string;
-//   lat: number;
-//   lng: number;
-//   alt: number;
-//   timezone: number;
-// }
-
 export interface City {
   readonly id: string;
   readonly names: ReadonlyArray<string>;
@@ -56,6 +32,9 @@ export interface DBCity {
 }
 
 export interface Ticket {
+  // DB id.
+  readonly _id: string;
+  // Ticket No.
   id: string;
   passengerName: string;
   passengerLastname: string;
@@ -71,11 +50,14 @@ export interface CharterTicket extends Ticket {
 }
 
 export interface CharterDoc {
-  id?: string;
+  readonly _id?: string;
   kind: "internal" | "international";
   payer: string;
   payerName: string;
   nationalCode: string;
   phone: string;
-  tickets: CharterTicket[];
+  // What we send for the client.
+  tickets?: CharterTicket[];
+  // What we store in the database.
+  ticketIds?: string[];
 }

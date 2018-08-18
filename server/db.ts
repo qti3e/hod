@@ -11,7 +11,12 @@ import * as t from "./types";
 
 export const collections = {
   users: new Datastore({ filename: ".db/users.db", autoload: true }),
-  passwords: new Datastore({ filename: ".db/passwords.db", autoload: true })
+  passwords: new Datastore({ filename: ".db/passwords.db", autoload: true }),
+  charter_tickets: new Datastore({
+    filename: "./db/c_tickets.db",
+    autoload: true
+  }),
+  charters: new Datastore({ filename: "./db/charters.db", autoload: true })
 };
 
 export async function getUser(id: string): Promise<t.User> {
@@ -39,7 +44,6 @@ export async function getPasswordByID(id: string): Promise<string> {
 
 export async function newUser(data: t.User, password: string): Promise<string> {
   const user = await collections.users.insert(data);
-  console.log("XXX", user._id);
   await collections.passwords.insert({
     user: user._id,
     password
@@ -49,4 +53,31 @@ export async function newUser(data: t.User, password: string): Promise<string> {
 
 export async function listUsers(): Promise<t.User[]> {
   return await collections.users.find({});
+}
+
+export function storeCharterTicket(
+  ticket: t.CharterTicket
+): Promise<t.CharterTicket> {
+  return collections.charter_tickets.insert(ticket);
+}
+
+export async function storeCharter(doc: t.CharterDoc): Promise<t.CharterDoc> {
+  // Prepare doc for database.
+  const tickets = doc.tickets;
+  doc.tickets = undefined;
+  doc.ticketIds = [];
+
+  for (let i = 0; i < tickets.length; ++i) {
+    const ticket = await storeCharterTicket(tickets[i]);
+    doc.ticketIds.push(ticket._id);
+    tickets[i] = ticket;
+  }
+
+  const insertedDoc = await collections.charters.insert(doc);
+
+  // Prepare insertedDoc for sending to client.
+  delete insertedDoc.ticketIds;
+  insertedDoc.tickets = tickets;
+
+  return insertedDoc;
 }
