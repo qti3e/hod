@@ -1,3 +1,4 @@
+// tslint:disable
 export const data = [
   { names: ["تورهال"], country: "TR", lng: 36.09, lat: 40.39 },
   {
