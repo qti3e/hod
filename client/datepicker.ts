@@ -112,10 +112,6 @@ export function datepicker(
     nextMonthBtn.onclick = () => nextMonth();
     prevMonthBtn.onclick = () => prevMonth();
 
-    // Make it visible.
-    document.body.appendChild(wrapper);
-    gcData.set(input, wrapper);
-
     // Initial rendering.
     render();
     updateValue();
@@ -124,6 +120,11 @@ export function datepicker(
   function ensureWrapper() {
     if (!wrapper) {
       lazyLoadWrapper();
+    }
+    if (!wrapper.parentElement) {
+      // Make it visible.
+      document.body.appendChild(wrapper);
+      gcData.set(input, wrapper);
     }
   }
 
