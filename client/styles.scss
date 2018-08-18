@@ -532,7 +532,6 @@ p {
       width: 100%;
       margin: 10px;
       border-right: 1px solid $primary;
-      overflow-y: auto;
     }
 
     :-webkit-any(.right-split, .ticket-wrapper, .group) > input {
@@ -568,6 +567,11 @@ p {
         outline: none;
       }
     }
+  }
+
+  .tickets-wrapper {
+    overflow-y: auto;
+    height: calc(100% - 40px);
   }
 
   .ticket-wrapper {
