@@ -29,7 +29,15 @@ export function renderNewCharter(app: HTMLElement): void {
     payerName: "",
     nationalCode: "",
     phone: "",
-    tickets: []
+    tickets: [],
+    receives: {
+      ICI: 0,
+      cache: 0,
+      companyCost: 0,
+      credit: 0,
+      installmentBase: 0,
+      wage: 0
+    }
   };
 
   forms.set(form);
@@ -128,6 +136,19 @@ export function renderNewCharter(app: HTMLElement): void {
   const left = document.createElement("div");
   left.className = "left-split";
   view.appendChild(left);
+
+  const receivesWrapper = document.createElement("div");
+  receivesWrapper.className = "receives-wrapper";
+  left.appendChild(receivesWrapper);
+
+  for (const name in form.receives) {
+    if (local[name]) {
+      const tmpInput = document.createElement("input");
+      tmpInput.placeholder = local[name];
+      receivesWrapper.appendChild(tmpInput);
+      tmpInput.onchange = () => form.receives.ICI = Number(tmpInput.value);
+    }
+  }
 
   const tickets: TicketElement[] = [];
   const ticketsWrapper = document.createElement("div");

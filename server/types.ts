@@ -75,4 +75,13 @@ export interface CharterDoc extends DocBase<CharterTicket> {
 
 export interface SystemicTicket extends TicketBase {}
 
-export interface SystemicDoc extends DocBase<SystemicTicket> {}
+export interface SystemicDoc extends DocBase<SystemicTicket> {
+  receives: {
+    ICI: number,
+    cache: number,
+    companyCost: number,
+    credit: number,
+    installmentBase: number,
+    wage: number
+  };
+}

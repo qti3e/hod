@@ -534,7 +534,7 @@ p {
       border-right: 1px solid $primary;
     }
 
-    :-webkit-any(.right-split, .ticket-wrapper, .group) > input {
+    :-webkit-any(.right-split, .ticket-wrapper, .group, .receives-wrapper) > input {
       width: 100%;
       height: 30px;
       font-size: 14pt;
@@ -567,6 +567,11 @@ p {
         outline: none;
       }
     }
+  }
+
+  .receives-wrapper {
+    display: flex;
+    margin: 10px;
   }
 
   .tickets-wrapper {

@@ -74,8 +74,8 @@ export const newCharter = {
   cache: "دریافت نقدی...",
   companyCost: "هزینه شرکت...",
   credit: "مابه‌التفاوت نقدی...",
-  installmentBase: "مبلغ مبنای اقساط",
-  wage: "مبلغ کارمزد"
+  installmentBase: "مبلغ مبنای اقساط...",
+  wage: "مبلغ کارمزد..."
 };
 
 export const newSystemic = {
