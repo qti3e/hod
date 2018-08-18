@@ -181,23 +181,23 @@ function ticket(): TicketElement {
   g1.appendChild(dateInput);
   datepicker(dateInput);
 
-  const passengerNameInput = document.createElement("input");
-  passengerNameInput.placeholder = local.passengerName;
-  g2.appendChild(passengerNameInput);
-
-  const passengerLastnameInput = document.createElement("input");
-  passengerLastnameInput.placeholder = local.passengerLastname;
-  g2.appendChild(passengerLastnameInput);
-
   const paidInput = document.createElement("input");
   paidInput.placeholder = local.paid;
   paidInput.type = "number";
-  g3.appendChild(paidInput);
+  g2.appendChild(paidInput);
 
   const receivedInput = document.createElement("input");
   receivedInput.placeholder = local.received;
   receivedInput.type = "number";
-  g3.appendChild(receivedInput);
+  g2.appendChild(receivedInput);
+
+  const passengerNameInput = document.createElement("input");
+  passengerNameInput.placeholder = local.passengerName;
+  g3.appendChild(passengerNameInput);
+
+  const passengerLastnameInput = document.createElement("input");
+  passengerLastnameInput.placeholder = local.passengerLastname;
+  g3.appendChild(passengerLastnameInput);
 
   const outlineInput = document.createElement("input");
   outlineInput.placeholder = local.outline;

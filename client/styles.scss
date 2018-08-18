@@ -583,8 +583,13 @@ p {
       padding: 10px;
     }
 
+    .g1, .g2 { 
+      min-width: 100px;
+      flex-shrink: 15;
+    }
+
     .route-selector {
-      width: 400px;
+      min-width: 300px;
       margin: auto;
     }
   }
