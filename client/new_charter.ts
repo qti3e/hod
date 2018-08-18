@@ -238,8 +238,3 @@ async function submit(doc: t.CharterDoc): Promise<void> {
     }
   );
 }
-
-// TODO(qti3e) Remove this when we're done.
-setTimeout(() => {
-  emit("goto", "newCharter");
-});
