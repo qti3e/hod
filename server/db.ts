@@ -12,17 +12,13 @@ import * as t from "./types";
 export const collections = {
   users: new Datastore({ filename: ".db/users.db", autoload: true }),
   passwords: new Datastore({ filename: ".db/passwords.db", autoload: true }),
-  // Charter.
-  charter_tickets: new Datastore({
-    filename: "./db/c_tickets.db",
+  // Tickets.
+  tickets: new Datastore({
+    filename: "./db/tickets.db",
     autoload: true
   }),
+  // Docs.
   charters: new Datastore({ filename: "./db/charters.db", autoload: true }),
-  // Systemic.
-  systemic_tickets: new Datastore({
-    filename: "./db/s_tickets.db",
-    autoload: true
-  }),
   systemics: new Datastore({ filename: "./db/systemics.db", autoload: true })
 };
 
@@ -62,10 +58,10 @@ export async function listUsers(): Promise<t.User[]> {
   return await collections.users.find({});
 }
 
-export function storeCharterTicket(
-  ticket: t.CharterTicket
-): Promise<t.CharterTicket> {
-  return collections.charter_tickets.insert(ticket);
+export async function storeTicket<T extends t.TicketBase>(
+  ticket: T
+): Promise<T> {
+  return collections.tickets.insert(ticket);
 }
 
 export async function storeCharter(doc: t.CharterDoc): Promise<t.CharterDoc> {
@@ -75,7 +71,7 @@ export async function storeCharter(doc: t.CharterDoc): Promise<t.CharterDoc> {
   doc.ticketIds = [];
 
   for (let i = 0; i < tickets.length; ++i) {
-    const ticket = await storeCharterTicket(tickets[i]);
+    const ticket = await storeTicket(tickets[i]);
     doc.ticketIds.push(ticket._id);
     tickets[i] = ticket;
   }
@@ -89,12 +85,6 @@ export async function storeCharter(doc: t.CharterDoc): Promise<t.CharterDoc> {
   return insertedDoc;
 }
 
-export async function storeSystemicTicket(
-  ticket: t.SystemicTicket
-): Promise<t.SystemicTicket> {
-  return collections.systemic_tickets.insert(ticket);
-}
-
 export async function storeSystemic(
   doc: t.SystemicDoc
 ): Promise<t.SystemicDoc> {
@@ -104,7 +94,7 @@ export async function storeSystemic(
   doc.ticketIds = [];
 
   for (let i = 0; i < tickets.length; ++i) {
-    const ticket = await storeSystemicTicket(tickets[i]);
+    const ticket = await storeTicket(tickets[i]);
     doc.ticketIds.push(ticket._id);
     tickets[i] = ticket;
   }
