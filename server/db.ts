@@ -108,8 +108,8 @@ async function storeDoc<A extends t.TicketBase, T extends t.DocBase<A>>(
   // Make the relation.
   await collections.tickets.update(
     { docId: tmpId },
-    { docId: insertedDoc._id },
-    {}
+    { $set: { docId: insertedDoc._id } },
+    { multi: true }
   );
   for (let i = 0; i < tickets.length; ++i) {
     (tickets[i] as any).docId = insertedDoc._id;
@@ -135,14 +135,37 @@ export async function storeSystemic(
 }
 
 export async function listCharter(page: number): Promise<t.CharterDoc[]> {
-  const rawData: t.CharterDoc[] = await collections.charters.cfind({})
-  .sort({ day: 1 })
-  .skip(20 * page)
-  .limit(20)
-  .exec();
+  const rawData: t.CharterDoc[] = await collections.charters
+    .cfind({})
+    .sort({ day: 1 })
+    .skip(20 * page)
+    .limit(20)
+    .exec();
   for (let i = 0; i < rawData.length; ++i) {
     rawData[i].owner = await getUser(rawData[i]._ownerId);
     delete rawData[i]._ownerId;
   }
+  return rawData;
+}
+
+async function getTicket<T extends t.TicketBase>(id: string): Promise<T> {
+  return collections.tickets.findOne({ _id: id });
+}
+
+export async function getCharter(id: string): Promise<t.CharterDoc> {
+  const rawData: t.CharterDoc = await collections.charters.findOne({ _id: id });
+
+  rawData.owner = await getUser(rawData._ownerId);
+  rawData.tickets = [];
+
+  for (let i = 0; i < rawData._ticketIds.length; ++i) {
+    rawData.tickets.push(
+      await getTicket<t.CharterTicket>(rawData._ticketIds[i])
+    );
+  }
+
+  delete rawData._ownerId;
+  delete rawData._ticketIds;
+
   return rawData;
 }

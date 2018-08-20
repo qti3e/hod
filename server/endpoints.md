@@ -33,6 +33,8 @@ Data {}
 
 ### /v1/charter/new
 
-### /v1/charter/list
+### /v1/charter/list/:page
+
+### /v1/charter/view/:id
 
 ### /v1/systemic/new

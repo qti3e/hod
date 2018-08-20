@@ -31,9 +31,9 @@ router.post("/new", async function(
   }
 });
 
-router.post("/list/:page", async function (
+router.post("/list/:page", async function(
   req: express.Request,
-  res: express.Response,
+  res: express.Response
 ): Promise<void> {
   const page = Number(req.params.page);
   if (isNaN(page) || page < 0) {
@@ -46,6 +46,24 @@ router.post("/list/:page", async function (
     res.send({
       code: 200,
       docs: ret
+    });
+  } catch (e) {
+    console.log(e);
+    res.send({
+      code: 500
+    });
+  }
+});
+
+router.post("/view/:id", async function(
+  req: express.Request,
+  res: express.Response
+): Promise<void> {
+  try {
+    const ret = await db.getCharter(req.params.id);
+    res.send({
+      code: 200,
+      doc: ret
     });
   } catch (e) {
     console.log(e);
