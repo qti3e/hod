@@ -669,3 +669,29 @@ p {
     }
   }
 }
+
+.modal-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150000000;
+  cursor: pointer;
+
+  .modal-inner-wrapper {
+    width: 70vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    background-image: linear-gradient($background, lighten($background, 10%) 70%);
+    border-right: 1px solid $primary;
+    transition: left 800ms ease-in;
+    padding: 15px;
+
+    &.show {
+      left: 0;
+    }
+  }
+}

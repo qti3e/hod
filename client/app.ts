@@ -109,6 +109,46 @@ function renderApp(wrapper: HTMLElement) {
   // user to another page.
   on("goto", render);
 
+  const renderModal = async (page: PageName) => {
+    const modalWrapper = document.createElement("div");
+    modalWrapper.className = "modal-wrapper";
+    wrapper.appendChild(modalWrapper);
+
+    const innerWrapper = document.createElement("div");
+    innerWrapper.className = "modal-inner-wrapper";
+    modalWrapper.appendChild(innerWrapper);
+
+    modalWrapper.onclick = async (e) => {
+      if (e.target !== modalWrapper) return;
+      innerWrapper.classList.remove("show");
+      // Wait till animation finishes.
+      await delay(800);
+      if (innerWrapper.childNodes.length > 0) {
+        const child = innerWrapper.childNodes[0];
+        // Let current component know we're going to unmount it.
+        const e = new Event("component-will-unmount");
+        const cancelled = !child.dispatchEvent(e);
+        // We might want to call `e.preventDefault()`.
+        if (cancelled) {
+          return;
+        }
+      }
+      if (modalWrapper.parentElement) {
+        modalWrapper.parentElement.removeChild(modalWrapper);
+      }
+    };
+
+    if (pages[page]) {
+      pages[page](innerWrapper);
+    }
+
+    await delay(500);
+    innerWrapper.classList.add("show");
+  };
+
+  // Open a modal.
+  on("open-modal", renderModal);
+
   // Initial rendering.
   // Try to open home page, it might render login page in
   // case user is not signed-in.

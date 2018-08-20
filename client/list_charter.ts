@@ -149,4 +149,7 @@ export function renderListCharter(app: HTMLElement): void {
 
 setTimeout(() => {
   emit("goto", "listCharter");
+  setTimeout(() => {
+    emit("open-modal", "newCharter");
+  });
 });

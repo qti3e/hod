@@ -14,6 +14,7 @@ const EE = new EventEmitter();
 
 export interface EventDataTypeMap {
   goto: PageName;
+  "open-modal": PageName;
   notification: string;
   "route-change": PageName;
   login: t.User;
