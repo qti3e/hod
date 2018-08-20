@@ -113,5 +113,23 @@ export const listCharter = {
 };
 
 export const viewCharter = {
+  ...listCharter,
   title: "گزارش چارتر",
+
+  info: "اطلاعات",
+  payer: "طرف حساب",
+  counter: "کانتر",
+  receives: "دریافتی ها",
+  tickets: "بلیط ها",
+
+  id: "شناسه",
+  dateOfCreation: "تاریخ ایجاد",
+  dateOfUpdate: "تاریخ بروزرسانی",
+
+  serviceKind: "نوع خدمات",
+  phoneNumber: "شماره تلفن",
+  nationalCode: "کد ملی",
+
+  name: "نام",
+  lastName: "نام خانوادگی",
 };

@@ -112,7 +112,7 @@ function renderApp(wrapper: HTMLElement) {
   // user to another page.
   on("goto", render);
 
-  const renderModal = async (data) => {
+  const renderModal = async data => {
     const { page, param } = data;
     let finishedLoading = false;
     const modalWrapper = document.createElement("div");
