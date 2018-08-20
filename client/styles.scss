@@ -661,11 +661,13 @@ p {
         color: $fg;
         text-align: center;
         align-self: center;
+        cursor: pointer;
       }
 
       div.row:nth-child(1) {
         color: $primary;
         border-bottom: 1px solid $primary;
+        cursor: default;
       }
     }
   }
@@ -678,7 +680,7 @@ p {
   top: 0;
   left: 0;
   z-index: 150000000;
-  cursor: pointer;
+  transition: background 800ms ease-in;
 
   .modal-inner-wrapper {
     width: 70vw;
@@ -690,8 +692,13 @@ p {
     border-right: 1px solid $primary;
     transition: left 800ms ease-in;
     padding: 15px;
+  }
 
-    &.show {
+  &.show {
+    cursor: pointer;
+    background: rgba($background, 0.4);
+
+    .modal-inner-wrapper {
       left: 0;
     }
   }

@@ -128,18 +128,26 @@ export function renderListCharter(app: HTMLElement): void {
     for (let i = 0; i < currentData.length; ++i) {
       const doc = currentData[i];
       // Create a new row.
-      cols[0].appendChild(row()).innerText = doc._id.slice(1, 7);
-      cols[1].appendChild(row()).innerText = local[doc.kind];
-      cols[2].appendChild(row()).innerText = formatDate(doc.createdAt);
-      cols[3].appendChild(row()).innerText = local[doc.providedBy];
-      cols[4].appendChild(row()).innerText = doc.payer;
-      cols[5].appendChild(row()).innerText = doc.payerName;
+      cols[0].appendChild(row(doc._id)).innerText = doc._id.slice(0, 7);
+      cols[1].appendChild(row(doc._id)).innerText = local[doc.kind];
+      cols[2].appendChild(row(doc._id)).innerText = formatDate(doc.createdAt);
+      cols[3].appendChild(row(doc._id)).innerText = local[doc.providedBy];
+      cols[4].appendChild(row(doc._id)).innerText = doc.payer;
+      cols[5].appendChild(row(doc._id)).innerText = doc.payerName;
     }
   }
 
-  function row() {
+  function row(openModal?: string) {
     const tmp = document.createElement("div");
     tmp.className = "row";
+    if (openModal) {
+      tmp.onclick = () => {
+        emit("open-modal", {
+          page: "viewCharter",
+          param: openModal
+        });
+      };
+    }
     return tmp;
   }
 
@@ -149,7 +157,4 @@ export function renderListCharter(app: HTMLElement): void {
 
 setTimeout(() => {
   emit("goto", "listCharter");
-  setTimeout(() => {
-    emit("open-modal", "newCharter");
-  });
 });

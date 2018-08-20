@@ -12,9 +12,14 @@ import * as t from "./types";
 
 const EE = new EventEmitter();
 
+export interface OpenModalParam {
+  page: PageName;
+  param: string;
+}
+
 export interface EventDataTypeMap {
   goto: PageName;
-  "open-modal": PageName;
+  "open-modal": OpenModalParam;
   notification: string;
   "route-change": PageName;
   login: t.User;
@@ -35,6 +40,7 @@ export type On = <T extends EventName>(name: T, cb: EventCallBack<T>) => void;
 
 export declare const emit: Emit;
 export declare const on: On;
+export declare const once: On;
 declare const module;
 
 module.exports = EE;

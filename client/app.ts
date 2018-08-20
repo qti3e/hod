@@ -7,7 +7,7 @@
  */
 
 import { get } from "./context";
-import { emit, on } from "./ipc";
+import { emit, on, once } from "./ipc";
 import { common as local } from "./local";
 import { delay } from "./util";
 
@@ -21,6 +21,7 @@ import { renderNewCharter } from "./new_charter";
 import { renderNewSystemic } from "./new_systemic";
 import { renderNewUser } from "./new_user";
 import { renderUsersList } from "./users";
+import { renderViewCharter } from "./view_charter";
 
 export type PageName =
   | "login"
@@ -30,9 +31,10 @@ export type PageName =
   | "newUser"
   | "newCharter"
   | "newSystemic"
-  | "listCharter";
+  | "listCharter"
+  | "viewCharter";
 
-export type Page = (app: HTMLElement) => void;
+export type Page = (app: HTMLElement, param?: string) => void;
 export type Pages = { [key in PageName]: Page };
 
 export const pages: Pages = {
@@ -43,7 +45,8 @@ export const pages: Pages = {
   newUser: renderNewUser,
   newCharter: renderNewCharter,
   newSystemic: renderNewSystemic,
-  listCharter: renderListCharter
+  listCharter: renderListCharter,
+  viewCharter: renderViewCharter
 };
 
 function renderApp(wrapper: HTMLElement) {
@@ -109,7 +112,9 @@ function renderApp(wrapper: HTMLElement) {
   // user to another page.
   on("goto", render);
 
-  const renderModal = async (page: PageName) => {
+  const renderModal = async (data) => {
+    const { page, param } = data;
+    let finishedLoading = false;
     const modalWrapper = document.createElement("div");
     modalWrapper.className = "modal-wrapper";
     wrapper.appendChild(modalWrapper);
@@ -118,9 +123,8 @@ function renderApp(wrapper: HTMLElement) {
     innerWrapper.className = "modal-inner-wrapper";
     modalWrapper.appendChild(innerWrapper);
 
-    modalWrapper.onclick = async (e) => {
-      if (e.target !== modalWrapper) return;
-      innerWrapper.classList.remove("show");
+    async function close() {
+      modalWrapper.classList.remove("show");
       // Wait till animation finishes.
       await delay(800);
       if (innerWrapper.childNodes.length > 0) {
@@ -136,14 +140,26 @@ function renderApp(wrapper: HTMLElement) {
       if (modalWrapper.parentElement) {
         modalWrapper.parentElement.removeChild(modalWrapper);
       }
+    }
+
+    modalWrapper.onclick = e => {
+      if (!finishedLoading || e.target !== modalWrapper) return;
+      close();
     };
 
     if (pages[page]) {
-      pages[page](innerWrapper);
+      pages[page](innerWrapper, param);
     }
 
-    await delay(500);
-    innerWrapper.classList.add("show");
+    once("goto", () => {
+      finishedLoading = false;
+      close();
+    });
+
+    await delay(50);
+    modalWrapper.classList.add("show");
+    await delay(800);
+    finishedLoading = true;
   };
 
   // Open a modal.
