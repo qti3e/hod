@@ -30,3 +30,9 @@ Data {
 ```
 Data {}
 ```
+
+### /v1/charter/new
+
+### /v1/charter/list
+
+### /v1/systemic/new
