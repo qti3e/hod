@@ -144,11 +144,6 @@ export function renderNewSystemic(app: HTMLElement): void {
     console.log("sending form", form);
     await submit(form);
     // Reset form.
-    form.payer = "";
-    form.payerName = "";
-    form.nationalCode = "";
-    form.phone = "";
-    form.tickets = [];
     // TODO(qti3e) show the saved doc.
     emit("goto", "home");
   };

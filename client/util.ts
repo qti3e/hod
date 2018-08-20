@@ -73,6 +73,10 @@ export function cacheForUser<V>() {
     has(): boolean {
       const token = get("currentToken");
       return map.has(token);
+    },
+    delete(): boolean {
+      const token = get("currentToken");
+      return map.delete(token);
     }
   };
 }
