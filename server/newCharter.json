@@ -1,0 +1,66 @@
+{
+  "code": 200,
+  "doc": {
+    "kind": "international",
+    "payer": "اسلای",
+    "payerName": "پارسا قدیمی",
+    "nationalCode": "6660346562",
+    "phone": "09214478724",
+    "tickets": [
+      {
+        "id": "abcd",
+        "passengerName": "محمد",
+        "passengerLastname": "همتی",
+        "paid": 25000,
+        "received": 3500,
+        "outline": "ماهان",
+        "turnline": "ایران ایر",
+        "date": "۱۳۹۷/۱/۱",
+        "route": [
+          {
+            "id": "c170f76b883ad1db881ac6aee5b86381",
+            "displayName": "تهران",
+            "lngLat": [51.4, 35.7]
+          },
+          {
+            "id": "8925c85aea3d352a05db9a09009b89a4",
+            "displayName": "خرمشهر",
+            "lngLat": [48.11, 30.26]
+          },
+          {
+            "id": "009f770ea26728a7be26c7db9fc55820",
+            "displayName": "پاریس",
+            "lngLat": [2.3508, 48.8567]
+          }
+        ],
+        "docId": "FLthqk2ZLlFSmfWb",
+        "_id": "PbXzS4N98IlIePtu",
+        "createdAt": "2018-08-20T05:54:19.940Z",
+        "updatedAt": "2018-08-20T05:54:19.940Z",
+        "owner": {
+          "nationalCode": "6660346562",
+          "name": "پارسا",
+          "lastName": "قدیمی",
+          "_id": "Og5YaBxkmzIkfpFD"
+        }
+      }
+    ],
+    "receives": {
+      "ICI": 2000,
+      "cache": 0,
+      "companyCost": 0,
+      "credit": 0,
+      "installmentBase": 0,
+      "wage": 0
+    },
+    "_id": "FLthqk2ZLlFSmfWb",
+    "createdAt": "2018-08-20T05:54:19.941Z",
+    "updatedAt": "2018-08-20T05:54:19.941Z",
+    "owner": {
+      "nationalCode": "6660346562",
+      "name": "پارسا",
+      "lastName": "قدیمی",
+      "_id": "Og5YaBxkmzIkfpFD"
+    }
+  }
+}

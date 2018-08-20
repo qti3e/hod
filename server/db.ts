@@ -15,11 +15,20 @@ export const collections = {
   // Tickets.
   tickets: new Datastore({
     filename: "./db/tickets.db",
-    autoload: true
+    autoload: true,
+    timestampData: true
   }),
   // Docs.
-  charters: new Datastore({ filename: "./db/charters.db", autoload: true }),
-  systemics: new Datastore({ filename: "./db/systemics.db", autoload: true })
+  charters: new Datastore({
+    filename: "./db/charters.db",
+    autoload: true,
+    timestampData: true
+  }),
+  systemics: new Datastore({
+    filename: "./db/systemics.db",
+    autoload: true,
+    timestampData: true
+  })
 };
 
 export async function getUser(id: string): Promise<t.User> {
@@ -58,52 +67,69 @@ export async function listUsers(): Promise<t.User[]> {
   return await collections.users.find({});
 }
 
-export async function storeTicket<T extends t.TicketBase>(
-  ticket: T
-): Promise<T> {
+/** @internal */
+async function storeTicket<T extends t.TicketBase>(ticket: T): Promise<T> {
   return collections.tickets.insert(ticket);
 }
 
-export async function storeCharter(doc: t.CharterDoc): Promise<t.CharterDoc> {
+/** @internal */
+async function storeDoc<A extends t.TicketBase, T extends t.DocBase<A>>(
+  doc: T,
+  owner: t.User,
+  docCollection
+): Promise<T> {
   // Prepare doc for database.
   const tickets = doc.tickets;
   doc.tickets = undefined;
-  doc.ticketIds = [];
+  doc._ticketIds = [];
+  doc._ownerId = owner._id;
+
+  const tmpId = (Math.random() + 1)
+    .toString(36)
+    .padEnd(12, "0")
+    .slice(2, 12);
 
   for (let i = 0; i < tickets.length; ++i) {
+    (tickets[i] as any).docId = tmpId;
+    tickets[i]._ownerId = owner._id;
     const ticket = await storeTicket(tickets[i]);
-    doc.ticketIds.push(ticket._id);
+    doc._ticketIds.push(ticket._id);
     tickets[i] = ticket;
   }
 
-  const insertedDoc = await collections.charters.insert(doc);
+  const insertedDoc: T = await docCollection.insert(doc);
 
   // Prepare insertedDoc for sending to client.
-  delete insertedDoc.ticketIds;
+  delete insertedDoc._ticketIds;
+  delete insertedDoc._ownerId;
   insertedDoc.tickets = tickets;
+  insertedDoc.owner = owner;
+
+  // Make the relation.
+  await collections.tickets.update(
+    { docId: tmpId },
+    { docId: insertedDoc._id },
+    {}
+  );
+  for (let i = 0; i < tickets.length; ++i) {
+    (tickets[i] as any).docId = insertedDoc._id;
+    delete tickets[i]._ownerId;
+    tickets[i].owner = owner;
+  }
 
   return insertedDoc;
 }
 
+export function storeCharter(
+  doc: t.CharterDoc,
+  owner: t.User
+): Promise<t.CharterDoc> {
+  return storeDoc(doc, owner, collections.charters);
+}
+
 export async function storeSystemic(
-  doc: t.SystemicDoc
+  doc: t.SystemicDoc,
+  owner: t.User
 ): Promise<t.SystemicDoc> {
-  // Prepare doc for database.
-  const tickets = doc.tickets;
-  doc.tickets = undefined;
-  doc.ticketIds = [];
-
-  for (let i = 0; i < tickets.length; ++i) {
-    const ticket = await storeTicket(tickets[i]);
-    doc.ticketIds.push(ticket._id);
-    tickets[i] = ticket;
-  }
-
-  const insertedDoc = await collections.systemics.insert(doc);
-
-  // Prepare insertedDoc for sending to client.
-  delete insertedDoc.ticketIds;
-  insertedDoc.tickets = tickets;
-
-  return insertedDoc;
+  return storeDoc(doc, owner, collections.systemics);
 }

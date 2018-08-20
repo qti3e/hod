@@ -18,7 +18,7 @@ router.post("/new", async function(
 ): Promise<void> {
   const doc: t.SystemicDoc = req.body.doc;
   try {
-    const ret = await db.storeSystemic(doc);
+    const ret = await db.storeSystemic(doc, req.user);
     res.send({
       code: 200,
       doc: ret

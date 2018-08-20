@@ -18,7 +18,7 @@ router.post("/new", async function(
 ): Promise<void> {
   const doc: t.CharterDoc = req.body.doc;
   try {
-    const ret = await db.storeCharter(doc);
+    const ret = await db.storeCharter(doc, req.user);
     res.send({
       code: 200,
       doc: ret
