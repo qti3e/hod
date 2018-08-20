@@ -68,6 +68,7 @@ h5,
 h6,
 a,
 div,
+label,
 p {
   color: $fg;
   cursor: default;
@@ -701,5 +702,40 @@ p {
     .modal-inner-wrapper {
       left: 0;
     }
+  }
+}
+
+#view-charter {
+
+  .rounded-box {
+    border-top: 1px solid $primary;
+    border-radius: 25px 25px 0 0;
+    display: inline-block;
+    width: 100%;
+
+    label:nth-child(1) {
+      font-size: 14pt;
+      background: $background;
+      position: relative;
+      top: -15px;
+      height: 30px;
+      right: 30px;
+    }
+  }
+
+  #head-wrapper {
+    display: flex;
+
+    .rounded-box {
+      height: 200px;
+    }
+  }
+
+  #tickets-wrapper {
+    overflow-y: auto;
+    border-top: 1px solid $primary;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
   }
 }

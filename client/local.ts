@@ -111,3 +111,7 @@ export const listCharter = {
   cache: "نقد و اینترنتی",
   credit: "اعتباری"
 };
+
+export const viewCharter = {
+  title: "گزارش چارتر",
+};

@@ -16,6 +16,7 @@ import { cacheForUser } from "./util";
 
 // Renders list of charter documentations.
 const domCache = cacheForUser<HTMLElement>();
+let lastId;
 
 export function renderListCharter(app: HTMLElement): void {
   if (domCache.has()) {
@@ -135,12 +136,18 @@ export function renderListCharter(app: HTMLElement): void {
       cols[4].appendChild(row(doc._id)).innerText = doc.payer;
       cols[5].appendChild(row(doc._id)).innerText = doc.payerName;
     }
+
+    emit("open-modal", {
+      page: "viewCharter",
+      param: lastId
+    });
   }
 
   function row(openModal?: string) {
     const tmp = document.createElement("div");
     tmp.className = "row";
     if (openModal) {
+      lastId = openModal;
       tmp.onclick = () => {
         emit("open-modal", {
           page: "viewCharter",
