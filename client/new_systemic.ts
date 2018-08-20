@@ -45,7 +45,7 @@ export function renderNewSystemic(app: HTMLElement): void {
 
   // Create wrapper
   const wrapper = document.createElement("div");
-  wrapper.id = "new-charter";
+  wrapper.id = "new-systemic";
   wrapper.classList.add("full-page");
   domCache.set(wrapper);
   app.appendChild(wrapper);

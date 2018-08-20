@@ -14,6 +14,7 @@ import { delay } from "./util";
 // Import views.
 import { renderFrame } from "./frame";
 import { renderHome } from "./home";
+import { renderListCharter } from "./list_charter";
 import { renderLogin } from "./login";
 import { renderMenu } from "./menu";
 import { renderNewCharter } from "./new_charter";
@@ -28,7 +29,8 @@ export type PageName =
   | "usersList"
   | "newUser"
   | "newCharter"
-  | "newSystemic";
+  | "newSystemic"
+  | "listCharter";
 
 export type Page = (app: HTMLElement) => void;
 export type Pages = { [key in PageName]: Page };
@@ -40,7 +42,8 @@ export const pages: Pages = {
   usersList: renderUsersList,
   newUser: renderNewUser,
   newCharter: renderNewCharter,
-  newSystemic: renderNewSystemic
+  newSystemic: renderNewSystemic,
+  listCharter: renderListCharter
 };
 
 function renderApp(wrapper: HTMLElement) {

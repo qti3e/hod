@@ -31,7 +31,11 @@ export function renderMenu(app: HTMLElement): void {
     wrapper.appendChild(diamond("new_user", "user-plus", "newUser"));
   } else {
     const newDocIcon = ["file", "plus"];
+    const listDocIcon = ["file", "eye"];
+
     wrapper.appendChild(diamond("new_charter", newDocIcon, "newCharter"));
+    wrapper.appendChild(diamond("list_charter", listDocIcon, "listCharter"));
+
     wrapper.appendChild(diamond("new_systemic", newDocIcon, "newSystemic"));
   }
 

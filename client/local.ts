@@ -24,7 +24,8 @@ export const menu = {
   home: "صفحه اصلی",
   new_user: "کاربر جدید",
   new_charter: "چارتر جدید",
-  new_systemic: "سیستمی جدید"
+  new_systemic: "سیستمی جدید",
+  list_charter: "گزارشات چارتر"
 };
 
 export const common = {
