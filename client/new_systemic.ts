@@ -246,7 +246,7 @@ function ticket(): TicketElement {
     passengerLastname: passengerLastnameInput.value,
     received: Number(receivedInput.value),
     outline: outlineInput.value,
-    date: dateInput.value,
+    date: Number(dateInput.getAttribute("data-day")),
     route: routeInput.getDBRoute()
   });
 

@@ -40,11 +40,11 @@ const i18n = {
 };
 
 export interface Options {
-  startYear: number;
+  today: Date;
 }
 
 const defaultOptions: Options = {
-  startYear: 1397
+  today: new Date()
 };
 
 const gcData: Map<HTMLInputElement, HTMLDivElement> = new Map();
@@ -130,10 +130,10 @@ export function datepicker(
 
   // End of view.
 
-  // TODO(qti3e) Maybe use input.value instead?
-  let year = options.startYear;
-  let month = 0;
-  let day = 0;
+  const jToday = jalaali.toJalaali(options.today);
+  let year = jToday.jy;
+  let month = jToday.jm - 1;
+  let day = jToday.jd;
 
   function prevMonth(): void {
     month--;
@@ -170,6 +170,8 @@ export function datepicker(
 
   function updateValue() {
     input.value = toPersianDigits(`${year}/${month + 1}/${day + 1}`);
+    const dayNum = jalaali.j2d(year, month + 1, day);
+    input.setAttribute("data-day", dayNum);
     if (monthName) {
       monthName.innerText = i18n.months[month];
       yearName.innerText = toPersianDigits(year);
@@ -179,7 +181,7 @@ export function datepicker(
   }
 
   function render() {
-    renderMonth(year, month, day, daysWrappers, selectDay);
+    renderMonth(year, month, day, daysWrappers, selectDay, jToday);
   }
 
   function show() {
@@ -231,7 +233,8 @@ function renderMonth(
   // Selected day.
   day: number,
   daysWrappers: HTMLDivElement[],
-  selectDayCb: (d: number) => void
+  selectDayCb: (d: number) => void,
+  today: { jy: number, jm: number, jd: number }
 ): void {
   // Remove all of contents in days wrappers.
   for (let i = 0; i < 7; ++i) {
@@ -249,6 +252,7 @@ function renderMonth(
   // Now let's insert days.
   const isLeap: boolean = jalaali.isLeapJalaaliYear(year);
   const numberOfDaysInMonth = getNumberOfDaysInMonth(isLeap, month);
+  const lookForToday = today.jy === year && today.jm === month + 1;
   let dayIndex = firstDay;
   let selected = null;
   for (let i = 0; i < numberOfDaysInMonth; ++i) {
@@ -258,7 +262,9 @@ function renderMonth(
       dayElement.classList.add("is-selected");
       selected = dayElement;
     }
-    // TODO(qti3e) Support is-today.
+    if (lookForToday && i === today.jd) {
+      dayElement.classList.add("is-today");
+    }
     dayElement.innerText = toPersianDigits(i + 1);
     dayElement.onclick = () => {
       selectDayCb(i);

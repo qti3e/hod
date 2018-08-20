@@ -88,6 +88,11 @@
         cursor: pointer;
         border-radius: 17.6px;
 
+        &.is-today {
+          background: $secondry;
+          color: $background;
+        }
+
         &.is-selected {
           background: $primary;
           color: $background;

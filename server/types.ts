@@ -45,7 +45,7 @@ export interface TicketBase {
   passengerLastname: string;
   received: number;
   outline: string;
-  date: string;
+  date: number;
   route: DBCity[];
 }
 
