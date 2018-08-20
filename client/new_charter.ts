@@ -25,6 +25,7 @@ export function renderNewCharter(app: HTMLElement): void {
 
   const form: t.CharterDoc = {
     kind: "internal",
+    providedBy: "credit",
     payer: "",
     payerName: "",
     nationalCode: "",
@@ -84,6 +85,26 @@ export function renderNewCharter(app: HTMLElement): void {
   internationalCheckBox.onchange = () => {
     internalCheckBox.checked = !internalCheckBox.checked;
     form.kind = internalCheckBox.checked ? "internal" : "international";
+  };
+
+  const providedByText = document.createElement("h3");
+  providedByText.innerText = local.providedBy;
+  right.appendChild(providedByText);
+
+  const cacheCheckBox = checkBox(local.pCache);
+  cacheCheckBox.checked = form.providedBy === "cache";
+  right.appendChild(cacheCheckBox.parentElement);
+  cacheCheckBox.onchange = () => {
+    creditCheckBox.checked = !creditCheckBox.checked;
+    form.providedBy = creditCheckBox.checked ? "credit" : "cache";
+  };
+
+  const creditCheckBox = checkBox(local.pCredit);
+  creditCheckBox.checked = form.providedBy === "credit";
+  right.appendChild(creditCheckBox.parentElement);
+  creditCheckBox.onchange = () => {
+    cacheCheckBox.checked = !cacheCheckBox.checked;
+    form.providedBy = creditCheckBox.checked ? "credit" : "cache";
   };
 
   const payerInput = document.createElement("input");
@@ -146,7 +167,7 @@ export function renderNewCharter(app: HTMLElement): void {
       const tmpInput = document.createElement("input");
       tmpInput.placeholder = local[name];
       receivesWrapper.appendChild(tmpInput);
-      tmpInput.onchange = () => form.receives.ICI = Number(tmpInput.value);
+      tmpInput.onchange = () => (form.receives.ICI = Number(tmpInput.value));
     }
   }
 

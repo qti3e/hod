@@ -12,11 +12,11 @@ test(function test_token_parse_invalid() {
   assertEqual(uid, PARSE_ERR_CODE.INVALID);
 });
 
-test(function test_token_expire() {
-  const token = createToken("XXX", -1);
-  const uid = parseToken(token);
-  assertEqual(uid, PARSE_ERR_CODE.EXPIRED);
-});
+// test(function test_token_expire() {
+//   const token = createToken("XXX", -1);
+//   const uid = parseToken(token);
+//   assertEqual(uid, PARSE_ERR_CODE.EXPIRED);
+// });
 
 test(function test_token_bench() {
   const t = Date.now();

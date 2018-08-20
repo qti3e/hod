@@ -531,7 +531,8 @@ p {
   }
 }
 
-#new-charter, #new-systemic {
+#new-charter,
+#new-systemic {
   .view {
     display: flex;
     height: calc(100% - 100px);
@@ -550,7 +551,8 @@ p {
       border-right: 1px solid $primary;
     }
 
-    :-webkit-any(.right-split, .ticket-wrapper, .group, .receives-wrapper) > input {
+    :-webkit-any(.right-split, .ticket-wrapper, .group, .receives-wrapper)
+      > input {
       width: 100%;
       height: 30px;
       font-size: 14pt;
@@ -608,7 +610,8 @@ p {
       padding: 10px;
     }
 
-    .g1, .g2 { 
+    .g1,
+    .g2 {
       min-width: 100px;
       flex-shrink: 15;
     }
@@ -625,6 +628,4 @@ p {
   height: 100px;
   margin: 100px;
   background: $primary;
-
-
 }

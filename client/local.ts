@@ -56,6 +56,9 @@ export const newCharter = {
   serviceKind: "نوع خدمات:",
   internal: "داخلی",
   international: "خارجی",
+  providedBy: "نحوه تهیه",
+  pCache: "نقد و اینترنتی",
+  pCredit: "اعتباری",
   payer: "طرف حساب...",
   nameOfPayer: "نام طرف حساب...",
   nationalCode: "کد ملی...",
@@ -81,7 +84,9 @@ export const newCharter = {
 
 export const newSystemic = {
   ...newCharter,
-  title: "سیستمی جدید"
+  title: "سیستمی جدید",
+  train: "قطار",
+  outline: "نام ایرلاین/قطار..."
 };
 
 export const route = {

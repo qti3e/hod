@@ -213,7 +213,7 @@ export function datepicker(
     }, 200);
   };
 
-  input.onkeydown = (e) => {
+  input.onkeydown = e => {
     e.preventDefault();
   };
 }

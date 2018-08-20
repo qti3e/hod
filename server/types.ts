@@ -38,14 +38,13 @@ export interface TicketBase {
   readonly updatedAt?: string;
   readonly docId?: string;
   owner?: User;
-  _ownerId: string;
+  _ownerId?: string;
   // Ticket No.
   id: string;
   passengerName: string;
   passengerLastname: string;
   received: number;
   outline: string;
-  turnline: string;
   date: string;
   route: DBCity[];
 }
@@ -57,42 +56,38 @@ export interface DocBase<T extends TicketBase> {
   readonly updatedAt?: string;
   owner?: User;
   // Our information about the documentation.
-  kind: "internal" | "international";
+  kind: string;
   payer: string;
   payerName: string;
   nationalCode: string;
   phone: string;
+  receives: {
+    ICI: number;
+    cache: number;
+    companyCost: number;
+    credit: number;
+    installmentBase: number;
+    wage: number;
+  };
   // What we send for the client.
   tickets?: T[];
   // What we store in the database.
   _ticketIds?: string[];
-  _ownerId: string;
+  _ownerId?: string;
 }
 
 export interface CharterTicket extends TicketBase {
   paid: number;
+  turnline: string;
 }
 
 export interface SystemicTicket extends TicketBase {}
 
 export interface CharterDoc extends DocBase<CharterTicket> {
-  receives: {
-    ICI: number;
-    cache: number;
-    companyCost: number;
-    credit: number;
-    installmentBase: number;
-    wage: number;
-  };
+  kind: "internal" | "international";
+  providedBy: "cache" | "credit";
 }
 
 export interface SystemicDoc extends DocBase<SystemicTicket> {
-  receives: {
-    ICI: number;
-    cache: number;
-    companyCost: number;
-    credit: number;
-    installmentBase: number;
-    wage: number;
-  };
+  kind: "internal" | "international" | "train";
 }

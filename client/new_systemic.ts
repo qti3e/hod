@@ -72,20 +72,39 @@ export function renderNewSystemic(app: HTMLElement): void {
   right.appendChild(serviceKindText);
 
   const internalCheckBox = checkBox(local.internal);
-  internalCheckBox.checked = form.kind === "internal";
   right.appendChild(internalCheckBox.parentElement);
   internalCheckBox.onchange = () => {
-    internationalCheckBox.checked = !internationalCheckBox.checked;
-    form.kind = internalCheckBox.checked ? "internal" : "international";
+    if (internalCheckBox.checked) {
+      form.kind = "internal";
+    }
+    updateCheckbox();
   };
 
   const internationalCheckBox = checkBox(local.international);
-  internationalCheckBox.checked = form.kind === "international";
   right.appendChild(internationalCheckBox.parentElement);
   internationalCheckBox.onchange = () => {
-    internalCheckBox.checked = !internalCheckBox.checked;
-    form.kind = internalCheckBox.checked ? "internal" : "international";
+    if (internationalCheckBox.checked) {
+      form.kind = "international";
+    }
+    updateCheckbox();
   };
+
+  const trainCheckbox = checkBox(local.train);
+  right.appendChild(trainCheckbox.parentElement);
+  trainCheckbox.onchange = () => {
+    if (trainCheckbox.checked) {
+      form.kind = "train";
+    }
+    updateCheckbox();
+  };
+
+  function updateCheckbox() {
+    trainCheckbox.checked = form.kind === "train";
+    internationalCheckBox.checked = form.kind === "international";
+    internalCheckBox.checked = form.kind === "internal";
+  }
+
+  updateCheckbox();
 
   const payerInput = document.createElement("input");
   payerInput.placeholder = local.payer;
@@ -147,7 +166,7 @@ export function renderNewSystemic(app: HTMLElement): void {
       const tmpInput = document.createElement("input");
       tmpInput.placeholder = local[name];
       receivesWrapper.appendChild(tmpInput);
-      tmpInput.onchange = () => form.receives.ICI = Number(tmpInput.value);
+      tmpInput.onchange = () => (form.receives.ICI = Number(tmpInput.value));
     }
   }
 
@@ -191,9 +210,6 @@ function ticket(): TicketElement {
   const g3 = document.createElement("div");
   g3.className = "group g3";
   wrapper.appendChild(g3);
-  const g4 = document.createElement("div");
-  g4.className = "group g4";
-  wrapper.appendChild(g4);
 
   const idInput = document.createElement("input");
   idInput.placeholder = local.id;
@@ -209,6 +225,10 @@ function ticket(): TicketElement {
   receivedInput.type = "number";
   g2.appendChild(receivedInput);
 
+  const outlineInput = document.createElement("input");
+  outlineInput.placeholder = local.outline;
+  g2.appendChild(outlineInput);
+
   const passengerNameInput = document.createElement("input");
   passengerNameInput.placeholder = local.passengerName;
   g3.appendChild(passengerNameInput);
@@ -216,14 +236,6 @@ function ticket(): TicketElement {
   const passengerLastnameInput = document.createElement("input");
   passengerLastnameInput.placeholder = local.passengerLastname;
   g3.appendChild(passengerLastnameInput);
-
-  const outlineInput = document.createElement("input");
-  outlineInput.placeholder = local.outline;
-  g4.appendChild(outlineInput);
-
-  const turnlineInput = document.createElement("input");
-  turnlineInput.placeholder = local.turnline;
-  g4.appendChild(turnlineInput);
 
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);
@@ -234,7 +246,6 @@ function ticket(): TicketElement {
     passengerLastname: passengerLastnameInput.value,
     received: Number(receivedInput.value),
     outline: outlineInput.value,
-    turnline: turnlineInput.value,
     date: dateInput.value,
     route: routeInput.getDBRoute()
   });
