@@ -31,4 +31,28 @@ router.post("/new", async function(
   }
 });
 
+router.post("/list/%page", async function (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> {
+  const page = Number(req.params.page);
+  if (isNaN(page) || page < 0) {
+    return void res.send({
+      code: 403
+    });
+  }
+  try {
+    const ret = await db.listCharter(page);
+    res.send({
+      code: 200,
+      docs: ret
+    });
+  } catch (e) {
+    console.log(e);
+    res.send({
+      code: 500
+    });
+  }
+});
+
 export { router };

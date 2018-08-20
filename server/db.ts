@@ -14,18 +14,18 @@ export const collections = {
   passwords: new Datastore({ filename: ".db/passwords.db", autoload: true }),
   // Tickets.
   tickets: new Datastore({
-    filename: "./db/tickets.db",
+    filename: ".db/tickets.db",
     autoload: true,
     timestampData: true
   }),
   // Docs.
   charters: new Datastore({
-    filename: "./db/charters.db",
+    filename: ".db/charters.db",
     autoload: true,
     timestampData: true
   }),
   systemics: new Datastore({
-    filename: "./db/systemics.db",
+    filename: ".db/systemics.db",
     autoload: true,
     timestampData: true
   })
@@ -132,4 +132,17 @@ export async function storeSystemic(
   owner: t.User
 ): Promise<t.SystemicDoc> {
   return storeDoc(doc, owner, collections.systemics);
+}
+
+export async function listCharter(page: number): Promise<t.CharterDoc[]> {
+  const rawData: t.CharterDoc[] = await collections.charters.find({})
+  .sort({ day: 1 })
+  .skip(20 * page)
+  .limit(20)
+  .exec();
+  for (let i = 0; i < rawData.length; ++i) {
+    rawData[i].owner = await getUser(rawData[i]._ownerId);
+    delete rawData[i]._ownerId;
+  }
+  return rawData;
 }
