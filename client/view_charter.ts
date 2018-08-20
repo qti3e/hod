@@ -76,6 +76,10 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
     receivesLabel.innerText = local.receives;
     receivesWrapper.appendChild(receivesLabel);
 
+    const receivesInner = document.createElement("div");
+    receivesInner.id = "receives-inner";
+    receivesWrapper.appendChild(receivesInner);
+
     const ticketsWrapper = document.createElement("div");
     ticketsWrapper.className = "rounded-box";
     wrapper.appendChild(ticketsWrapper);
@@ -84,7 +88,7 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
     ticketsWrapper.appendChild(ticketsLabel);
 
     const ticketsInner = document.createElement("div");
-    ticketsInner.className = "tickets-inner";
+    ticketsInner.id = "tickets-inner";
     ticketsWrapper.appendChild(ticketsInner);
 
     // End of rendering layout.
@@ -139,6 +143,15 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
     counterWrapper.appendChild(
       row(local.nationalCode, toPersianDigits(doc.owner.nationalCode))
     );
+
+    // Render receives box.
+    for (const key in doc.receives) {
+      if (local[key]) {
+        receivesInner.appendChild(
+          row(local[key], toPersianDigits(doc.receives[key] || 0))
+        );
+      }
+    }
 
     console.log(doc);
   }

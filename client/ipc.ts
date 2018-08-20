@@ -14,12 +14,12 @@ const EE = new EventEmitter();
 
 export interface OpenModalParam {
   page: PageName;
-  param: string;
+  param: any;
 }
 
 export interface EventDataTypeMap {
   goto: PageName;
-  "open-modal": OpenModalParam;
+  "open-modal": PageName | OpenModalParam;
   notification: string;
   "route-change": PageName;
   login: t.User;

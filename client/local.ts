@@ -99,7 +99,7 @@ export const listCharter = {
   next: "صفحه بعدی",
   prev: "صفحه قبلی",
 
-  id: "شماره",
+  id: "شناسه",
   serviceKind: "نوع خدمات",
   dateOfCreation: "تاریخ ایجاد",
   providedBy: "نحوه تهیه",
@@ -122,7 +122,6 @@ export const viewCharter = {
   receives: "دریافتی ها",
   tickets: "بلیط ها",
 
-  id: "شناسه",
   dateOfCreation: "تاریخ ایجاد",
   dateOfUpdate: "تاریخ بروزرسانی",
 
@@ -132,4 +131,11 @@ export const viewCharter = {
 
   name: "نام",
   lastName: "نام خانوادگی",
+
+  ICI: "دریافت ICI",
+  cache: "دریافت نقدی",
+  companyCost: "هزینه شرکت",
+  credit: "مابه‌التفاوت نقدی",
+  installmentBase: "مبلغ مبنای اقساط",
+  wage: "مبلغ کارمزد"
 };
