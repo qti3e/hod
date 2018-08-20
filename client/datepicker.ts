@@ -234,7 +234,7 @@ function renderMonth(
   day: number,
   daysWrappers: HTMLDivElement[],
   selectDayCb: (d: number) => void,
-  today: { jy: number, jm: number, jd: number }
+  today: { jy: number; jm: number; jd: number }
 ): void {
   // Remove all of contents in days wrappers.
   for (let i = 0; i < 7; ++i) {
@@ -309,6 +309,20 @@ function inScreen(e: HTMLElement): boolean {
     e = e.parentElement;
   }
   return false;
+}
+
+export function formatDate(d: string | Date | number): string {
+  let jDate;
+  if (typeof d === "number") {
+    jDate = jalaali.d2j(d);
+  } else {
+    const date: Date = typeof d === "string" ? new Date(d) : d;
+    jDate = jalaali.toJalaali(date);
+  }
+  const { jy, jm, jd } = jDate;
+  return (
+    toPersianDigits(jd) + " " + i18n.months[jm - 1] + " " + toPersianDigits(jy)
+  );
 }
 
 function doGC() {

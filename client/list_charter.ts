@@ -8,7 +8,9 @@
 
 import axios from "axios";
 import { get } from "./context";
+import { formatDate } from "./datepicker";
 import { emit } from "./ipc";
+import { listCharter as local } from "./local";
 import * as t from "./types";
 import { cacheForUser } from "./util";
 
@@ -57,6 +59,10 @@ export function renderListCharter(app: HTMLElement): void {
   }
 
   function nextPage() {
+    if (data.get(page).length < 20) {
+      fetchData();
+      return;
+    }
     page++;
     fetchData();
   }
@@ -71,51 +77,70 @@ export function renderListCharter(app: HTMLElement): void {
 
   // End of data fetch.
 
-  let rowCacheTime = Date.now();
-  const rowCache = new Map<string, HTMLElement>();
-
-  const dataWrapper = document.createElement("div");
-  dataWrapper.className = "data-wrapper";
-  wrapper.appendChild(dataWrapper);
+  const titleText = document.createElement("h1");
+  titleText.innerText = local.title;
+  wrapper.appendChild(titleText);
 
   // Create action buttons.
   const nextBtn = document.createElement("button");
-  nextBtn.innerText = "Next";
+  nextBtn.innerText = local.next;
   wrapper.appendChild(nextBtn);
 
   const prevBtn = document.createElement("button");
-  prevBtn.innerText = "Prev";
+  prevBtn.innerText = local.prev;
   wrapper.appendChild(prevBtn);
 
   // Bind events.
   nextBtn.onclick = () => nextPage();
   prevBtn.onclick = () => prevPage();
 
+  // Create the table.
+  const dataWrapper = document.createElement("div");
+  dataWrapper.className = "data-wrapper";
+  wrapper.appendChild(dataWrapper);
+
+  const cols = [];
+  const numCols = 6;
+
+  for (let i = 0; i < numCols; ++i) {
+    const tmp = document.createElement("div");
+    tmp.className = "col col-" + (i + 1);
+    cols.push(tmp);
+    dataWrapper.appendChild(tmp);
+  }
+
   function render() {
-    if (Date.now() - rowCacheTime > 20 * 1000) {
-      rowCacheTime = Date.now();
-      rowCache.clear();
+    const currentData = data.get(page);
+
+    if (!currentData) return;
+    for (let i = 0; i < numCols; ++i) {
+      cols[i].innerHTML = "";
     }
 
-    const currentData = data.get(page);
-    if (!currentData) return;
-    dataWrapper.innerHTML = "";
+    // Render headers
+    cols[0].appendChild(row()).innerText = local.id;
+    cols[1].appendChild(row()).innerText = local.serviceKind;
+    cols[2].appendChild(row()).innerText = local.dateOfCreation;
+    cols[3].appendChild(row()).innerText = local.providedBy;
+    cols[4].appendChild(row()).innerText = local.payer;
+    cols[5].appendChild(row()).innerText = local.nameOfPayer;
 
     for (let i = 0; i < currentData.length; ++i) {
       const doc = currentData[i];
-      if (rowCache.has(doc._id)) {
-        dataWrapper.appendChild(rowCache.get(doc._id));
-        continue;
-      }
-      // Create a new element.
-      const tmp = document.createElement("div");
-      rowCache.set(doc._id, tmp);
-      tmp.className = "list-entity";
-
-      // TODO(qti3e) Design row.
-
-      dataWrapper.appendChild(tmp);
+      // Create a new row.
+      cols[0].appendChild(row()).innerText = doc._id.slice(1, 7);
+      cols[1].appendChild(row()).innerText = local[doc.kind];
+      cols[2].appendChild(row()).innerText = formatDate(doc.createdAt);
+      cols[3].appendChild(row()).innerText = local[doc.providedBy];
+      cols[4].appendChild(row()).innerText = doc.payer;
+      cols[5].appendChild(row()).innerText = doc.payerName;
     }
+  }
+
+  function row() {
+    const tmp = document.createElement("div");
+    tmp.className = "row";
+    return tmp;
   }
 
   // Initial fetch.

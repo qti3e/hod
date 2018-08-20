@@ -66,6 +66,7 @@ h4,
 h5,
 h6,
 a,
+div,
 p {
   color: $fg;
   cursor: default;
@@ -177,6 +178,7 @@ p {
       line-height: 40px;
       cursor: pointer;
       transition: background 100ms ease-in;
+      background: $background;
 
       &:hover {
         background: $primary;
@@ -625,7 +627,45 @@ p {
 
 #list-charter {
   width: 100%;
-  height: 100px;
+  height: calc(100vh - 100px);
   margin: 100px;
-  background: $primary;
+  // background: $primary;
+
+  button {
+    -webkit-appearance: none;
+    border: none;
+    background: $primary;
+    color: $background;
+    font-size: 14pt;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .data-wrapper {
+    display: flex;
+    max-width: 900px;
+    margin: auto;
+    overflow-y: auto;
+    height: calc(100vh - 300px);
+
+    div.col {
+      display: inline-block;
+      margin: 10px;
+      width: 100%;
+
+      div.row {
+        height: 50px;
+        line-height: 50px;
+        font-size: 14pt;
+        color: $fg;
+        text-align: center;
+        align-self: center;
+      }
+
+      div.row:nth-child(1) {
+        color: $primary;
+        border-bottom: 1px solid $primary;
+      }
+    }
+  }
 }

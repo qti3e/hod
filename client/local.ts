@@ -93,3 +93,21 @@ export const route = {
   unknown: "مشخص نشده",
   search: "جست و جو..."
 };
+
+export const listCharter = {
+  title: "گزارشات چارتر",
+  next: "صفحه بعدی",
+  prev: "صفحه قبلی",
+
+  id: "شماره",
+  serviceKind: "نوع خدمات",
+  dateOfCreation: "تاریخ ایجاد",
+  providedBy: "نحوه تهیه",
+  payer: "طرف حساب",
+  nameOfPayer: "نام طرف حساب",
+
+  internal: "داخلی",
+  international: "خارجی",
+  cache: "نقد و اینترنتی",
+  credit: "اعتباری"
+};
