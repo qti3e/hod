@@ -52,7 +52,8 @@ body {
   font-family: BBCNassim;
 }
 
-body #app * {
+body #app *,
+body .modal-wrapper * {
   user-select: none;
   -webkit-user-drag: none;
 }
