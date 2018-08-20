@@ -31,7 +31,7 @@ router.post("/new", async function(
   }
 });
 
-router.post("/list/%page", async function (
+router.post("/list/:page", async function (
   req: express.Request,
   res: express.Response,
 ): Promise<void> {

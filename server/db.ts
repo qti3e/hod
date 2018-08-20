@@ -135,7 +135,7 @@ export async function storeSystemic(
 }
 
 export async function listCharter(page: number): Promise<t.CharterDoc[]> {
-  const rawData: t.CharterDoc[] = await collections.charters.find({})
+  const rawData: t.CharterDoc[] = await collections.charters.cfind({})
   .sort({ day: 1 })
   .skip(20 * page)
   .limit(20)

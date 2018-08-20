@@ -6,6 +6,8 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import axios from "axios";
+import { get } from "./context";
 import { emit } from "./ipc";
 import * as t from "./types";
 import { cacheForUser } from "./util";
@@ -33,7 +35,23 @@ export function renderListCharter(app: HTMLElement): void {
       data.clear();
     }
     if (!data.has(page)) {
-      // TODO(qti3e) Do the fetch.
+      const token = get("currentToken");
+      const server = get("server");
+      const currentPage = page;
+      const { data: res } = await axios.post(
+        server + "/charter/list/" + currentPage,
+        {},
+        {
+          headers: {
+            "hod-token": token
+          }
+        }
+      );
+      if (res.docs) {
+        data.set(currentPage, res.docs);
+      } else {
+        // TODO(qti3e) Emit a notification.
+      }
     }
     render();
   }
