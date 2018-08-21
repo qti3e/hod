@@ -311,18 +311,22 @@ function inScreen(e: HTMLElement): boolean {
   return false;
 }
 
-export function formatDate(d: string | Date | number): string {
+export function formatDate(d: string | Date | number, short = false): string {
   let jDate;
+  let date: Date;
   if (typeof d === "number") {
     jDate = jalaali.d2j(d);
   } else {
-    const date: Date = typeof d === "string" ? new Date(d) : d;
+    date = typeof d === "string" ? new Date(d) : d;
     jDate = jalaali.toJalaali(date);
   }
   const { jy, jm, jd } = jDate;
-  return (
-    toPersianDigits(jd) + " " + i18n.months[jm - 1] + " " + toPersianDigits(jy)
+  const dateStr = toPersianDigits(jd + " " + i18n.months[jm - 1] + " " + jy);
+  if (!date || short) return dateStr;
+  const timeStr = toPersianDigits(
+    date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
   );
+  return dateStr + " - " + timeStr;
 }
 
 function doGC() {

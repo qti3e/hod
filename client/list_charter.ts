@@ -131,7 +131,10 @@ export function renderListCharter(app: HTMLElement): void {
       // Create a new row.
       cols[0].appendChild(row(doc._id)).innerText = doc._id.slice(0, 7);
       cols[1].appendChild(row(doc._id)).innerText = local[doc.kind];
-      cols[2].appendChild(row(doc._id)).innerText = formatDate(doc.createdAt);
+      cols[2].appendChild(row(doc._id)).innerText = formatDate(
+        doc.createdAt,
+        true
+      );
       cols[3].appendChild(row(doc._id)).innerText = local[doc.providedBy];
       cols[4].appendChild(row(doc._id)).innerText = doc.payer;
       cols[5].appendChild(row(doc._id)).innerText = doc.payerName;
