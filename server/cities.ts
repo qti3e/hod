@@ -39,7 +39,8 @@ for (let i = 0; i < data.length; ++i) {
   cities.push({
     id: md5(city.Cities),
     names: [normalizeText(city.label_fa), city.label_en],
-    lngLat: [lngLat[0], lngLat[1]]
+    lngLat: [lngLat[0], lngLat[1]],
+    country: city.country_fa
   });
 }
 
