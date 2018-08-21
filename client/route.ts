@@ -210,8 +210,8 @@ export function routeSelector(): RouteSelectorElement {
         if (bStarts) {
           return 1;
         }
-        const aIran = a.country === "IR";
-        const bIran = b.country === "IR";
+        const aIran = a.country === "ایران";
+        const bIran = b.country === "ایران";
         const aLen = Math.min(...a.names.map(x => x.length));
         const bLen = Math.min(...b.names.map(x => x.length));
         if (aIran && bIran) {
