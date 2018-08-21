@@ -142,8 +142,6 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
     for (let i = 0; i < doc.tickets.length; ++i) {
       ticketsInner.appendChild(renderTicket(doc.tickets[i]));
     }
-
-    console.log(doc);
   }
 
   // Initial fetch.
