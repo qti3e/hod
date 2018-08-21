@@ -333,7 +333,9 @@ export function routeView(
       mapWrapper.parentElement.removeChild(mapWrapper);
     }
     wrapper.classList.remove("map-view-show");
-    await delay(600);
+    if (inScreen(wrapper)) {
+      await delay(600);
+    }
     data.route = null;
     reqClose = null;
   }
@@ -546,4 +548,15 @@ async function fetchData(): Promise<t.City[]> {
   citiesCache = res.data;
   inProgress = false;
   return res.data;
+}
+
+// TODO(qti3e) Move to util.ts.
+function inScreen(e: HTMLElement): boolean {
+  while (e.parentElement) {
+    if (e === document.body) {
+      return true;
+    }
+    e = e.parentElement;
+  }
+  return false;
 }
