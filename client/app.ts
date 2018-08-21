@@ -15,6 +15,7 @@ import { delay } from "./util";
 import { renderFrame } from "./frame";
 import { renderHome } from "./home";
 import { renderListCharter } from "./list_charter";
+import { renderListSystemic } from "./list_systemic";
 import { renderLogin } from "./login";
 import { renderMenu } from "./menu";
 import { renderNewCharter } from "./new_charter";
@@ -22,6 +23,7 @@ import { renderNewSystemic } from "./new_systemic";
 import { renderNewUser } from "./new_user";
 import { renderUsersList } from "./users";
 import { renderViewCharter } from "./view_charter";
+import { renderViewSystemic } from "./view_systemic";
 
 export type PageName =
   | "login"
@@ -32,7 +34,9 @@ export type PageName =
   | "newCharter"
   | "newSystemic"
   | "listCharter"
-  | "viewCharter";
+  | "viewCharter"
+  | "listSystemic"
+  | "viewSystemic";
 
 export type Page = (app: HTMLElement, param?: string) => void;
 export type Pages = { [key in PageName]: Page };
@@ -46,7 +50,9 @@ export const pages: Pages = {
   newCharter: renderNewCharter,
   newSystemic: renderNewSystemic,
   listCharter: renderListCharter,
-  viewCharter: renderViewCharter
+  viewCharter: renderViewCharter,
+  listSystemic: renderListSystemic,
+  viewSystemic: renderViewSystemic
 };
 
 function renderApp(wrapper: HTMLElement) {

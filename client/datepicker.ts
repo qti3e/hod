@@ -323,9 +323,7 @@ export function formatDate(d: string | Date | number, short = false): string {
   const { jy, jm, jd } = jDate;
   const dateStr = toPersianDigits(jd + " " + i18n.months[jm - 1] + " " + jy);
   if (!date || short) return dateStr;
-  const timeStr = toPersianDigits(
-    date.getHours() + ":" + date.getMinutes()
-  );
+  const timeStr = toPersianDigits(date.getHours() + ":" + date.getMinutes());
   return dateStr + " - " + timeStr;
 }
 

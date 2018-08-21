@@ -10,14 +10,14 @@ import axios from "axios";
 import { get } from "./context";
 import { formatDate } from "./datepicker";
 import { emit } from "./ipc";
-import { listCharter as local } from "./local";
+import { listSystemic as local } from "./local";
 import * as t from "./types";
 import { cacheForUser } from "./util";
 
-// Renders list of charter documentations.
+// Renders list of systemic documentations.
 const domCache = cacheForUser<HTMLElement>();
 
-export function renderListCharter(app: HTMLElement): void {
+export function renderListSystemic(app: HTMLElement): void {
   if (domCache.has()) {
     fetchData();
     return void app.appendChild(domCache.get());
@@ -30,7 +30,7 @@ export function renderListCharter(app: HTMLElement): void {
 
   let page = 0;
   let dataTime = Date.now();
-  const data = new Map<number, t.CharterDoc[]>();
+  const data = new Map<number, t.SystemicDoc[]>();
 
   async function fetchData(): Promise<void> {
     if (Date.now() - dataTime > 10 * 1000) {
@@ -42,7 +42,7 @@ export function renderListCharter(app: HTMLElement): void {
       const server = get("server");
       const currentPage = page;
       const { data: res } = await axios.post(
-        server + "/charter/list/" + currentPage,
+        server + "/systemic/list/" + currentPage,
         {},
         {
           headers: {
@@ -122,9 +122,8 @@ export function renderListCharter(app: HTMLElement): void {
     cols[0].appendChild(row()).innerText = local.id;
     cols[1].appendChild(row()).innerText = local.serviceKind;
     cols[2].appendChild(row()).innerText = local.dateOfCreation;
-    cols[3].appendChild(row()).innerText = local.providedBy;
-    cols[4].appendChild(row()).innerText = local.payer;
-    cols[5].appendChild(row()).innerText = local.nameOfPayer;
+    cols[3].appendChild(row()).innerText = local.payer;
+    cols[4].appendChild(row()).innerText = local.nameOfPayer;
 
     for (let i = 0; i < currentData.length; ++i) {
       const doc = currentData[i];
@@ -135,9 +134,8 @@ export function renderListCharter(app: HTMLElement): void {
         doc.createdAt,
         true
       );
-      cols[3].appendChild(row(doc._id)).innerText = local[doc.providedBy];
-      cols[4].appendChild(row(doc._id)).innerText = doc.payer;
-      cols[5].appendChild(row(doc._id)).innerText = doc.payerName;
+      cols[3].appendChild(row(doc._id)).innerText = doc.payer;
+      cols[4].appendChild(row(doc._id)).innerText = doc.payerName;
     }
   }
 
@@ -147,7 +145,7 @@ export function renderListCharter(app: HTMLElement): void {
     if (openModal) {
       tmp.onclick = () => {
         emit("open-modal", {
-          page: "viewCharter",
+          page: "viewSystemic",
           param: openModal
         });
       };

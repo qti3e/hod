@@ -37,6 +37,7 @@ export function renderMenu(app: HTMLElement): void {
     wrapper.appendChild(diamond("list_charter", listDocIcon, "listCharter"));
 
     wrapper.appendChild(diamond("new_systemic", newDocIcon, "newSystemic"));
+    wrapper.appendChild(diamond("list_systemic", listDocIcon, "listSystemic"));
   }
 
   app.appendChild(wrapper);

@@ -25,7 +25,8 @@ export const menu = {
   new_user: "کاربر جدید",
   new_charter: "چارتر جدید",
   new_systemic: "سیستمی جدید",
-  list_charter: "گزارشات چارتر"
+  list_charter: "گزارشات چارتر",
+  list_systemic: "گزارشات سیستمی"
 };
 
 export const common = {
@@ -146,4 +147,16 @@ export const viewCharter = {
   received: "دریافتی",
   outline: "ایرلاین رفت",
   turnline: "ایرلاین بازگشت"
+};
+
+export const listSystemic = {
+  ...listCharter,
+  title: "گزارشات سیستمی",
+  train: "قطار"
+};
+
+export const viewSystemic = {
+  ...viewCharter,
+  ...listSystemic,
+  title: "گزارش سیستمی"
 };

@@ -169,3 +169,37 @@ export async function getCharter(id: string): Promise<t.CharterDoc> {
 
   return rawData;
 }
+
+export async function listSystemic(page: number): Promise<t.SystemicDoc[]> {
+  const rawData: t.SystemicDoc[] = await collections.systemics
+    .cfind({})
+    .sort({ day: 1 })
+    .skip(20 * page)
+    .limit(20)
+    .exec();
+  for (let i = 0; i < rawData.length; ++i) {
+    rawData[i].owner = await getUser(rawData[i]._ownerId);
+    delete rawData[i]._ownerId;
+  }
+  return rawData;
+}
+
+export async function getSystemic(id: string): Promise<t.SystemicDoc> {
+  const rawData: t.SystemicDoc = await collections.systemics.findOne({
+    _id: id
+  });
+
+  rawData.owner = await getUser(rawData._ownerId);
+  rawData.tickets = [];
+
+  for (let i = 0; i < rawData._ticketIds.length; ++i) {
+    rawData.tickets.push(
+      await getTicket<t.SystemicTicket>(rawData._ticketIds[i])
+    );
+  }
+
+  delete rawData._ownerId;
+  delete rawData._ticketIds;
+
+  return rawData;
+}
