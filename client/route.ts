@@ -184,10 +184,8 @@ export function routeSelector(): RouteSelectorElement {
       for (const name of cities[i].names) {
         if (name.toLowerCase().indexOf(value) > -1) {
           data.results.push(cities[i]);
-          const s = cities[i].names.filter(x =>
-            x.toLowerCase().startsWith(value)
-          );
-          cities[i].name = s[0] || name;
+          // Force to use Persian names.
+          cities[i].name = cities[i].names[0];
           break;
         }
       }
