@@ -145,5 +145,5 @@ export const viewCharter = {
   paid: "پرداخت شده",
   received: "دریافتی",
   outline: "ایرلاین رفت",
-  turnline: "ایرلاین بازگشت",
+  turnline: "ایرلاین بازگشت"
 };

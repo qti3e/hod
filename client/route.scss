@@ -176,3 +176,95 @@
     }
   }
 }
+
+.map-view {
+  transition: height 600ms ease-in-out, border-radius 600ms ease-in-out;
+
+  .map-view-canvas-wrapper {
+    transition: opacity 600ms ease-in-out;
+    opacity: 0;
+  }
+
+  &.map-view-show {
+    height: 400px !important;
+    border-radius: 0 !important;
+    overflow-y: hidden;
+
+    & > * {
+      display: none !important;
+    }
+
+    .map-view-canvas-wrapper {
+      opacity: 1;
+    }
+  }
+
+  .map-view-canvas-wrapper {
+    width: 100%;
+    text-align: center;
+    background: $background;
+    display: block !important;
+  }
+
+  .map-view-show {
+    -webkit-appearance: none;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+
+    .city-name {
+      direction: ltr;
+      display: inline-block;
+      cursor: pointer;
+      margin: 10px;
+      min-width: 100px;
+      font-size: 14pt;
+      color: $primary;
+      text-align: center;
+      text-decoration: underline;
+      text-decoration-color: $secondry;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 3px;
+      border-radius: 5px;
+      background: $primary;
+    }
+
+    &:focus {
+      outline: none;
+      .dot {
+        background: $secondry;
+      }
+    }
+  }
+
+  .map-view-hide {
+    -webkit-appearance: none;
+    display: block;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: lighten($background, 10%);
+    width: 45px;
+    height: 45px;
+    outline: none;
+    border-radius: 0 0 0 45px;
+    font-family: FontAwesome;
+    font-size: 20pt;
+    padding-left: 10px;
+    padding-bottom: 10px;
+
+    &::before {
+      color: $primary;
+      content: "\f00d";
+    }
+  }
+}

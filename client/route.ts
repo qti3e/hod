@@ -13,14 +13,14 @@ import { get } from "./context";
 import { route as local } from "./local";
 import { normalizeText } from "./persian";
 import * as t from "./types";
-import { fa } from "./util";
+import { delay, fa } from "./util";
 
 let citiesCache: t.City[];
 let canvasCache;
 let updateFnCache;
 
 interface Data {
-  route: t.City[];
+  route: t.City[] | t.DBCity[];
   results: t.City[];
   hover: t.City;
 }
@@ -293,6 +293,71 @@ export function routeSelector(): RouteSelectorElement {
     fromEl.innerText = fromStr;
     toEl.innerText = toStr;
   }
+
+  return btn;
+}
+
+let reqClose: () => Promise<void>;
+
+export function routeView(
+  route: t.DBCity[],
+  wrapper: HTMLElement
+): HTMLButtonElement {
+  wrapper.classList.add("map-view");
+
+  const mapWrapper = document.createElement("div");
+  mapWrapper.className = "map-view-canvas-wrapper";
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "map-view-hide";
+  closeBtn.onclick = () => hide();
+  mapWrapper.appendChild(closeBtn);
+
+  async function show() {
+    // Only show one map at a time (we only have one canvas).
+    if (reqClose) {
+      await reqClose();
+    }
+    reqClose = hide;
+
+    data.route = route;
+    wrapper.appendChild(mapWrapper);
+    wrapper.classList.add("map-view-show");
+
+    const update = renderMap(mapWrapper);
+    // Start the animation loop.
+    update();
+  }
+
+  async function hide(): Promise<void> {
+    if (mapWrapper.parentElement) {
+      mapWrapper.parentElement.removeChild(mapWrapper);
+    }
+    wrapper.classList.remove("map-view-show");
+    await delay(600);
+    data.route = null;
+    reqClose = null;
+  }
+
+  const btn = document.createElement("button");
+  btn.classList.add("map-view-show");
+  btn.onclick = () => show();
+
+  const fromEl = document.createElement("div");
+  fromEl.classList.add("city-name");
+  fromEl.innerText = route[0].displayName || local.unknown;
+  const toEl = document.createElement("div");
+  toEl.classList.add("city-name");
+  if (route.length > 1) {
+    toEl.innerText = route[route.length - 1].displayName;
+  } else {
+    toEl.innerText = local.unknown;
+  }
+
+  btn.appendChild(fromEl);
+  btn.appendChild(document.createElement("div")).className = "dot";
+  btn.appendChild(document.createElement("div")).className = "dot";
+  btn.appendChild(document.createElement("div")).className = "dot";
+  btn.appendChild(toEl);
 
   return btn;
 }

@@ -760,7 +760,7 @@ p {
     .data-row {
       display: inline-block;
       width: 100%;
-      
+
       div {
         text-align: center;
       }
@@ -774,11 +774,10 @@ p {
     .ticket-wrapper {
       width: calc(100% - 30px);
       margin: 15px;
-      height: 150px;
+      height: 110px;
       border-radius: 0 0 35px 35px;
       border: 1px solid $primary;
-      display: flex;
-      transition: height 600ms ease-in-out;
+      text-align: center;
 
       &:first-child {
         margin-top: 0;
@@ -790,6 +789,11 @@ p {
 
       .group {
         width: 100%;
+      }
+
+      .g-wrapper {
+        display: flex;
+        text-align: right;
       }
     }
   }

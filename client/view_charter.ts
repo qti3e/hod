@@ -11,6 +11,7 @@ import { get } from "./context";
 import { formatDate } from "./datepicker";
 import { viewCharter as local } from "./local";
 import { toPersianDigits } from "./persian";
+import { routeView } from "./route";
 import * as t from "./types";
 
 export function renderViewCharter(app: HTMLElement, param: string): void {
@@ -94,34 +95,22 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
     // End of rendering layout.
 
     // Render info box.
-    infoWrapper.appendChild(
-      row(local.id, doc._id.slice(0, 7))
-    );
+    infoWrapper.appendChild(row(local.id, doc._id.slice(0, 7)));
 
-    infoWrapper.appendChild(
-      row(local.serviceKind, local[doc.kind])
-    );
+    infoWrapper.appendChild(row(local.serviceKind, local[doc.kind]));
 
-    infoWrapper.appendChild(
-      row(local.providedBy, local[doc.providedBy])
-    );
+    infoWrapper.appendChild(row(local.providedBy, local[doc.providedBy]));
 
     infoWrapper.appendChild(
       row(local.dateOfCreation, formatDate(doc.createdAt))
     );
 
-    infoWrapper.appendChild(
-      row(local.dateOfUpdate, formatDate(doc.updatedAt))
-    );
+    infoWrapper.appendChild(row(local.dateOfUpdate, formatDate(doc.updatedAt)));
 
     // Render payer box.
-    payerWrapper.appendChild(
-      row(local.payer, doc.payer)
-    );
+    payerWrapper.appendChild(row(local.payer, doc.payer));
 
-    payerWrapper.appendChild(
-      row(local.nameOfPayer, doc.payerName)
-    );
+    payerWrapper.appendChild(row(local.nameOfPayer, doc.payerName));
 
     payerWrapper.appendChild(
       row(local.nationalCode, toPersianDigits(doc.nationalCode))
@@ -132,13 +121,9 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
     );
 
     // Render counter box.
-    counterWrapper.appendChild(
-      row(local.name, doc.owner.name)
-    );
+    counterWrapper.appendChild(row(local.name, doc.owner.name));
 
-    counterWrapper.appendChild(
-      row(local.lastName, doc.owner.lastName)
-    );
+    counterWrapper.appendChild(row(local.lastName, doc.owner.lastName));
 
     counterWrapper.appendChild(
       row(local.nationalCode, toPersianDigits(doc.owner.nationalCode))
@@ -184,67 +169,37 @@ function renderTicket(ticket: t.CharterTicket): HTMLElement {
   const wrapper = document.createElement("div");
   wrapper.className = "ticket-wrapper";
 
-  // Create input groups.
+  const gwrapper = document.createElement("div");
+  gwrapper.className = "g-wrapper";
+  wrapper.appendChild(gwrapper);
+
+  // Create data groups.
   const g1 = document.createElement("div");
   g1.className = "group g1";
-  wrapper.appendChild(g1);
+  gwrapper.appendChild(g1);
   const g2 = document.createElement("div");
   g2.className = "group g2";
-  wrapper.appendChild(g2);
+  gwrapper.appendChild(g2);
   const g3 = document.createElement("div");
   g3.className = "group g3";
-  wrapper.appendChild(g3);
+  gwrapper.appendChild(g3);
   const g4 = document.createElement("div");
   g4.className = "group g4";
-  wrapper.appendChild(g4);
+  gwrapper.appendChild(g4);
 
-  g1.appendChild(row(
-    local.id,
-    ticket.id
-  ));
+  g1.appendChild(row(local.id, ticket.id));
+  g1.appendChild(row(local.date, formatDate(ticket.date)));
 
-  g1.appendChild(row(
-    local.date,
-    formatDate(ticket.date)
-  ));
+  g2.appendChild(row(local.paid, String(ticket.paid || 0)));
+  g2.appendChild(row(local.received, String(ticket.received || 0)));
 
-  g2.appendChild(row(
-    local.paid,
-    String(ticket.paid || 0)
-  ));
+  g3.appendChild(row(local.passengerName, ticket.passengerName));
+  g3.appendChild(row(local.passengerLastname, ticket.passengerLastname));
 
-  g2.appendChild(row(
-    local.received,
-    String(ticket.received || 0)
-  ));
+  g4.appendChild(row(local.outline, ticket.outline));
+  g4.appendChild(row(local.turnline, ticket.turnline));
 
-  g3.appendChild(row(
-    local.passengerName,
-    ticket.passengerName
-  ));
-
-  g3.appendChild(row(
-    local.passengerLastname,
-    ticket.passengerLastname
-  ));
-
-  g4.appendChild(row(
-    local.outline,
-    ticket.outline
-  ));
-
-  g4.appendChild(row(
-    local.turnline,
-    ticket.turnline
-  ));
-
-  // TODO(qti3e) Implement routeView(wrapper);
-  // It should:
-  // 1. Change height of content to 500px or so.
-  // 2. Fade all the current content
-  // 3. Show the map
-  // 4. It should have a button to close the map
-  //    and re-show the content.
+  wrapper.appendChild(routeView(ticket.route, wrapper));
 
   return wrapper;
 }
