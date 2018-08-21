@@ -741,10 +741,6 @@ p {
     }
   }
 
-  #tickets-inner {
-    overflow-y: auto;
-  }
-
   .data-row {
     label {
       width: 100px;
@@ -767,6 +763,33 @@ p {
       
       div {
         text-align: center;
+      }
+    }
+  }
+
+  #tickets-inner {
+    overflow-y: auto;
+    max-height: calc(100vh - 475px);
+
+    .ticket-wrapper {
+      width: calc(100% - 30px);
+      margin: 15px;
+      height: 150px;
+      border-radius: 0 0 35px 35px;
+      border: 1px solid $primary;
+      display: flex;
+      transition: height 600ms ease-in-out;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      .data-row {
+        display: block;
+      }
+
+      .group {
+        width: 100%;
       }
     }
   }

@@ -37,6 +37,7 @@ export function renderLogin(wrapper: HTMLElement): void {
 
   const usernameIn = document.createElement("input");
   usernameIn.type = "text";
+  usernameIn.className = "ltr";
   usernameIn.placeholder = local.username;
   onEnter(usernameIn, doLogin);
   loginBox.appendChild(usernameIn);

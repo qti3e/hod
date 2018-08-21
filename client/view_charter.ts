@@ -153,6 +153,11 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
       }
     }
 
+    // Render tickets.
+    for (let i = 0; i < doc.tickets.length; ++i) {
+      ticketsInner.appendChild(renderTicket(doc.tickets[i]));
+    }
+
     console.log(doc);
   }
 
@@ -173,4 +178,73 @@ function row(label: string, value: string): HTMLDivElement {
   tmp.appendChild(valueEl);
 
   return tmp;
+}
+
+function renderTicket(ticket: t.CharterTicket): HTMLElement {
+  const wrapper = document.createElement("div");
+  wrapper.className = "ticket-wrapper";
+
+  // Create input groups.
+  const g1 = document.createElement("div");
+  g1.className = "group g1";
+  wrapper.appendChild(g1);
+  const g2 = document.createElement("div");
+  g2.className = "group g2";
+  wrapper.appendChild(g2);
+  const g3 = document.createElement("div");
+  g3.className = "group g3";
+  wrapper.appendChild(g3);
+  const g4 = document.createElement("div");
+  g4.className = "group g4";
+  wrapper.appendChild(g4);
+
+  g1.appendChild(row(
+    local.id,
+    ticket.id
+  ));
+
+  g1.appendChild(row(
+    local.date,
+    formatDate(ticket.date)
+  ));
+
+  g2.appendChild(row(
+    local.paid,
+    String(ticket.paid || 0)
+  ));
+
+  g2.appendChild(row(
+    local.received,
+    String(ticket.received || 0)
+  ));
+
+  g3.appendChild(row(
+    local.passengerName,
+    ticket.passengerName
+  ));
+
+  g3.appendChild(row(
+    local.passengerLastname,
+    ticket.passengerLastname
+  ));
+
+  g4.appendChild(row(
+    local.outline,
+    ticket.outline
+  ));
+
+  g4.appendChild(row(
+    local.turnline,
+    ticket.turnline
+  ));
+
+  // TODO(qti3e) Implement routeView(wrapper);
+  // It should:
+  // 1. Change height of content to 500px or so.
+  // 2. Fade all the current content
+  // 3. Show the map
+  // 4. It should have a button to close the map
+  //    and re-show the content.
+
+  return wrapper;
 }

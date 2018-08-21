@@ -137,5 +137,13 @@ export const viewCharter = {
   companyCost: "هزینه شرکت",
   credit: "مابه‌التفاوت نقدی",
   installmentBase: "مبلغ مبنای اقساط",
-  wage: "مبلغ کارمزد"
+  wage: "مبلغ کارمزد",
+
+  date: "تاریخ",
+  passengerName: "نام مسافر",
+  passengerLastname: "نام خانوادگی مسافر",
+  paid: "پرداخت شده",
+  received: "دریافتی",
+  outline: "ایرلاین رفت",
+  turnline: "ایرلاین بازگشت",
 };
