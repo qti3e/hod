@@ -26,7 +26,8 @@ export const menu = {
   new_charter: "چارتر جدید",
   new_systemic: "سیستمی جدید",
   list_charter: "گزارشات چارتر",
-  list_systemic: "گزارشات سیستمی"
+  list_systemic: "گزارشات سیستمی",
+  fund_dashboard: "داشبورد صندوق"
 };
 
 export const common = {
@@ -159,4 +160,8 @@ export const viewSystemic = {
   ...viewCharter,
   ...listSystemic,
   title: "گزارش سیستمی"
+};
+
+export const fundDashboard = {
+  title: "داشبورد صندوق"
 };

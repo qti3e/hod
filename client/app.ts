@@ -13,6 +13,7 @@ import { delay } from "./util";
 
 // Import views.
 import { renderFrame } from "./frame";
+import { renderFundDashboard } from "./fund_dashboard";
 import { renderHome } from "./home";
 import { renderListCharter } from "./list_charter";
 import { renderListSystemic } from "./list_systemic";
@@ -36,7 +37,8 @@ export type PageName =
   | "listCharter"
   | "viewCharter"
   | "listSystemic"
-  | "viewSystemic";
+  | "viewSystemic"
+  | "fundDashboard";
 
 export type PageURLWithParam = {
   page: PageName;
@@ -59,7 +61,8 @@ export const pages: Pages = {
   listCharter: renderListCharter,
   viewCharter: renderViewCharter,
   listSystemic: renderListSystemic,
-  viewSystemic: renderViewSystemic
+  viewSystemic: renderViewSystemic,
+  fundDashboard: renderFundDashboard
 };
 
 function renderApp(wrapper: HTMLElement) {

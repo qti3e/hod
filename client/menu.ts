@@ -38,6 +38,8 @@ export function renderMenu(app: HTMLElement): void {
 
     wrapper.appendChild(diamond("new_systemic", newDocIcon, "newSystemic"));
     wrapper.appendChild(diamond("list_systemic", listDocIcon, "listSystemic"));
+
+    wrapper.appendChild(diamond("fund_dashboard", "dollar", "fundDashboard"));
   }
 
   app.appendChild(wrapper);
