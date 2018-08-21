@@ -29,38 +29,32 @@ export function renderListCharter(app: HTMLElement): void {
   app.appendChild(wrapper);
 
   let page = 0;
-  let dataTime = Date.now();
-  const data = new Map<number, t.CharterDoc[]>();
+  let data: t.CharterDoc[];
 
   async function fetchData(): Promise<void> {
-    if (Date.now() - dataTime > 10 * 1000) {
-      dataTime = Date.now();
-      data.clear();
-    }
-    if (!data.has(page)) {
-      const token = get("currentToken");
-      const server = get("server");
-      const currentPage = page;
-      const { data: res } = await axios.post(
-        server + "/charter/list/" + currentPage,
-        {},
-        {
-          headers: {
-            "hod-token": token
-          }
+    const token = get("currentToken");
+    const server = get("server");
+    const currentPage = page;
+    const { data: res } = await axios.post(
+      server + "/charter/list/" + currentPage,
+      {},
+      {
+        headers: {
+          "hod-token": token
         }
-      );
-      if (res.docs) {
-        data.set(currentPage, res.docs);
-      } else {
-        // TODO(qti3e) Emit a notification.
       }
+    );
+    if (res.docs) {
+      data = res.docs;
+    } else {
+      data = [];
+      // TODO(qti3e) Emit a notification.
     }
     render();
   }
 
   function nextPage() {
-    if (data.get(page).length < 20) {
+    if (data && data.length < 20) {
       fetchData();
       return;
     }
@@ -83,13 +77,13 @@ export function renderListCharter(app: HTMLElement): void {
   wrapper.appendChild(titleText);
 
   // Create action buttons.
-  const nextBtn = document.createElement("button");
-  nextBtn.innerText = local.next;
-  wrapper.appendChild(nextBtn);
-
   const prevBtn = document.createElement("button");
   prevBtn.innerText = local.prev;
   wrapper.appendChild(prevBtn);
+
+  const nextBtn = document.createElement("button");
+  nextBtn.innerText = local.next;
+  wrapper.appendChild(nextBtn);
 
   // Bind events.
   nextBtn.onclick = () => nextPage();
@@ -111,7 +105,7 @@ export function renderListCharter(app: HTMLElement): void {
   }
 
   function render() {
-    const currentData = data.get(page);
+    const currentData = data;
 
     if (!currentData) return;
     for (let i = 0; i < numCols; ++i) {
