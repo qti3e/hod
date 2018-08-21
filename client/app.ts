@@ -38,6 +38,13 @@ export type PageName =
   | "listSystemic"
   | "viewSystemic";
 
+export type PageURLWithParam = {
+  page: PageName;
+  param: any;
+};
+
+export type PageURL = PageName | PageURLWithParam;
+
 export type Page = (app: HTMLElement, param?: string) => void;
 export type Pages = { [key in PageName]: Page };
 
@@ -67,7 +74,10 @@ function renderApp(wrapper: HTMLElement) {
   app.id = "app";
   wrapper.appendChild(app);
 
-  const render = async (page: PageName) => {
+  const render = async (url: PageURL) => {
+    const parsedURL = parseURL(url);
+    let page = parsedURL.page;
+    const param = parsedURL.param;
     // Hide current content with a fade effect.
     app.classList.add("hide");
     await delay(200);
@@ -95,7 +105,7 @@ function renderApp(wrapper: HTMLElement) {
       }
 
       if (pages[page]) {
-        return pages[page](app);
+        return pages[page](app, param);
       } else {
         console.log("404", page);
         emit("notification", local["404"]);
@@ -118,8 +128,8 @@ function renderApp(wrapper: HTMLElement) {
   // user to another page.
   on("goto", render);
 
-  const renderModal = async data => {
-    const { page, param } = data;
+  const renderModal = async (url: PageURL) => {
+    const { page, param } = parseURL(url);
     let finishedLoading = false;
     const modalWrapper = document.createElement("div");
     modalWrapper.className = "modal-wrapper";
@@ -186,3 +196,13 @@ on("notification", (text: string) => {
     body: text
   });
 });
+
+function parseURL(url: PageURL): PageURLWithParam {
+  if (typeof url === "string") {
+    return {
+      page: url,
+      param: undefined
+    };
+  }
+  return url;
+}
