@@ -6,7 +6,7 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import { PageName } from "./app";
+import { PageURLWithParam } from "./app";
 import { get, set } from "./context";
 import { save } from "./context";
 import { emit, on } from "./ipc";
@@ -35,14 +35,14 @@ export function renderFrame(app: HTMLElement): void {
   navbar.appendChild(document.createElement("div")).id = "b1";
   navbar.appendChild(document.createElement("div")).id = "b2";
   navbar.appendChild(document.createElement("div")).id = "b3";
-  let previousPage: PageName;
+  let previousPage: PageURLWithParam;
   let isOpen = false;
-  on("route-change", page => {
-    if (page === "menu") {
+  on("route-change", url => {
+    if (url.page === "menu") {
       navbar.classList.add("open");
       isOpen = true;
     } else {
-      previousPage = page;
+      previousPage = url;
       navbar.classList.remove("open");
       isOpen = false;
     }

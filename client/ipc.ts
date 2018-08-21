@@ -7,7 +7,7 @@
  */
 
 import EventEmitter from "eventemitter3";
-import { PageName, PageURL } from "./app";
+import { PageURL, PageURLWithParam } from "./app";
 import * as t from "./types";
 
 const EE = new EventEmitter();
@@ -15,7 +15,7 @@ export interface EventDataTypeMap {
   goto: PageURL;
   "open-modal": PageURL;
   notification: string;
-  "route-change": PageName;
+  "route-change": PageURLWithParam;
   login: t.User;
 }
 

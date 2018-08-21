@@ -116,7 +116,7 @@ function renderApp(wrapper: HTMLElement) {
         }
       }
     } finally {
-      emit("route-change", page);
+      emit("route-change", parsedURL);
       // To prevent a flush.
       await delay(50);
       // Remove the hide class.
