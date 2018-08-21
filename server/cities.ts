@@ -28,15 +28,17 @@ for (let i = 0; i < data.length; ++i) {
   }
   seen.set(city.Cities, 1);
 
-  const lngLat = city.coordinate_location.slice(6, -1).split(" ").map(Number);
-  if (lngLat.length !== 2) { continue; }
+  const lngLat = city.coordinate_location
+    .slice(6, -1)
+    .split(" ")
+    .map(Number);
+  if (lngLat.length !== 2) {
+    continue;
+  }
 
   cities.push({
     id: md5(city.Cities),
-    names: [
-      normalizeText(city.label_fa),
-      city.label_en
-    ],
+    names: [normalizeText(city.label_fa), city.label_en],
     lngLat: [lngLat[0], lngLat[1]]
   });
 }
