@@ -204,6 +204,10 @@
     text-align: center;
     background: $background;
     display: block !important;
+
+    canvas {
+      margin-top: -45px;
+    }
   }
 
   .map-view-show {
