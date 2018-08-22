@@ -44,6 +44,8 @@ function main() {
   win.once("ready-to-show", () => {
     win.show();
   });
+
+  win.on("closed", () => app.quit());
 }
 
 app.on("ready", main);
