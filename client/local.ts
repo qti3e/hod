@@ -165,3 +165,12 @@ export const viewSystemic = {
 export const fundDashboard = {
   title: "داشبورد صندوق"
 };
+
+export const config = {
+  done: "اتصال به سرور با موفقیت انجام شد.",
+  versionError: "نسخه سرور با این نرم افزار همگام نمیباشد.",
+  error: "امکان اتصال به سرور مورد نظر وجود ندارد.",
+  title: "تنظیم سرور",
+  host: "آدرس سرور...",
+  set: "تلاش برای اتصال"
+};

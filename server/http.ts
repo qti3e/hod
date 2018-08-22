@@ -24,7 +24,7 @@ app.use(normalizeBody);
 app.get("/info", (req, res) => {
   res.send({
     name: "Hod Hod Co",
-    version: "v1",
+    versions: ["v1"],
     author: "Parsa Ghadimi <me@qti3e.com>"
   });
 });

@@ -13,4 +13,4 @@ export function renderFundDashboard(app: HTMLElement): void {
   app.innerHTML = local.title;
 }
 
-setTimeout(() => emit("goto", "fundDashboard"));
+// setTimeout(() => emit("goto", "fundDashboard"));

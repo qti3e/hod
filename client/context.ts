@@ -19,14 +19,17 @@ import { nodeRequire } from "./util";
 
 const home = nodeRequire("os").homedir();
 const file = nodeRequire("path").join(home, ".hod");
-const version = "v1";
+export const version = "v1";
 
 let context: ContextTypesMap;
 const defaultContext: ContextTypesMap = {
   tokens: {},
   currentToken: undefined,
   // Note: There must be no "/" at the end.
-  server: "http://localhost:10234/v1"
+  host: "http://localhost:10234",
+  get server() {
+    return this.host + "/" + version;
+  }
 };
 
 export interface ContextTypesMap {
@@ -34,7 +37,8 @@ export interface ContextTypesMap {
     [token: string]: t.User;
   };
   currentToken: string;
-  server: string;
+  host: string;
+  readonly server: string;
 }
 
 export function get<T extends keyof ContextTypesMap>(
@@ -90,6 +94,11 @@ function load() {
     const json = JSON.parse(str);
     if (json["__hod"] !== version) throw null;
     context = json;
+    Object.defineProperty(context, "server", {
+      get() {
+        return context.host + "/" + version;
+      }
+    });
     console.log("Loaded context", context);
   } catch (e) {
     console.log(e);

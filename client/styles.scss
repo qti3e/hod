@@ -802,3 +802,34 @@ p {
     }
   }
 }
+
+#config-page-wrapper {
+  input {
+    border: none;
+    outline: none;
+    font-size: 15pt;
+    background: transparent;
+    border-bottom: 1px solid $primary;
+    color: $primary;
+    height: 35px;
+    width: 400px;
+    padding-right: 5px;
+  }
+
+  button {
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    height: 35px;
+    font-size: 15pt;
+    cursor: pointer;
+    background: $primary;
+    color: $background;
+    border-bottom: 1px solid $primary;
+  }
+
+  .form {
+    width: 100%;
+    text-align: center;
+  }
+}

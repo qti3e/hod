@@ -9,12 +9,15 @@
 import "@fortawesome/fontawesome-free";
 import "@fortawesome/fontawesome-free/css/all.css";
 
-import { get } from "./context";
+import axios from "axios";
+
+import { get, version } from "./context";
 import { emit, on, once } from "./ipc";
 import { common as local } from "./local";
 import { delay } from "./util";
 
 // Import views.
+import { renderConfig } from "./config";
 import { renderFrame } from "./frame";
 import { renderFundDashboard } from "./fund_dashboard";
 import { renderHome } from "./home";
@@ -41,7 +44,8 @@ export type PageName =
   | "viewCharter"
   | "listSystemic"
   | "viewSystemic"
-  | "fundDashboard";
+  | "fundDashboard"
+  | "config";
 
 export type PageURLWithParam = {
   page: PageName;
@@ -50,7 +54,11 @@ export type PageURLWithParam = {
 
 export type PageURL = PageName | PageURLWithParam;
 
-export type Page = (app: HTMLElement, param?: string) => void;
+export type Page = (
+  app: HTMLElement,
+  param?: string,
+  closeCb?: (emitEvent?: boolean) => Promise<void>
+) => void;
 export type Pages = { [key in PageName]: Page };
 
 export const pages: Pages = {
@@ -65,7 +73,8 @@ export const pages: Pages = {
   viewCharter: renderViewCharter,
   listSystemic: renderListSystemic,
   viewSystemic: renderViewSystemic,
-  fundDashboard: renderFundDashboard
+  fundDashboard: renderFundDashboard,
+  config: renderConfig
 };
 
 function renderApp(wrapper: HTMLElement) {
@@ -91,7 +100,9 @@ function renderApp(wrapper: HTMLElement) {
     if (app.childNodes.length > 0) {
       const child = app.childNodes[0];
       // Let current component know we're going to unmount it.
-      const e = new Event("component-will-unmount");
+      const e = new Event("component-will-unmount", {
+        cancelable: true
+      });
       const cancelled = !child.dispatchEvent(e);
       // We might want to call `e.preventDefault()`.
       if (cancelled) {
@@ -145,20 +156,22 @@ function renderApp(wrapper: HTMLElement) {
     innerWrapper.className = "modal-inner-wrapper";
     modalWrapper.appendChild(innerWrapper);
 
-    async function close() {
-      modalWrapper.classList.remove("show");
-      // Wait till animation finishes.
-      await delay(800);
-      if (innerWrapper.childNodes.length > 0) {
+    async function close(emitEvent = true) {
+      if (emitEvent && innerWrapper.childNodes.length > 0) {
         const child = innerWrapper.childNodes[0];
         // Let current component know we're going to unmount it.
-        const e = new Event("component-will-unmount");
+        const e = new Event("component-will-unmount", {
+          cancelable: true
+        });
         const cancelled = !child.dispatchEvent(e);
         // We might want to call `e.preventDefault()`.
         if (cancelled) {
           return;
         }
       }
+      modalWrapper.classList.remove("show");
+      // Wait till animation finishes.
+      await delay(800);
       if (modalWrapper.parentElement) {
         modalWrapper.parentElement.removeChild(modalWrapper);
       }
@@ -170,7 +183,7 @@ function renderApp(wrapper: HTMLElement) {
     };
 
     if (pages[page]) {
-      pages[page](innerWrapper, param);
+      pages[page](innerWrapper, param, close);
     }
 
     once("goto", () => {
@@ -193,7 +206,7 @@ function renderApp(wrapper: HTMLElement) {
   render("home");
 }
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
   renderApp(document.getElementById("root"));
 });
 
