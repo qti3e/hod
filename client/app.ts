@@ -6,6 +6,9 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import "@fortawesome/fontawesome-free";
+import "@fortawesome/fontawesome-free/css/all.css";
+
 import { get } from "./context";
 import { emit, on, once } from "./ipc";
 import { common as local } from "./local";

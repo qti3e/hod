@@ -4,7 +4,9 @@
   "author": "Parsa Ghadimi <me@qti3e.com>",
   "license": "MIT",
   "private": true,
+  "main": "dist/main.js",
   "devDependencies": {
+    "electron-packager": "^12.1.1",
     "http-server": "^0.11.1",
     "live-server": "^1.2.0",
     "node-sass": "^4.9.0",
@@ -15,25 +17,17 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.2.0",
     "@types/d3": "^5.0.0",
     "@types/d3-geo": "^1.10.3",
-    "@types/electron": "^1.6.10",
-    "add": "^2.0.6",
     "axios": "^0.18.0",
-    "btoa": "^1.2.1",
     "d3": "^5.5.0",
     "d3-geo": "^1.10.0",
-    "d3-geo-projection": "^2.4.0",
+    "dotenv": "^6.0.0",
     "electron": "^2.0.5",
     "eventemitter3": "^3.1.0",
-    "font-awesome": "^4.7.0",
     "jalaali-js": "^1.1.0",
-    "javascript-autocomplete": "^1.0.3",
-    "js-base64": "^2.4.8",
-    "moment-jalaali": "^0.7.4",
-    "node-machine-id": "^1.1.10",
-    "pikaday": "^1.7.0",
-    "yarn": "^1.9.2"
+    "js-base64": "^2.4.8"
   },
   "browserslist": [
     "chrome 69"
