@@ -19,11 +19,13 @@
   background: $background;
   display: block;
   width: 70vw;
-  height: 80vh;
+  height: 70vh;
+  min-height: 400px + 200px;
   cursor: default;
   padding: 15px;
   min-width: 850px;
   min-height: 400px;
+  border-radius: 25px;
 }
 
 #map-wrapper {
@@ -149,7 +151,7 @@
     bottom: 40px;
     cursor: pointer;
     text-align: center;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     border-radius: 5px;
     padding: 2px;
 
@@ -265,14 +267,14 @@
     height: 45px;
     outline: none;
     border-radius: 0 0 0 45px;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 20pt;
     padding-left: 10px;
     padding-bottom: 10px;
 
     &::before {
       color: $primary;
-      content: "\f00d";
+      content: "\f057";
     }
   }
 }

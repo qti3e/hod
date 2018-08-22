@@ -16,10 +16,11 @@ import { cacheForUser } from "./util";
 
 // Renders list of charter documentations.
 const domCache = cacheForUser<HTMLElement>();
+let cFetchData;
 
 export function renderListCharter(app: HTMLElement): void {
   if (domCache.has()) {
-    fetchData();
+    cFetchData();
     return void app.appendChild(domCache.get());
   }
 
@@ -52,6 +53,8 @@ export function renderListCharter(app: HTMLElement): void {
     }
     render();
   }
+
+  cFetchData = fetchData;
 
   function nextPage() {
     if (data && data.length < 20) {

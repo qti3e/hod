@@ -26,11 +26,11 @@
 
     .prev-month-btn {
       width: 30px;
-      font-family: FontAwesome;
+      font-family: "Font Awesome 5 Free";
 
       &::before {
         color: $background;
-        content: "\f060";
+        content: "\f359";
       }
     }
 
@@ -41,11 +41,11 @@
 
     .next-month-btn {
       width: 30px;
-      font-family: FontAwesome;
+      font-family: "Font Awesome 5 Free";
 
       &::before {
         color: $background;
-        content: "\f061";
+        content: "\f35a";
       }
     }
 

@@ -19,9 +19,14 @@ export function renderMenu(app: HTMLElement): void {
   if (menuCache.has(currentToken)) {
     return void app.appendChild(menuCache.get(currentToken));
   }
+  const menuWrapper = document.createElement("div");
+  menuCache.set(currentToken, menuWrapper);
+  menuWrapper.id = "menu";
+  // menuWrapper.className = "img-bg";
+
   const wrapper = document.createElement("div");
-  menuCache.set(currentToken, wrapper);
-  wrapper.id = "menu";
+  wrapper.id = "diamonds";
+  menuWrapper.appendChild(wrapper);
 
   wrapper.appendChild(diamond("home", "home", "home"));
 
@@ -44,7 +49,7 @@ export function renderMenu(app: HTMLElement): void {
     );
   }
 
-  app.appendChild(wrapper);
+  app.appendChild(menuWrapper);
 }
 
 function diamond(
@@ -68,3 +73,7 @@ function diamond(
   }
   return el;
 }
+
+setTimeout(() => {
+  emit("goto", "menu");
+});

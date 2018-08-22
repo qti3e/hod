@@ -16,10 +16,11 @@ import { cacheForUser } from "./util";
 
 // Renders list of systemic documentations.
 const domCache = cacheForUser<HTMLElement>();
+let cFetchData;
 
 export function renderListSystemic(app: HTMLElement): void {
   if (domCache.has()) {
-    fetchData();
+    cFetchData();
     return void app.appendChild(domCache.get());
   }
 
@@ -51,6 +52,8 @@ export function renderListSystemic(app: HTMLElement): void {
     }
     render();
   }
+
+  cFetchData = fetchData;
 
   function nextPage() {
     if (data && data.length < 20) {

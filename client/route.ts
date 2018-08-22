@@ -344,7 +344,7 @@ export function routeView(
 
   const fromEl = document.createElement("div");
   fromEl.classList.add("city-name");
-  fromEl.innerText = route[0].displayName || local.unknown;
+  fromEl.innerText = (route[0] && route[0].displayName) || local.unknown;
   const toEl = document.createElement("div");
   toEl.classList.add("city-name");
   if (route.length > 1) {

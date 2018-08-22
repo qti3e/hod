@@ -3,5 +3,5 @@
 cp ./tools/Watcher.js ./node_modules/parcel-bundler/src/Watcher.js
 (./node_modules/.bin/parcel watch index.html; [ "$?" -lt 2 ] && kill "$$") &
 (./node_modules/.bin/parcel watch main.ts --target=electron; [ "$?" -lt 2 ] && kill "$$") &
-./node_modules/.bin/live-server \
+./node_modules/.bin/http-server -c-1 \
   dist/
