@@ -73,7 +73,3 @@ function diamond(
   }
   return el;
 }
-
-setTimeout(() => {
-  emit("goto", "menu");
-});

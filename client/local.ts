@@ -31,7 +31,8 @@ export const menu = {
 };
 
 export const common = {
-  "404": "صفحه مورد نظر یافت نشد."
+  "404": "صفحه مورد نظر یافت نشد.",
+  hodhod: "هد هد"
 };
 
 export const newUser = {

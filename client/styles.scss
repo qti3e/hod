@@ -146,7 +146,6 @@ p {
     float: right;
     width: 300px;
     height: $frame-height;
-    display: inline-block;
     border-left: 1px solid $primary;
     padding-right: 4px;
     text-align: center;
@@ -220,7 +219,6 @@ p {
     width: $frame-height;
     height: $frame-height;
     margin: 0;
-    display: inline-block;
     border-left: 1px solid $primary;
     display: flex;
     justify-content: center;
@@ -390,7 +388,7 @@ p {
 
     &:hover {
       transform: rotate(0);
-      
+
       .inner {
         transform: rotate(0);
       }
@@ -495,7 +493,7 @@ p {
     width: 100%;
 
     &:checked ~ .checkmark {
-      background-color: #primary;
+      background-color: $primary;
     }
 
     &:checked ~ .checkmark:after {
@@ -830,4 +828,10 @@ p {
     width: 100%;
     text-align: center;
   }
+}
+
+#fund-dashboard-wrapper {
+  width: 100%;
+  padding: 15px;
+  height: calc(100vh - 50px);
 }

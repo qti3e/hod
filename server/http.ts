@@ -31,4 +31,6 @@ app.get("/info", (req, res) => {
 
 app.use("/v1", v1);
 
-app.listen(10234);
+app.listen(10234, () => {
+  console.log("Started server on port 10234");
+});

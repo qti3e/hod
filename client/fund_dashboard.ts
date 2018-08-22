@@ -10,7 +10,13 @@ import { emit } from "./ipc";
 import { fundDashboard as local } from "./local";
 
 export function renderFundDashboard(app: HTMLElement): void {
-  app.innerHTML = local.title;
+  const wrapper = document.createElement("div");
+  wrapper.id = "fund-dashboard-wrapper";
+  app.appendChild(wrapper);
+
+  const title = document.createElement("h1");
+  title.innerText = local.title;
+  wrapper.appendChild(title);
 }
 
-// setTimeout(() => emit("goto", "fundDashboard"));
+setTimeout(() => emit("goto", "fundDashboard"));

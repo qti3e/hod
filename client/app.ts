@@ -6,12 +6,9 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import "@fortawesome/fontawesome-free";
 import "@fortawesome/fontawesome-free/css/all.css";
 
-import axios from "axios";
-
-import { get, version } from "./context";
+import { get } from "./context";
 import { emit, on, once } from "./ipc";
 import { common as local } from "./local";
 import { delay } from "./util";
@@ -211,7 +208,7 @@ window.addEventListener("load", async () => {
 });
 
 on("notification", (text: string) => {
-  return new Notification("Hod Hod", {
+  return new Notification(local.hodhod, {
     body: text
   });
 });
