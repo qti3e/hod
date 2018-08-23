@@ -247,7 +247,7 @@ export async function broadcast(
   query,
   msg: t.NotificationMsg
 ): Promise<number> {
-  return (await collections.users.find(query)).map(({ uid }) =>
-    sendNotification(uid, msg)
+  return (await collections.users.find(query)).map(({ _id }) =>
+    sendNotification(_id, msg)
   ).length;
 }

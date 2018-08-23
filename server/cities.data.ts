@@ -47493,5 +47493,1888 @@ export const data = [
         "label_fa": "گنووا",
         "coordinate_location": "Point(-5.93333 6.13333)",
         "country_fa": "ساحل عاج"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3692",
+        "label_en": "Riyadh",
+        "label_fa": "ریاض",
+        "coordinate_location": "Point(46.71 24.65)",
+        "country_fa": "عربستان سعودی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q52101",
+        "label_en": "Middelburg",
+        "label_fa": "میدل‌بورخ",
+        "coordinate_location": "Point(3.613611111 51.499722222)",
+        "country_fa": "هلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q63964",
+        "label_en": "Sarnen",
+        "label_fa": "سرنان",
+        "coordinate_location": "Point(8.17646 46.89845)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q63964",
+        "label_en": "Sarnen",
+        "label_fa": "سرنان",
+        "coordinate_location": "Point(8.246944444 46.896944444)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q63896",
+        "label_en": "Delémont",
+        "label_fa": "دلمون",
+        "coordinate_location": "Point(7.347222222 47.365277777)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q63970",
+        "label_en": "Herisau",
+        "label_fa": "اریزو",
+        "coordinate_location": "Point(9.266666666 47.383055555)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q63970",
+        "label_en": "Herisau",
+        "label_fa": "اریزو",
+        "coordinate_location": "Point(9.27409 47.38288)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q48338",
+        "label_en": "Kayseri",
+        "label_fa": "قیصریه",
+        "coordinate_location": "Point(35.483333333 38.733333333)",
+        "country_fa": "ترکیه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q61",
+        "label_en": "Washington, D.C.",
+        "label_fa": "واشینگتن، دی. سی.",
+        "coordinate_location": "Point(-77.036666666 38.895)",
+        "country_fa": "ایالات متحده آمریکا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q66485",
+        "label_en": "Jaipur",
+        "label_fa": "جایپور",
+        "coordinate_location": "Point(75.866666666 26.916666666)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68120",
+        "label_en": "Frauenfeld",
+        "label_fa": "فروآنفلد",
+        "coordinate_location": "Point(8.896388888 47.555833333)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3711",
+        "label_en": "Belgrade",
+        "label_fa": "بلگراد",
+        "coordinate_location": "Point(20.466666666 44.816666666)",
+        "country_fa": "صربستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3718",
+        "label_en": "Dakar",
+        "label_fa": "داکار",
+        "coordinate_location": "Point(-17.457222222 14.731944444)",
+        "country_fa": "سنگال"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q70",
+        "label_en": "Bern",
+        "label_fa": "برن",
+        "coordinate_location": "Point(7.438611111 46.950833333)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68155",
+        "label_en": "Schwyz",
+        "label_fa": "شوئیز",
+        "coordinate_location": "Point(8.658332 47.020546)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68155",
+        "label_en": "Schwyz",
+        "label_fa": "شوئیز",
+        "coordinate_location": "Point(8.67464 47.02345)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3739",
+        "label_en": "Bissau",
+        "label_fa": "بیسائو",
+        "coordinate_location": "Point(-15.595555555 11.859166666)",
+        "country_fa": "گینه بیسائو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68136",
+        "label_en": "Sion",
+        "label_fa": "سیون، سوئیس",
+        "coordinate_location": "Point(7.36606 46.23045)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68136",
+        "label_en": "Sion",
+        "label_fa": "سیون، سوئیس",
+        "coordinate_location": "Point(7.366666666 46.233333333)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68972",
+        "label_en": "Liestal",
+        "label_fa": "لستل",
+        "coordinate_location": "Point(7.72569 47.48541)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68972",
+        "label_en": "Liestal",
+        "label_fa": "لستل",
+        "coordinate_location": "Point(7.735 47.483888888)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3766",
+        "label_en": "Damascus",
+        "label_fa": "دمشق",
+        "coordinate_location": "Point(36.291944444 33.513055555)",
+        "country_fa": "سوریه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3726",
+        "label_en": "Banjul",
+        "label_fa": "بانجول",
+        "coordinate_location": "Point(-16.5775 13.453055555)",
+        "country_fa": "گامبیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3787",
+        "label_en": "Abuja",
+        "label_fa": "آبوجا",
+        "coordinate_location": "Point(7.5 9.05)",
+        "country_fa": "نیجریه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68965",
+        "label_en": "Solothurn",
+        "label_fa": "سولوتورن",
+        "coordinate_location": "Point(7.53009 47.20838)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68965",
+        "label_en": "Solothurn",
+        "label_fa": "سولوتورن",
+        "coordinate_location": "Point(7.5375 47.208055555)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68144",
+        "label_en": "Zug",
+        "label_fa": "زوگ",
+        "coordinate_location": "Point(8.515488888 47.166169444)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68144",
+        "label_en": "Zug",
+        "label_fa": "زوگ",
+        "coordinate_location": "Point(8.516388888 47.169166666)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68144",
+        "label_en": "Zug",
+        "label_fa": "زوگ",
+        "coordinate_location": "Point(8.52323 47.15)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q84",
+        "label_en": "London",
+        "label_fa": "لندن",
+        "coordinate_location": "Point(-0.1275 51.507222222)",
+        "country_fa": "بریتانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3751",
+        "label_en": "Praia",
+        "label_fa": "پرایا",
+        "coordinate_location": "Point(-23.509155555 14.917719444)",
+        "country_fa": "کیپ ورد"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q216",
+        "label_en": "Vilnius",
+        "label_fa": "ویلنیوس",
+        "coordinate_location": "Point(25.283333333 54.683333333)",
+        "country_fa": "لیتوانی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3777",
+        "label_en": "Ouagadougou",
+        "label_fa": "اوآگادوگو",
+        "coordinate_location": "Point(-1.535277777 12.357222222)",
+        "country_fa": "بورکینافاسو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q80989",
+        "label_en": "Bhopal",
+        "label_fa": "بوپال",
+        "coordinate_location": "Point(77.416666666 23.25)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3808",
+        "label_en": "Yaounde",
+        "label_fa": "یائونده",
+        "coordinate_location": "Point(11.518055555 3.857777777)",
+        "country_fa": "کامرون"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68481",
+        "label_en": "Fuzhou",
+        "label_fa": "فوژو",
+        "coordinate_location": "Point(119.30611 26.06139)",
+        "country_fa": "جمهوری خلق چین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q68481",
+        "label_en": "Fuzhou",
+        "label_fa": "فوژو",
+        "coordinate_location": "Point(119.291666666 26.076944444)",
+        "country_fa": "جمهوری خلق چین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q69345",
+        "label_en": "Neuchâtel",
+        "label_fa": "نوشاتل",
+        "coordinate_location": "Point(6.930555555 46.990277777)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q69007",
+        "label_en": "Chur",
+        "label_fa": "شور، سوئیس",
+        "coordinate_location": "Point(9.533055555 46.85)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q69007",
+        "label_en": "Chur",
+        "label_fa": "شور، سوئیس",
+        "coordinate_location": "Point(9.52965 46.85212)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q239",
+        "label_en": "Brussels",
+        "label_fa": "شهر بروکسل",
+        "coordinate_location": "Point(4.3547 50.8467)",
+        "country_fa": "بلژیک"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q90",
+        "label_en": "Paris",
+        "label_fa": "پاریس",
+        "coordinate_location": "Point(2.351827777 48.856577777)",
+        "country_fa": "فرانسه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q82500",
+        "label_en": "St. Pölten",
+        "label_fa": "زانکت پولتن",
+        "coordinate_location": "Point(15.616666666 48.2)",
+        "country_fa": "اتریش"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q80484",
+        "label_en": "Patna",
+        "label_fa": "پتنا",
+        "coordinate_location": "Point(85.141388888 25.61)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3768",
+        "label_en": "Yamoussoukro",
+        "label_fa": "یاموسوکرو",
+        "coordinate_location": "Point(-5.27618 6.81769)",
+        "country_fa": "ساحل عاج"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q174",
+        "label_en": "São Paulo",
+        "label_fa": "سائوپائولو",
+        "coordinate_location": "Point(-46.633947222 -23.550394444)",
+        "country_fa": "برزیل"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3826",
+        "label_en": "Muscat",
+        "label_fa": "مسقط",
+        "coordinate_location": "Point(58.592222222 23.613888888)",
+        "country_fa": "عمان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q270",
+        "label_en": "Warsaw",
+        "label_fa": "ورشو",
+        "coordinate_location": "Point(21.033333333 52.216666666)",
+        "country_fa": "لهستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q147738",
+        "label_en": "Saint Helier",
+        "label_fa": "سن هلیه",
+        "coordinate_location": "Point(-2.116666666 49.183333333)",
+        "country_fa": "جرزی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3805",
+        "label_en": "Amman",
+        "label_fa": "امان",
+        "coordinate_location": "Point(35.933333333 31.95)",
+        "country_fa": "اردن"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q83786",
+        "label_en": "Shimla",
+        "label_fa": "شیملا",
+        "coordinate_location": "Point(77.172222222 31.103333333)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3859",
+        "label_en": "Kigali",
+        "label_fa": "کیگالی",
+        "coordinate_location": "Point(30.060555555 -1.953611111)",
+        "country_fa": "رواندا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3820",
+        "label_en": "Beirut",
+        "label_fa": "بیروت",
+        "coordinate_location": "Point(35.513055555 33.886944444)",
+        "country_fa": "لبنان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q103717",
+        "label_en": "Rovaniemi",
+        "label_fa": "رووانیمی",
+        "coordinate_location": "Point(25.734722222 66.501388888)",
+        "country_fa": "فنلاند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3838",
+        "label_en": "Kinshasa",
+        "label_fa": "کینشاسا",
+        "coordinate_location": "Point(15.313888888 -4.331666666)",
+        "country_fa": "جمهوری دموکراتیک کنگو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q220",
+        "label_en": "Rome",
+        "label_fa": "رم",
+        "coordinate_location": "Point(12.482777777 41.893055555)",
+        "country_fa": "ایتالیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q146723",
+        "label_en": "Kisangani",
+        "label_fa": "کیسانگانی",
+        "coordinate_location": "Point(25.2 0.516666666)",
+        "country_fa": "جمهوری دموکراتیک کنگو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3861",
+        "label_en": "Doha",
+        "label_fa": "دوحه",
+        "coordinate_location": "Point(51.533333333 25.3)",
+        "country_fa": "قطر"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q472",
+        "label_en": "Sofia",
+        "label_fa": "صوفیه",
+        "coordinate_location": "Point(23.333333333 42.7)",
+        "country_fa": "بلغارستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q85",
+        "label_en": "Cairo",
+        "label_fa": "قاهره",
+        "coordinate_location": "Point(31.239444444 30.056111111)",
+        "country_fa": "مصر"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3844",
+        "label_en": "Brazzaville",
+        "label_fa": "برازاویل",
+        "coordinate_location": "Point(15.283333333 -4.266666666)",
+        "country_fa": "جمهوری کنگو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q384",
+        "label_en": "Skopje",
+        "label_fa": "اسکوپیه",
+        "coordinate_location": "Point(21.433333333 41.983333333)",
+        "country_fa": "جمهوری مقدونیه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q132679",
+        "label_en": "Willemstad",
+        "label_fa": "ویلمستاد",
+        "coordinate_location": "Point(-68.933333333 12.116666666)",
+        "country_fa": "کوراسائو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q597",
+        "label_en": "Lisbon",
+        "label_fa": "لیسبون",
+        "coordinate_location": "Point(-9.166666666 38.716666666)",
+        "country_fa": "پرتغال"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q83189",
+        "label_en": "Goiânia",
+        "label_fa": "گویانیا",
+        "coordinate_location": "Point(-49.253888888 -16.678888888)",
+        "country_fa": "برزیل"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q112813",
+        "label_en": "Durango",
+        "label_fa": "دورانگو، دورانگو",
+        "coordinate_location": "Point(-104.654444444 24.022777777)",
+        "country_fa": "مکزیک"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q269",
+        "label_en": "Tashkent",
+        "label_fa": "تاشکند",
+        "coordinate_location": "Point(69.266666666 41.3)",
+        "country_fa": "ازبکستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q166065",
+        "label_en": "Lelystad",
+        "label_fa": "لیلی‌استاد",
+        "coordinate_location": "Point(5.483333333 52.516666666)",
+        "country_fa": "هلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q331584",
+        "label_en": "Kralendijk",
+        "label_fa": "کرالن‌دیک",
+        "coordinate_location": "Point(-68.276666666 12.150833333)",
+        "country_fa": "هلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q192541",
+        "label_en": "Ctesiphon",
+        "label_fa": "تیسفون",
+        "coordinate_location": "Point(44.580833 33.093611)",
+        "country_fa": "عراق"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q585",
+        "label_en": "Oslo",
+        "label_fa": "اسلو",
+        "coordinate_location": "Point(10.752777777 59.911111111)",
+        "country_fa": "نروژ"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3870",
+        "label_en": "Nairobi",
+        "label_fa": "نایروبی",
+        "coordinate_location": "Point(36.816666666 -1.283333333)",
+        "country_fa": "کنیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q167715",
+        "label_en": "Thiruvananthapuram",
+        "label_fa": "تریواندروم",
+        "coordinate_location": "Point(76.899722222 8.5)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q181830",
+        "label_en": "Shumen",
+        "label_fa": "شومن",
+        "coordinate_location": "Point(26.924444444 43.27)",
+        "country_fa": "بلغارستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q437",
+        "label_en": "Ljubljana",
+        "label_fa": "لیوبلیانا",
+        "coordinate_location": "Point(14.516666666 46.05)",
+        "country_fa": "اسلوونی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q174461",
+        "label_en": "Ranchi",
+        "label_fa": "رانچی",
+        "coordinate_location": "Point(85.334722222 23.355555555)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3904",
+        "label_en": "Mbabane",
+        "label_fa": "مبابانه",
+        "coordinate_location": "Point(31.161666666 -26.320833333)",
+        "country_fa": "سوازیلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q132997",
+        "label_en": "Florianópolis",
+        "label_fa": "فلوریانوپلیس",
+        "coordinate_location": "Point(-48.553047222 -27.593280555)",
+        "country_fa": "برزیل"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q159273",
+        "label_en": "Arequipa",
+        "label_fa": "آرکیپا",
+        "coordinate_location": "Point(-71.536883333 -16.398763888)",
+        "country_fa": "پرو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q129072",
+        "label_en": "Persepolis",
+        "label_fa": "تخت جمشید",
+        "coordinate_location": "Point(52.891388888 29.934444444)",
+        "country_fa": "ایران"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3897",
+        "label_en": "Luanda",
+        "label_fa": "لوآندا",
+        "coordinate_location": "Point(13.233333333 -8.833333333)",
+        "country_fa": "آنگولا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3894",
+        "label_en": "Kampala",
+        "label_fa": "کامپالا",
+        "coordinate_location": "Point(32.581111111 0.313611111)",
+        "country_fa": "اوگاندا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q170454",
+        "label_en": "Agartala",
+        "label_fa": "اگرتلا",
+        "coordinate_location": "Point(91.266666666 23.833333333)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q232615",
+        "label_en": "Sardis",
+        "label_fa": "سارد",
+        "coordinate_location": "Point(28.040278 38.488333)",
+        "country_fa": "ترکیه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q931780",
+        "label_en": "Alzira",
+        "label_fa": "الزیرا، والنسیا",
+        "coordinate_location": "Point(-0.435 39.15)",
+        "country_fa": "اسپانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q181007",
+        "label_en": "Hattusa",
+        "label_fa": "خاتوشا",
+        "coordinate_location": "Point(34.615277777 40.019722222)",
+        "country_fa": "ترکیه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3881",
+        "label_en": "Lusaka",
+        "label_fa": "لوساکا",
+        "coordinate_location": "Point(28.283333333 -15.416666666)",
+        "country_fa": "زامبیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q994",
+        "label_en": "Tbilisi",
+        "label_fa": "تفلیس",
+        "coordinate_location": "Point(44.783333333 41.716666666)",
+        "country_fa": "گرجستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3919",
+        "label_en": "Gaborone",
+        "label_fa": "گابورون",
+        "coordinate_location": "Point(25.908611111 -24.656944444)",
+        "country_fa": "بوتسوانا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3935",
+        "label_en": "Windhoek",
+        "label_fa": "ویندهوک",
+        "coordinate_location": "Point(17.083611111 -22.57)",
+        "country_fa": "نامیبیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q807",
+        "label_en": "Lausanne",
+        "label_fa": "لوزان",
+        "coordinate_location": "Point(6.633333333 46.533333333)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q956",
+        "label_en": "Beijing",
+        "label_fa": "پکن",
+        "coordinate_location": "Point(116.391388888 39.905)",
+        "country_fa": "جمهوری خلق چین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q641",
+        "label_en": "Venice",
+        "label_fa": "ونیز",
+        "coordinate_location": "Point(12.331944444 45.439722222)",
+        "country_fa": "ایتالیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q749",
+        "label_en": "Groningen",
+        "label_fa": "خرونینگن",
+        "coordinate_location": "Point(6.55 53.216666666)",
+        "country_fa": "هلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3876",
+        "label_en": "Lilongwe",
+        "label_fa": "لیلونگوه",
+        "coordinate_location": "Point(33.783333333 -13.983333333)",
+        "country_fa": "مالاوی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q727",
+        "label_en": "Amsterdam",
+        "label_fa": "آمستردام",
+        "coordinate_location": "Point(4.9 52.383333333)",
+        "country_fa": "هلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3866",
+        "label_en": "Dodoma",
+        "label_fa": "دودوما",
+        "coordinate_location": "Point(35.75 -6.25)",
+        "country_fa": "تانزانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q665",
+        "label_en": "Lugdunum",
+        "label_fa": "لوگدونوم",
+        "coordinate_location": "Point(4.819444444 45.759722222)",
+        "country_fa": "فرانسه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3915",
+        "label_en": "Antananarivo",
+        "label_fa": "آنتاناناریوو",
+        "coordinate_location": "Point(47.521388888 -18.938611111)",
+        "country_fa": "ماداگاسکار"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q752394",
+        "label_en": "Asuka, Yamato",
+        "label_fa": "آسوکا، یاماتو",
+        "coordinate_location": "Point(135.81305556 34.48222222)",
+        "country_fa": "ژاپن"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1354",
+        "label_en": "Dhaka",
+        "label_fa": "داکا",
+        "coordinate_location": "Point(90.366666666 23.7)",
+        "country_fa": "بنگلادش"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1606574",
+        "label_en": "Albocàsser",
+        "label_fa": "البوکاسر",
+        "coordinate_location": "Point(0.0245058 40.3571915)",
+        "country_fa": "اسپانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q696193",
+        "label_en": "Ecbatana",
+        "label_fa": "هگمتانه",
+        "coordinate_location": "Point(48.516247 34.8065)",
+        "country_fa": "ایران"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q6526",
+        "label_en": "Bolzano",
+        "label_fa": "بولزانو",
+        "coordinate_location": "Point(11.35 46.5)",
+        "country_fa": "ایتالیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q9365",
+        "label_en": "Dushanbe",
+        "label_fa": "دوشنبه",
+        "coordinate_location": "Point(68.786388888 38.573055555)",
+        "country_fa": "تاجیکستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3921",
+        "label_en": "Harare",
+        "label_fa": "هراره",
+        "coordinate_location": "Point(31.052222222 -17.829166666)",
+        "country_fa": "زیمبابوه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q987",
+        "label_en": "New Delhi",
+        "label_fa": "دهلی نو",
+        "coordinate_location": "Point(77.2 28.7)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q617",
+        "label_en": "Padua",
+        "label_fa": "پادووا",
+        "coordinate_location": "Point(11.877777777 45.406388888)",
+        "country_fa": "ایتالیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1518300",
+        "label_en": "Hecatompylos",
+        "label_fa": "صددروازه",
+        "coordinate_location": "Point(54.0375 35.961666666)",
+        "country_fa": "ایران"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q5818",
+        "label_en": "Córdoba",
+        "label_fa": "کوردوبا",
+        "coordinate_location": "Point(-4.766666666 37.883333333)",
+        "country_fa": "اسپانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q182378",
+        "label_en": "Putrajaya",
+        "label_fa": "پوتراجایا",
+        "coordinate_location": "Point(101.7 2.916666666)",
+        "country_fa": "مالزی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3882",
+        "label_en": "Manama",
+        "label_fa": "منامه",
+        "coordinate_location": "Point(50.583055555 26.216666666)",
+        "country_fa": "بحرین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1362",
+        "label_en": "Islamabad",
+        "label_fa": "اسلام‌آباد",
+        "coordinate_location": "Point(73.066666666 33.716666666)",
+        "country_fa": "پاکستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3926",
+        "label_en": "Pretoria",
+        "label_fa": "پرتوریا",
+        "coordinate_location": "Point(28.188055555 -25.746388888)",
+        "country_fa": "آفریقای جنوبی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3926",
+        "label_en": "Pretoria",
+        "label_fa": "پرتوریا",
+        "coordinate_location": "Point(28.18783 -25.74486)",
+        "country_fa": "آفریقای جنوبی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q180773",
+        "label_en": "Susa",
+        "label_fa": "شوش",
+        "coordinate_location": "Point(48.25 32.2)",
+        "country_fa": "ایران"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q180773",
+        "label_en": "Susa",
+        "label_fa": "شوش",
+        "coordinate_location": "Point(48.257777777 32.190555555)",
+        "country_fa": "ایران"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1335",
+        "label_en": "Montevideo",
+        "label_fa": "مونته‌ویدئو",
+        "coordinate_location": "Point(-56.166666666 -34.866944444)",
+        "country_fa": "اروگوئه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3909",
+        "label_en": "Maseru",
+        "label_fa": "ماسرو",
+        "coordinate_location": "Point(27.487777777 -29.322222222)",
+        "country_fa": "لسوتو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q854672",
+        "label_en": "Nisa",
+        "label_fa": "نسا",
+        "coordinate_location": "Point(58.212408333 37.951147222)",
+        "country_fa": "پارت"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1085",
+        "label_en": "Prague",
+        "label_fa": "پراگ",
+        "coordinate_location": "Point(14.421388888 50.088611111)",
+        "country_fa": "جمهوری چک"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1136681",
+        "label_en": "Seleucia",
+        "label_fa": "سلوکیه",
+        "coordinate_location": "Point(44.517222 33.137222)",
+        "country_fa": "ساسانیان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q12245",
+        "label_en": "Stanley",
+        "label_fa": "استنلی، جزایر فالکلند",
+        "coordinate_location": "Point(-57.8589 -51.6921)",
+        "country_fa": "بریتانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2995389",
+        "label_en": "Port Elizabeth",
+        "label_fa": "پورت الیزابت",
+        "coordinate_location": "Point(-61.234444444 13.011111111)",
+        "country_fa": "سنت وینسنت و گرنادین‌ها"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q9248",
+        "label_en": "Baku",
+        "label_fa": "باکو",
+        "coordinate_location": "Point(49.835183333 40.366655555)",
+        "country_fa": "جمهوری آذربایجان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1113311",
+        "label_en": "Peshawar",
+        "label_fa": "پیشاور",
+        "coordinate_location": "Point(71.5 34.0)",
+        "country_fa": "پاکستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q9326",
+        "label_en": "Vientiane",
+        "label_fa": "وینتیان",
+        "coordinate_location": "Point(102.6 17.966666666)",
+        "country_fa": "لائوس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1136681",
+        "label_en": "Seleucia",
+        "label_fa": "سلوکیه",
+        "coordinate_location": "Point(44.517222 33.137222)",
+        "country_fa": "پارت"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1519",
+        "label_en": "Abu Dhabi",
+        "label_fa": "ابوظبی",
+        "coordinate_location": "Point(54.368611111 24.478055555)",
+        "country_fa": "امارات متحده عربی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q9310",
+        "label_en": "Dili",
+        "label_fa": "دیلی",
+        "coordinate_location": "Point(125.573611111 -8.558611111)",
+        "country_fa": "تیمور شرقی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1218",
+        "label_en": "Jerusalem",
+        "label_fa": "اورشلیم",
+        "coordinate_location": "Point(35.216666666 31.783333333)",
+        "country_fa": "اسرائیل"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q8851",
+        "label_en": "Málaga",
+        "label_fa": "مالاگا",
+        "coordinate_location": "Point(-4.416666666 36.716666666)",
+        "country_fa": "اسپانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q6602",
+        "label_en": "Strasbourg",
+        "label_fa": "استراسبورگ",
+        "coordinate_location": "Point(7.752222222 48.573333333)",
+        "country_fa": "فرانسه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1136681",
+        "label_en": "Seleucia",
+        "label_fa": "سلوکیه",
+        "coordinate_location": "Point(44.517222 33.137222)",
+        "country_fa": "عراق"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1136681",
+        "label_en": "Seleucia",
+        "label_fa": "سلوکیه",
+        "coordinate_location": "Point(44.517222 33.137222)",
+        "country_fa": "سلوکیان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1355",
+        "label_en": "Bangalore",
+        "label_fa": "بنگلور",
+        "coordinate_location": "Point(77.597963 12.969907)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q854672",
+        "label_en": "Nisa",
+        "label_fa": "نسا",
+        "coordinate_location": "Point(58.212408333 37.951147222)",
+        "country_fa": "ترکمنستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q9361",
+        "label_en": "Bishkek",
+        "label_fa": "بیشکک",
+        "coordinate_location": "Point(74.566666666 42.866666666)",
+        "country_fa": "قرقیزستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q5838",
+        "label_en": "Kabul",
+        "label_fa": "کابل",
+        "coordinate_location": "Point(69.165833333 34.532777777)",
+        "country_fa": "افغانستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1489",
+        "label_en": "Mexico City",
+        "label_fa": "مکزیکو سیتی",
+        "coordinate_location": "Point(-99.145555555 19.419444444)",
+        "country_fa": "مکزیک"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1461",
+        "label_en": "Manila",
+        "label_fa": "مانیل",
+        "coordinate_location": "Point(121.0 14.583333333)",
+        "country_fa": "فیلیپین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1435",
+        "label_en": "Zagreb",
+        "label_fa": "زاگرب",
+        "coordinate_location": "Point(15.95 45.8)",
+        "country_fa": "کرواسی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1070920",
+        "label_en": "Mamuju",
+        "label_fa": "ماموجو",
+        "coordinate_location": "Point(118.893333333 -2.678611111)",
+        "country_fa": "اندونزی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q841342",
+        "label_en": "Canelones",
+        "label_fa": "کنلونس، اروگوئه",
+        "coordinate_location": "Point(-56.27778 -34.52278)",
+        "country_fa": "اروگوئه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q841342",
+        "label_en": "Canelones",
+        "label_fa": "کنلونس، اروگوئه",
+        "coordinate_location": "Point(-56.283333333 -34.516666666)",
+        "country_fa": "اروگوئه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1555",
+        "label_en": "Guatemala City",
+        "label_fa": "گواتمالاسیتی",
+        "coordinate_location": "Point(-90.531388888 14.622777777)",
+        "country_fa": "گواتمالا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q569107",
+        "label_en": "Anshan",
+        "label_fa": "انزان (مشگین شهر)",
+        "coordinate_location": "Point(52.407777777 30.011666666)",
+        "country_fa": "ایران"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q10690",
+        "label_en": "Cardiff",
+        "label_fa": "کاردیف",
+        "coordinate_location": "Point(-3.18 51.48)",
+        "country_fa": "بریتانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q8684",
+        "label_en": "Seoul",
+        "label_fa": "سئول",
+        "coordinate_location": "Point(127.0 37.583333333)",
+        "country_fa": "کره جنوبی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q11194",
+        "label_en": "Sarajevo",
+        "label_fa": "سارایوو",
+        "coordinate_location": "Point(18.416666666 43.866666666)",
+        "country_fa": "بوسنی و هرزگوین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1524",
+        "label_en": "Athens",
+        "label_fa": "آتن",
+        "coordinate_location": "Point(23.716111111 37.979444444)",
+        "country_fa": "یونان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1741",
+        "label_en": "Vienna",
+        "label_fa": "وین",
+        "coordinate_location": "Point(16.373064 48.20833)",
+        "country_fa": "اتریش"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q14274",
+        "label_en": "Aarau",
+        "label_fa": "ارو، سوئیس",
+        "coordinate_location": "Point(8.044338888 47.39285)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q14274",
+        "label_en": "Aarau",
+        "label_fa": "ارو، سوئیس",
+        "coordinate_location": "Point(8.04826 47.38878)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q14274",
+        "label_en": "Aarau",
+        "label_fa": "ارو، سوئیس",
+        "coordinate_location": "Point(8.045 47.394166666)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q11711",
+        "label_en": "Siem Reap",
+        "label_fa": "سیه‌م رئاپ",
+        "coordinate_location": "Point(103.859722222 13.362222222)",
+        "country_fa": "کامبوج"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q9920",
+        "label_en": "Haarlem",
+        "label_fa": "هارلم",
+        "coordinate_location": "Point(4.640555555 52.380277777)",
+        "country_fa": "هلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1764",
+        "label_en": "Reykjavík",
+        "label_fa": "ریکیاویک",
+        "coordinate_location": "Point(-21.883333333 64.15)",
+        "country_fa": "ایسلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1770",
+        "label_en": "Tallinn",
+        "label_fa": "تالین",
+        "coordinate_location": "Point(24.745 59.437222222)",
+        "country_fa": "استونی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q30985",
+        "label_en": "Hamilton",
+        "label_fa": "همیلتون",
+        "coordinate_location": "Point(-64.801388888 32.2975)",
+        "country_fa": "برمودا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1486",
+        "label_en": "Buenos Aires",
+        "label_fa": "بوئنوس آیرس",
+        "coordinate_location": "Point(-58.381944444 -34.599722222)",
+        "country_fa": "آرژانتین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1107569",
+        "label_en": "Kerma",
+        "label_fa": "کرمه",
+        "coordinate_location": "Point(30.409731 19.600802)",
+        "country_fa": "سودان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q36260",
+        "label_en": "Apia",
+        "label_fa": "آپیا",
+        "coordinate_location": "Point(-171.833333333 -13.833333333)",
+        "country_fa": "ساموآ"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1842",
+        "label_en": "Luxembourg",
+        "label_fa": "لوکزامبورگ",
+        "coordinate_location": "Point(6.132777777 49.610555555)",
+        "country_fa": "لوکزامبورگ"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3940",
+        "label_en": "Victoria",
+        "label_fa": "پورت‌ویکتوریا",
+        "coordinate_location": "Point(55.454444444 -4.623611111)",
+        "country_fa": "سیشل"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q30958",
+        "label_en": "Philipsburg",
+        "label_fa": "فیلیپسبورگ، سینت مارتن",
+        "coordinate_location": "Point(-63.043333333 18.024166666)",
+        "country_fa": "هلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1520",
+        "label_en": "Astana",
+        "label_fa": "آستانه",
+        "coordinate_location": "Point(71.4 51.183333333)",
+        "country_fa": "قزاقستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q19660",
+        "label_en": "Bucharest",
+        "label_fa": "بخارست",
+        "coordinate_location": "Point(26.083333333 44.4)",
+        "country_fa": "رومانی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q19689",
+        "label_en": "Tirana",
+        "label_fa": "تیرانا",
+        "coordinate_location": "Point(19.82 41.33)",
+        "country_fa": "آلبانی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q23564",
+        "label_en": "Podgorica",
+        "label_fa": "پودگوریتسا",
+        "coordinate_location": "Point(19.266111111 42.439722222)",
+        "country_fa": "مونته‌نگرو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q35178",
+        "label_en": "Kuwait City",
+        "label_fa": "کویت",
+        "coordinate_location": "Point(47.98 29.375)",
+        "country_fa": "کویت"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q10717",
+        "label_en": "Georgetown",
+        "label_fa": "جورج تاون",
+        "coordinate_location": "Point(-58.166666666 6.783333333)",
+        "country_fa": "گایان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q12919",
+        "label_en": "Majuro",
+        "label_fa": "ماجورو",
+        "coordinate_location": "Point(171.266666666 7.066666666)",
+        "country_fa": "جزایر مارشال"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q31487",
+        "label_en": "Kraków",
+        "label_fa": "کراکوف",
+        "coordinate_location": "Point(19.95 50.066666666)",
+        "country_fa": "لهستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1491",
+        "label_en": "La Paz",
+        "label_fa": "لاپاز",
+        "coordinate_location": "Point(-68.1475 -16.494166666)",
+        "country_fa": "بولیوی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1748",
+        "label_en": "Copenhagen",
+        "label_fa": "کپنهاگ",
+        "coordinate_location": "Point(12.568888888 55.676111111)",
+        "country_fa": "دانمارک"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1781",
+        "label_en": "Budapest",
+        "label_fa": "بوداپست",
+        "coordinate_location": "Point(19.040833333 47.498333333)",
+        "country_fa": "مجارستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q34820",
+        "label_en": "Santo Domingo",
+        "label_fa": "سانتو دومینگو",
+        "coordinate_location": "Point(-69.893333333 18.476388888)",
+        "country_fa": "جمهوری دومینیکن"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q34692",
+        "label_en": "Kingston",
+        "label_fa": "کینگستون",
+        "coordinate_location": "Point(-76.8 17.983333333)",
+        "country_fa": "جامائیکا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1754",
+        "label_en": "Stockholm",
+        "label_fa": "استکهلم",
+        "coordinate_location": "Point(18.068611111 59.329444444)",
+        "country_fa": "سوئد"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1490",
+        "label_en": "Tokyo",
+        "label_fa": "توکیو",
+        "coordinate_location": "Point(139.77 35.68)",
+        "country_fa": "ژاپن"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1780",
+        "label_en": "Bratislava",
+        "label_fa": "براتیسلاوا",
+        "coordinate_location": "Point(17.112777777 48.144722222)",
+        "country_fa": "اسلواکی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q21197",
+        "label_en": "Chișinău",
+        "label_fa": "کیشیناو",
+        "coordinate_location": "Point(28.8575 47.005555555)",
+        "country_fa": "مولداوی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q23430",
+        "label_en": "Ulaanbaatar",
+        "label_fa": "اولان‌باتور",
+        "coordinate_location": "Point(106.917222222 47.920277777)",
+        "country_fa": "مغولستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q23661",
+        "label_en": "Wellington",
+        "label_fa": "ولینگتون",
+        "coordinate_location": "Point(174.777222222 -41.288888888)",
+        "country_fa": "نیوزیلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q34205",
+        "label_en": "Cockburn Town",
+        "label_fa": "کوک برن تاون، باهاما",
+        "coordinate_location": "Point(-71.141388888 21.460277777)",
+        "country_fa": "بریتانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1930",
+        "label_en": "Ottawa",
+        "label_fa": "اتاوا",
+        "coordinate_location": "Point(-75.7 45.416666666)",
+        "country_fa": "کانادا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q36281",
+        "label_en": "Roseau",
+        "label_fa": "روسو",
+        "coordinate_location": "Point(-61.383333333 15.3)",
+        "country_fa": "دومینیکا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1844",
+        "label_en": "Vaduz",
+        "label_fa": "فادوتس",
+        "coordinate_location": "Point(9.521944444 47.139722222)",
+        "country_fa": "لیختن‌اشتاین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1850",
+        "label_en": "Phnom Penh",
+        "label_fa": "پنوم‌پن",
+        "coordinate_location": "Point(104.916666666 11.55)",
+        "country_fa": "کامبوج"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1530",
+        "label_en": "Baghdad",
+        "label_fa": "بغداد",
+        "coordinate_location": "Point(44.416666666 33.35)",
+        "country_fa": "عراق"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q36262",
+        "label_en": "St. John's",
+        "label_fa": "سینت جانز",
+        "coordinate_location": "Point(-61.844722222 17.121111111)",
+        "country_fa": "آنتیگوا و باربودا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1761",
+        "label_en": "Dublin",
+        "label_fa": "دوبلین",
+        "coordinate_location": "Point(-6.265833333 53.3425)",
+        "country_fa": "ایرلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q16666",
+        "label_en": "Nanjing",
+        "label_fa": "نانجینگ",
+        "coordinate_location": "Point(118.766666666 32.05)",
+        "country_fa": "جمهوری خلق چین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1858",
+        "label_en": "Hanoi",
+        "label_fa": "هانوی",
+        "coordinate_location": "Point(105.84117 21.0245)",
+        "country_fa": "ویتنام"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q23436",
+        "label_en": "Edinburgh",
+        "label_fa": "ادینبرو",
+        "coordinate_location": "Point(-3.198888888 55.95)",
+        "country_fa": "بریتانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q18808",
+        "label_en": "Pyongyang",
+        "label_fa": "پیونگ‌یانگ",
+        "coordinate_location": "Point(125.73 39.03)",
+        "country_fa": "کره شمالی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q36526",
+        "label_en": "Port Moresby",
+        "label_fa": "پورت مورسبی",
+        "coordinate_location": "Point(147.149444444 -9.478888888)",
+        "country_fa": "پاپوآ گینه نو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q37776",
+        "label_en": "Besançon",
+        "label_fa": "بزانسون",
+        "coordinate_location": "Point(6.021388888 47.242222222)",
+        "country_fa": "فرانسه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1773",
+        "label_en": "Riga",
+        "label_fa": "ریگا",
+        "coordinate_location": "Point(24.106944444 56.9475)",
+        "country_fa": "لتونی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1861",
+        "label_en": "Bangkok",
+        "label_fa": "بانکوک",
+        "coordinate_location": "Point(100.516666666 13.75)",
+        "country_fa": "تایلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q39178",
+        "label_en": "Port of Spain",
+        "label_fa": "پرت آو اسپاین",
+        "coordinate_location": "Point(-61.516666666 10.666666666)",
+        "country_fa": "ترینیداد و توباگو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1533",
+        "label_en": "Caracas",
+        "label_fa": "کاراکاس",
+        "coordinate_location": "Point(-66.933333333 10.5)",
+        "country_fa": "ونزوئلا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q41474",
+        "label_en": "Kingstown",
+        "label_fa": "کینگزتاون",
+        "coordinate_location": "Point(-61.233333333 13.166666666)",
+        "country_fa": "سنت وینسنت و گرنادین‌ها"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q34261",
+        "label_en": "Port-au-Prince",
+        "label_fa": "پورتو پرنس",
+        "coordinate_location": "Point(-72.338611111 18.5425)",
+        "country_fa": "هائیتی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q44215",
+        "label_en": "Santa Rosa",
+        "label_fa": "سانتا روسا",
+        "coordinate_location": "Point(-64.290555555 -36.620277777)",
+        "country_fa": "آرژانتین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q44215",
+        "label_en": "Santa Rosa",
+        "label_fa": "سانتا روسا",
+        "coordinate_location": "Point(-64.28333 -36.61667)",
+        "country_fa": "آرژانتین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1563",
+        "label_en": "Havana",
+        "label_fa": "هاوانا",
+        "coordinate_location": "Point(-82.383333333 23.116666666)",
+        "country_fa": "کوبا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q36378",
+        "label_en": "Fribourg",
+        "label_fa": "فریبورگ",
+        "coordinate_location": "Point(7.15 46.8)",
+        "country_fa": "سوئیس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2900",
+        "label_en": "Quito",
+        "label_fa": "کیتو",
+        "coordinate_location": "Point(-78.509722222 -0.218611111)",
+        "country_fa": "اکوادور"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q41963",
+        "label_en": "Sri Jayawardenepura Kotte",
+        "label_fa": "سری جایاواردنپورا کوته",
+        "coordinate_location": "Point(79.916388888 6.9)",
+        "country_fa": "سری‌لانکا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q26600",
+        "label_en": "Fukuoka",
+        "label_fa": "فوکوئوکا",
+        "coordinate_location": "Point(130.401944444 33.590277777)",
+        "country_fa": "ژاپن"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q40921",
+        "label_en": "Honiara",
+        "label_fa": "هونیارا",
+        "coordinate_location": "Point(159.95 -9.433333)",
+        "country_fa": "جزایر سلیمان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1757",
+        "label_en": "Helsinki",
+        "label_fa": "هلسینکی",
+        "coordinate_location": "Point(24.948611111 60.173333333)",
+        "country_fa": "فنلاند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q41295",
+        "label_en": "Basseterre",
+        "label_fa": "باسه‌تر",
+        "coordinate_location": "Point(-62.734166666 17.298333333)",
+        "country_fa": "سنت کیتس و نویس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q36168",
+        "label_en": "Bridgetown",
+        "label_fa": "بریج‌تاون",
+        "coordinate_location": "Point(-59.608333333 13.096111111)",
+        "country_fa": "باربادوس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q25390",
+        "label_en": "Leeuwarden",
+        "label_fa": "لیوواردن",
+        "coordinate_location": "Point(5.783333333 53.2)",
+        "country_fa": "هلند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q37806",
+        "label_en": "Port Vila",
+        "label_fa": "پورت ویلا",
+        "coordinate_location": "Point(168.3 -17.75)",
+        "country_fa": "وانواتو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1863",
+        "label_en": "Andorra la Vella",
+        "label_fa": "آندورا لاولا",
+        "coordinate_location": "Point(1.5 42.5)",
+        "country_fa": "آندورا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3037",
+        "label_en": "Kathmandu",
+        "label_fa": "کاتماندو",
+        "coordinate_location": "Point(85.366666666 27.716666666)",
+        "country_fa": "نپال"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q42800",
+        "label_en": "Belo Horizonte",
+        "label_fa": "بلو هوریزونته",
+        "coordinate_location": "Point(-43.947777777 -19.891666666)",
+        "country_fa": "برزیل"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1865",
+        "label_en": "Kuala Lumpur",
+        "label_fa": "کوالالامپور",
+        "coordinate_location": "Point(101.7 3.159722222)",
+        "country_fa": "مالزی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q41699",
+        "label_en": "Castries",
+        "label_fa": "کاستریس",
+        "coordinate_location": "Point(-60.983333333 14.016666666)",
+        "country_fa": "سنت لوسیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q41211",
+        "label_en": "San Juan",
+        "label_fa": "سان خوآن",
+        "coordinate_location": "Point(-66.066666666 18.45)",
+        "country_fa": "پورتوریکو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1947",
+        "label_en": "Juba",
+        "label_fa": "جوبا",
+        "coordinate_location": "Point(31.6 4.85)",
+        "country_fa": "سودان جنوبی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q41547",
+        "label_en": "St. George's",
+        "label_fa": "سینت‌جورجس",
+        "coordinate_location": "Point(-61.741666666 12.044444444)",
+        "country_fa": "گرنادا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3043",
+        "label_en": "Belmopan",
+        "label_fa": "بلموپان",
+        "coordinate_location": "Point(-88.7675 17.25)",
+        "country_fa": "بلیز"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1953",
+        "label_en": "Yerevan",
+        "label_fa": "ایروان",
+        "coordinate_location": "Point(44.516666666 40.183333333)",
+        "country_fa": "ارمنستان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2807",
+        "label_en": "Madrid",
+        "label_fa": "مادرید",
+        "coordinate_location": "Point(-3.691944444 40.418888888)",
+        "country_fa": "اسپانیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q44211",
+        "label_en": "Corrientes",
+        "label_fa": "کورینتس",
+        "coordinate_location": "Point(-58.816666666 -27.483333333)",
+        "country_fa": "آرژانتین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1963",
+        "label_en": "Khartoum",
+        "label_fa": "خارطوم",
+        "coordinate_location": "Point(32.52654 15.60308)",
+        "country_fa": "سودان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q40269",
+        "label_en": "Porto Alegre",
+        "label_fa": "پورتو الگره",
+        "coordinate_location": "Point(-51.23 -30.032777777)",
+        "country_fa": "برزیل"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2887",
+        "label_en": "Santiago",
+        "label_fa": "سانتیاگو",
+        "coordinate_location": "Point(-70.666666666 -33.45)",
+        "country_fa": "شیلی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q47837",
+        "label_en": "Laayoune",
+        "label_fa": "العیون",
+        "coordinate_location": "Point(-13.2 27.15)",
+        "country_fa": "صحرای غربی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2044",
+        "label_en": "Florence",
+        "label_fa": "فلورانس",
+        "coordinate_location": "Point(11.254166666 43.771388888)",
+        "country_fa": "ایتالیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1867",
+        "label_en": "Taipei",
+        "label_fa": "تایپه",
+        "coordinate_location": "Point(121.633333333 25.033333333)",
+        "country_fa": "تایوان"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3110",
+        "label_en": "San Salvador",
+        "label_fa": "سان سالوادور",
+        "coordinate_location": "Point(-89.19 13.69)",
+        "country_fa": "السالوادور"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2907",
+        "label_en": "Sucre",
+        "label_fa": "سوکره",
+        "coordinate_location": "Point(-65.25917 -19.04306)",
+        "country_fa": "بولیوی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2907",
+        "label_en": "Sucre",
+        "label_fa": "سوکره",
+        "coordinate_location": "Point(-65.25 -19.05)",
+        "country_fa": "بولیوی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q1899",
+        "label_en": "Kiev",
+        "label_fa": "کی‌یف",
+        "coordinate_location": "Point(30.523611111 50.45)",
+        "country_fa": "اوکراین"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2280",
+        "label_en": "Minsk",
+        "label_fa": "مینسک",
+        "coordinate_location": "Point(27.561837 53.902246)",
+        "country_fa": "بلاروس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3572",
+        "label_en": "Tunis",
+        "label_fa": "تونس",
+        "coordinate_location": "Point(10.18 36.800833333)",
+        "country_fa": "تونس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2933",
+        "label_en": "Asunción",
+        "label_fa": "آسونسیون",
+        "coordinate_location": "Point(-57.633333333 -25.3)",
+        "country_fa": "پاراگوئه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3114",
+        "label_en": "Canberra",
+        "label_fa": "کانبرا",
+        "coordinate_location": "Point(149.141666666 -35.302777777)",
+        "country_fa": "استرالیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3001",
+        "label_en": "Paramaribo",
+        "label_fa": "پاراماریبو",
+        "coordinate_location": "Point(-55.166666666 5.866666666)",
+        "country_fa": "سورینام"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2841",
+        "label_en": "Bogotá",
+        "label_fa": "بوگوتا",
+        "coordinate_location": "Point(-74.080833333 4.598888888)",
+        "country_fa": "کلمبیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q47916",
+        "label_en": "Lucknow",
+        "label_fa": "لکھنو",
+        "coordinate_location": "Point(80.915833333 26.860555555)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q47916",
+        "label_en": "Lucknow",
+        "label_fa": "لکھنو",
+        "coordinate_location": "Point(80.947 26.847)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3238",
+        "label_en": "Tegucigalpa y Camayagüela",
+        "label_fa": "تگوسیگالپا",
+        "coordinate_location": "Point(-87.206666666 14.094166666)",
+        "country_fa": "هندوراس"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q48329",
+        "label_en": "Mariehamn",
+        "label_fa": "ماریهام",
+        "coordinate_location": "Point(19.944444444 60.098611111)",
+        "country_fa": "فنلاند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3070",
+        "label_en": "San José",
+        "label_fa": "سان خوزه",
+        "coordinate_location": "Point(-84.083333333 9.933333333)",
+        "country_fa": "کاستاریکا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3274",
+        "label_en": "Managua",
+        "label_fa": "ماناگوآ",
+        "coordinate_location": "Point(-86.266666666 12.15)",
+        "country_fa": "نیکاراگوئه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3640",
+        "label_en": "Ankara",
+        "label_fa": "آنکارا",
+        "coordinate_location": "Point(32.866666666 39.866666666)",
+        "country_fa": "ترکیه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3561",
+        "label_en": "Algiers",
+        "label_fa": "الجزیره",
+        "coordinate_location": "Point(3.058611111 36.776388888)",
+        "country_fa": "الجزایر"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3306",
+        "label_en": "Panama City",
+        "label_fa": "پاناماسیتی",
+        "coordinate_location": "Point(-79.5 9.0)",
+        "country_fa": "پاناما"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2844",
+        "label_en": "Brasília",
+        "label_fa": "برازیلیا",
+        "coordinate_location": "Point(-47.882777777 -15.793888888)",
+        "country_fa": "برزیل"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3642",
+        "label_en": "Asmara",
+        "label_fa": "اسمره",
+        "coordinate_location": "Point(38.916666666 15.333333333)",
+        "country_fa": "اریتره"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2449",
+        "label_en": "Mogadishu",
+        "label_fa": "موگادیشو",
+        "coordinate_location": "Point(45.3425 2.040833333)",
+        "country_fa": "سومالی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2868",
+        "label_en": "Lima",
+        "label_fa": "لیما",
+        "coordinate_location": "Point(-77.030555555 -12.045833333)",
+        "country_fa": "پرو"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2337",
+        "label_en": "Smolensk",
+        "label_fa": "اسمولنسک",
+        "coordinate_location": "Point(32.045277777 54.782777777)",
+        "country_fa": "روسیه"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3624",
+        "label_en": "Addis Ababa",
+        "label_fa": "آدیس آبابا",
+        "coordinate_location": "Point(38.736944444 9.027222222)",
+        "country_fa": "اتیوپی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3616",
+        "label_en": "Tehran",
+        "label_fa": "تهران",
+        "coordinate_location": "Point(51.416666666 35.7)",
+        "country_fa": "ایران"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3130",
+        "label_en": "Sydney",
+        "label_fa": "سیدنی",
+        "coordinate_location": "Point(151.2 -33.866666666)",
+        "country_fa": "استرالیا"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3630",
+        "label_en": "Jakarta",
+        "label_fa": "جاکارتا",
+        "coordinate_location": "Point(106.8 -6.166666666)",
+        "country_fa": "اندونزی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q43433",
+        "label_en": "Chandigarh",
+        "label_fa": "چندی‌گر",
+        "coordinate_location": "Point(76.791111111 30.735277777)",
+        "country_fa": "هند"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3688",
+        "label_en": "Nouakchott",
+        "label_fa": "نوآکشوت",
+        "coordinate_location": "Point(-15.974444444 18.078333333)",
+        "country_fa": "موریتانی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q42751",
+        "label_en": "Palikir",
+        "label_fa": "پالیکیر",
+        "coordinate_location": "Point(158.185 6.917777777)",
+        "country_fa": "میکرونزی"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q3674",
+        "label_en": "Niamey",
+        "label_fa": "نیامی",
+        "coordinate_location": "Point(2.111111111 13.508611111)",
+        "country_fa": "نیجر"
+    },
+    {
+        "Cities": "http://www.wikidata.org/entity/Q2467",
+        "label_en": "Nassau",
+        "label_fa": "ناسائو",
+        "coordinate_location": "Point(-77.333333333 25.066666666)",
+        "country_fa": "باهاما"
     }
 ];

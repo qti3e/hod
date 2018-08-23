@@ -79,7 +79,7 @@ async function getNotificationsForUser(token) {
           await readNotification(token, msg._id);
         };
         // Fire an event.
-        emit("sse", {
+        EE.emit("sse", {
           read: readCb,
           currentUser: currentToken === token,
           notification: msg
