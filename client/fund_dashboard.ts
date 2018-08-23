@@ -99,6 +99,10 @@ export function renderFundDashboard(app: HTMLElement): void {
         // Uncomment this after dev.
         // read();
         // TODO(qti3e) Open payment modal.
+        emit("open-modal", {
+          page: isCharter ? "fillCharter" : null,
+          param: doc
+        });
       };
       row(5, btn);
     }

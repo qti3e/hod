@@ -183,3 +183,7 @@ export const config = {
   host: "آدرس سرور...",
   set: "تلاش برای اتصال"
 };
+
+export const fillCharter = {
+  title: "اطلاعت مالی چارتر"
+};

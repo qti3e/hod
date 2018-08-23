@@ -15,6 +15,7 @@ import { delay } from "./util";
 
 // Import views.
 import { renderConfig } from "./config";
+import { renderFillCharter } from "./fill_charter";
 import { renderFrame } from "./frame";
 import { renderFundDashboard } from "./fund_dashboard";
 import { renderHome } from "./home";
@@ -42,7 +43,8 @@ export type PageName =
   | "listSystemic"
   | "viewSystemic"
   | "fundDashboard"
-  | "config";
+  | "config"
+  | "fillCharter";
 
 export type PageURLWithParam = {
   page: PageName;
@@ -53,7 +55,7 @@ export type PageURL = PageName | PageURLWithParam;
 
 export type Page = (
   app: HTMLElement,
-  param?: string,
+  param?: any,
   closeCb?: (emitEvent?: boolean) => Promise<void>
 ) => void;
 export type Pages = { [key in PageName]: Page };
@@ -71,7 +73,8 @@ export const pages: Pages = {
   listSystemic: renderListSystemic,
   viewSystemic: renderViewSystemic,
   fundDashboard: renderFundDashboard,
-  config: renderConfig
+  config: renderConfig,
+  fillCharter: renderFillCharter
 };
 
 function renderApp(wrapper: HTMLElement) {
