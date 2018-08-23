@@ -164,7 +164,15 @@ export const viewSystemic = {
 };
 
 export const fundDashboard = {
-  title: "داشبورد صندوق"
+  title: "داشبورد صندوق",
+  id: "شناسه",
+  docKind: "نوع سند",
+  docPayer: "طرف حساب",
+  docPayerName: "نام طرف حساب",
+  dateOfCreation: "تاریخ ایجاد",
+  show: "اقدام",
+  charter: "چارتر",
+  systemic: "سیستمی"
 };
 
 export const config = {

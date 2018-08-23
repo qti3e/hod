@@ -39,7 +39,7 @@ export type Emit = <T extends EventName>(
 
 export type On = <T extends EventName>(name: T, cb: EventCallBack<T>) => void;
 
-const seen = new Map<string, 1>();
+// const seen = new Map<string, 1>();
 
 async function readNotification(token, id) {
   const server = get("server");
@@ -70,21 +70,18 @@ async function getNotificationsForUser(token) {
   if (res.code === 200) {
     for (let i = 0; i < res.msgs.length; ++i) {
       const msg = res.msgs[i];
-      if (!seen.has(msg._id)) {
-        seen.set(msg._id, 1);
-        let sentReadReq = false;
-        const readCb = async () => {
-          if (sentReadReq) return;
-          sentReadReq = true;
-          await readNotification(token, msg._id);
-        };
-        // Fire an event.
-        EE.emit("sse", {
-          read: readCb,
-          currentUser: currentToken === token,
-          notification: msg
-        });
-      }
+      let sentReadReq = false;
+      const readCb = async () => {
+        if (sentReadReq) return;
+        sentReadReq = true;
+        await readNotification(token, msg._id);
+      };
+      // Fire an event.
+      EE.emit("sse", {
+        read: readCb,
+        currentUser: currentToken === token,
+        notification: msg
+      });
     }
   } else {
     console.log("/pub/get", res);

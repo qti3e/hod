@@ -834,4 +834,34 @@ p {
   width: 100%;
   padding: 15px;
   height: calc(100vh - 50px);
+
+  .table {
+    display: flex;
+    max-width: 900px;
+    margin: auto;
+
+    .col {
+      width: 100%;
+      margin: 4px;
+    }
+
+    .row-head {
+      color: $primary;
+      border-bottom: 1px solid $primary;
+    }
+
+    .row {
+      height: 35px;
+    }
+
+    button.row {
+      -webkit-appearance: none;
+      border: none;
+      outline: none;
+      background: $primary;
+      color: $background;
+      width: 100px;
+      cursor: pointer;
+    }
+  }
 }
