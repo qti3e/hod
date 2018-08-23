@@ -231,15 +231,12 @@ export async function sendNotification(
   await collections.notifications.insert(notification);
 }
 
-export function queryNotifications(uid: string): Promise<t.NotificationMsg> {
-  const res = collections.notifications.find({
+export async function queryNotifications(uid: string): Promise<t.Notification> {
+  const res = await collections.notifications.find({
     uid,
     read: false
   });
-  return res.map(x => {
-    x.msg._id = x._id;
-    return x.msg;
-  });
+  return res;
 }
 
 export async function readNotification(id: string): Promise<void> {

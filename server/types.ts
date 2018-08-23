@@ -97,7 +97,6 @@ export enum NotificationMsgKind {
 }
 
 export interface NewDocNotification {
-  readonly _id?: string;
   readonly kind: NotificationMsgKind.newDoc;
   readonly id: string;
 }
