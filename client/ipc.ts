@@ -21,6 +21,7 @@ export interface EventDataTypeMap {
   login: t.User;
   sse: {
     read: () => Promise<void>;
+    currentUser: boolean;
     notification: t.Notification;
   };
 }
@@ -58,8 +59,8 @@ async function readNotification(token, id) {
   );
 }
 
-export async function getNotifications() {
-  const token = get("currentToken");
+async function getNotificationsForUser(token) {
+  const currentToken = get("currentToken");
   const server = get("server");
   const { data: res } = await axios.post(
     server + "/pub/get",
@@ -85,6 +86,7 @@ export async function getNotifications() {
         // Fire an event.
         emit("sse", {
           read: readCb,
+          currentUser: currentToken === token,
           notification: msg
         });
       }
@@ -93,6 +95,12 @@ export async function getNotifications() {
     console.log("/pub/get", res);
     throw null;
   }
+}
+
+export async function getNotifications() {
+  await Promise.all(
+    Object.keys(get("tokens")).map(x => getNotificationsForUser(x))
+  );
 }
 
 module.exports = EE;
