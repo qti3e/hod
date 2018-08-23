@@ -8,7 +8,7 @@
 
 import axios from "axios";
 import { get, set, version } from "./context";
-import { emit } from "./ipc";
+import { emit, getNotifications } from "./ipc";
 import { config as local } from "./local";
 
 let open = false;
@@ -43,6 +43,8 @@ export function renderConfig(
         emit("notification", local.done);
         open = false;
         close(false);
+        // Get notifications.
+        pingServer();
       }
     } catch (e) {
       emit("notification", local.error);
@@ -80,18 +82,26 @@ export function renderConfig(
 
 async function pingServer() {
   if (open) return;
+  open = true;
   try {
-    const server = get("host") + "/info";
-    const res = await axios.get(server);
-    const versions = res.data.versions;
-    if (versions.indexOf(version) === -1) {
-      throw null;
+    const currentToken = get("currentToken");
+    const user = currentToken && get("tokens")[currentToken];
+    if (user) {
+      await getNotifications();
+    } else {
+      const server = get("host") + "/info";
+      const res = await axios.get(server);
+      const versions = res.data.versions;
+      if (versions.indexOf(version) === -1) {
+        throw null;
+      }
     }
+    open = false;
   } catch (e) {
     emit("open-modal", "config");
   }
 }
 
-setInterval(pingServer, 3e3);
+setInterval(pingServer, 2.5e3);
 
 pingServer();
