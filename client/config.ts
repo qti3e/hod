@@ -82,7 +82,6 @@ export function renderConfig(
 
 async function pingServer() {
   if (open) return;
-  open = true;
   try {
     const currentToken = get("currentToken");
     const user = currentToken && get("tokens")[currentToken];
@@ -96,12 +95,12 @@ async function pingServer() {
         throw null;
       }
     }
-    open = false;
   } catch (e) {
+    console.log(e);
     emit("open-modal", "config");
   }
 }
 
-setInterval(pingServer, 2.5e3);
+setInterval(pingServer, 3e3);
 
 pingServer();

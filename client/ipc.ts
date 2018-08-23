@@ -39,11 +39,6 @@ export type Emit = <T extends EventName>(
 
 export type On = <T extends EventName>(name: T, cb: EventCallBack<T>) => void;
 
-export declare const emit: Emit;
-export declare const on: On;
-export declare const once: On;
-declare const module;
-
 const seen = new Map<string, 1>();
 
 async function readNotification(token, id) {
@@ -97,12 +92,18 @@ async function getNotificationsForUser(token) {
   }
 }
 
-export async function getNotifications() {
+EE["getNotifications"] = async () => {
   await Promise.all(
     Object.keys(get("tokens")).map(x => getNotificationsForUser(x))
   );
-}
+};
 
 module.exports = EE;
 
 window["ipc"] = EE;
+
+export declare const emit: Emit;
+export declare const on: On;
+export declare const once: On;
+export declare function getNotifications(): Promise<void>;
+declare const module;
