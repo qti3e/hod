@@ -133,7 +133,7 @@ export function datepicker(
   const jToday = jalaali.toJalaali(options.today);
   let year = jToday.jy;
   let month = jToday.jm - 1;
-  let day = jToday.jd;
+  let day = jToday.jd - 1;
 
   function prevMonth(): void {
     month--;
@@ -262,7 +262,7 @@ function renderMonth(
       dayElement.classList.add("is-selected");
       selected = dayElement;
     }
-    if (lookForToday && i === today.jd) {
+    if (lookForToday && i + 1 === today.jd) {
       dayElement.classList.add("is-today");
     }
     dayElement.innerText = toPersianDigits(i + 1);
