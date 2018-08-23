@@ -28,6 +28,12 @@ export const collections = {
     filename: ".db/systemics.db",
     autoload: true,
     timestampData: true
+  }),
+  // Notifications.
+  notifications: new Datastore({
+    filename: ".db/notifications.db",
+    autoload: true,
+    timestampData: true
   })
 };
 
@@ -117,6 +123,15 @@ async function storeDoc<A extends t.TicketBase, T extends t.DocBase<A>>(
     tickets[i].owner = owner;
   }
 
+  // TODO(qti3e) Broadcast only to users who have access to fund.
+  broadcast(
+    {},
+    {
+      kind: t.NotificationMsgKind.newDoc,
+      id: insertedDoc._id
+    }
+  );
+
   return insertedDoc;
 }
 
@@ -202,4 +217,40 @@ export async function getSystemic(id: string): Promise<t.SystemicDoc> {
   delete rawData._ticketIds;
 
   return rawData;
+}
+
+export async function sendNotification(
+  uid: string,
+  msg: t.NotificationMsg
+): Promise<void> {
+  const notification: t.Notification = {
+    uid,
+    msg,
+    read: false
+  };
+  await collections.notifications.insert(notification);
+}
+
+export function queryNotifications(uid: string): Promise<t.NotificationMsg> {
+  const res = collections.notifications.find({
+    uid,
+    read: false
+  });
+  return res.map(x => {
+    x.msg._id = x._id;
+    return x.msg;
+  });
+}
+
+export async function readNotification(id: string): Promise<void> {
+  await collections.notifications.update({ _id: id }, { $set: { read: true } });
+}
+
+export async function broadcast(
+  query,
+  msg: t.NotificationMsg
+): Promise<number> {
+  return (await collections.users.find(query)).map(({ uid }) =>
+    sendNotification(uid, msg)
+  ).length;
 }

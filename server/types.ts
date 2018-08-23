@@ -91,3 +91,23 @@ export interface CharterDoc extends DocBase<CharterTicket> {
 export interface SystemicDoc extends DocBase<SystemicTicket> {
   kind: "internal" | "international" | "train";
 }
+
+export enum NotificationMsgKind {
+  newDoc = 1
+}
+
+export interface NewDocNotification {
+  readonly _id?: string;
+  readonly kind: NotificationMsgKind.newDoc;
+  readonly id: string;
+}
+
+export type NotificationMsg = NewDocNotification;
+
+export interface Notification {
+  readonly _id?: string;
+  readonly createdAt?: string;
+  readonly uid: string;
+  readonly msg: NotificationMsg;
+  read: boolean;
+}

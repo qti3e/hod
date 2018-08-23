@@ -38,3 +38,7 @@ Data {}
 ### /v1/charter/view/:id
 
 ### /v1/systemic/new
+
+### /v1/pub/get
+
+### /v1/pub/read/:id
