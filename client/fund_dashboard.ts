@@ -149,5 +149,3 @@ async function fetchDoc(
   );
   return res.doc;
 }
-
-setTimeout(() => emit("goto", "fundDashboard"));

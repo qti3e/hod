@@ -31,13 +31,18 @@ export function renderNewCharter(app: HTMLElement): void {
     nationalCode: "",
     phone: "",
     tickets: [],
-    receives: {
-      ICI: 0,
-      cache: 0,
-      companyCost: 0,
-      credit: 0,
-      installmentBase: 0,
-      wage: 0
+    pay: {
+      base: {
+        ICI: 0,
+        cache: 0,
+        companyCost: 0,
+        credit: 0,
+        installmentBase: 0,
+        wage: 0
+      },
+      receives: [],
+      payments: [],
+      additionalComments: ""
     }
   };
 
@@ -137,6 +142,30 @@ export function renderNewCharter(app: HTMLElement): void {
     form.phone = phoneInput.value.trim();
   };
 
+  const payBtn = document.createElement("button");
+  payBtn.innerText = local.pay;
+  right.appendChild(payBtn);
+  // Update payment information of the form.
+  const payCb = (data: t.CharterPayData) => {
+    // We pass form.data by reference, is this
+    // thing even needed? No, but let's be sure
+    // about what the heck we're doing.
+    form.pay = data;
+  };
+  payBtn.onclick = () => {
+    emit("open-modal", {
+      page: "charterPayCounter",
+      param: {
+        cb: payCb,
+        // TODO(qti3e) Sum tickets.
+        total: 0,
+        data: form.pay
+      }
+    });
+  };
+  // TODO(qti3e) Remove after dev time.
+  payBtn.onclick(null);
+
   const submitBtn = document.createElement("button");
   submitBtn.innerText = local.submit;
   right.appendChild(submitBtn);
@@ -153,19 +182,6 @@ export function renderNewCharter(app: HTMLElement): void {
   const left = document.createElement("div");
   left.className = "left-split";
   view.appendChild(left);
-
-  const receivesWrapper = document.createElement("div");
-  receivesWrapper.className = "receives-wrapper";
-  left.appendChild(receivesWrapper);
-
-  for (const name in form.receives) {
-    if (local[name]) {
-      const tmpInput = document.createElement("input");
-      tmpInput.placeholder = local[name];
-      receivesWrapper.appendChild(tmpInput);
-      tmpInput.onchange = () => (form.receives.ICI = Number(tmpInput.value));
-    }
-  }
 
   const tickets: TicketElement[] = [];
   const ticketsWrapper = document.createElement("div");

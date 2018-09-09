@@ -17,5 +17,4 @@ export function renderFillCharter(app: HTMLElement, doc: t.CharterDoc): void {
   const title = document.createElement("h1");
   title.innerText = local.title;
   wrapper.appendChild(title);
-
 }

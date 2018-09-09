@@ -865,3 +865,31 @@ p {
     }
   }
 }
+
+#charter-pay-counter {
+  input {
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: $primary;
+    height: 30px;
+    font-size: 14px;
+    margin: 5px;
+    padding: 2px;
+    border-bottom: 1px solid $primary;
+
+    &::-webkit-input-placeholder {
+      color: $primary;
+    }
+  }
+
+  .receives-wrapper {
+    width: 100%;
+    display: flex;
+
+    input {
+      width: 100%;
+    }
+  }
+}

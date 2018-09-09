@@ -14,6 +14,7 @@ import { common as local } from "./local";
 import { delay } from "./util";
 
 // Import views.
+import { renderCharterPayCounter } from "./charter_pay_counter";
 import { renderConfig } from "./config";
 import { renderFillCharter } from "./fill_charter";
 import { renderFrame } from "./frame";
@@ -44,7 +45,8 @@ export type PageName =
   | "viewSystemic"
   | "fundDashboard"
   | "config"
-  | "fillCharter";
+  | "fillCharter"
+  | "charterPayCounter";
 
 export type PageURLWithParam = {
   page: PageName;
@@ -74,7 +76,8 @@ export const pages: Pages = {
   viewSystemic: renderViewSystemic,
   fundDashboard: renderFundDashboard,
   config: renderConfig,
-  fillCharter: renderFillCharter
+  fillCharter: renderFillCharter,
+  charterPayCounter: renderCharterPayCounter
 };
 
 function renderApp(wrapper: HTMLElement) {

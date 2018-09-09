@@ -66,6 +66,7 @@ export const newCharter = {
   nameOfPayer: "نام طرف حساب...",
   nationalCode: "کد ملی...",
   phoneNumber: "شماره تلفن...",
+  pay: "اطلاعات پرداخت",
   submit: "ارسال",
   id: "شماره بلیط...",
   date: "تاریخ",
@@ -76,13 +77,7 @@ export const newCharter = {
   received: "دریافتی...",
   outline: "ایرلاین رفت...",
   turnline: "ایرلاین بازگشت...",
-  newTicket: "افزودن بلیط جدید",
-  ICI: "دریافت ICI...",
-  cache: "دریافت نقدی...",
-  companyCost: "هزینه شرکت...",
-  credit: "مابه‌التفاوت نقدی...",
-  installmentBase: "مبلغ مبنای اقساط...",
-  wage: "مبلغ کارمزد..."
+  newTicket: "افزودن بلیط جدید"
 };
 
 export const newSystemic = {
@@ -186,4 +181,14 @@ export const config = {
 
 export const fillCharter = {
   title: "اطلاعت مالی چارتر"
+};
+
+export const payCharterCounter = {
+  title: "اطلاعات پرداخت چارتر",
+  ICI: "دریافت ICI...",
+  cache: "دریافت نقدی...",
+  companyCost: "هزینه شرکت...",
+  credit: "مابه‌التفاوت نقدی...",
+  installmentBase: "مبلغ مبنای اقساط...",
+  wage: "مبلغ کارمزد..."
 };
