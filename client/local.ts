@@ -190,5 +190,10 @@ export const payCharterCounter = {
   companyCost: "هزینه شرکت...",
   credit: "مابه‌التفاوت نقدی...",
   installmentBase: "مبلغ مبنای اقساط...",
-  wage: "مبلغ کارمزد..."
+  wage: "مبلغ کارمزد...",
+  receives: "دریافت ها",
+  newCacheRec: "نقدی",
+  newBankRec: "واریز به حساب",
+  newHekmatRec: "حکمت کارت",
+  newNotificationRec: "اطلاعیه"
 };

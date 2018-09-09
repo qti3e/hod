@@ -874,7 +874,7 @@ p {
     background: transparent;
     color: $primary;
     height: 30px;
-    font-size: 14px;
+    font-size: 14pt;
     margin: 5px;
     padding: 2px;
     border-bottom: 1px solid $primary;
@@ -884,12 +884,40 @@ p {
     }
   }
 
-  .receives-wrapper {
+  .base-wrapper {
     width: 100%;
     display: flex;
 
     input {
       width: 100%;
+    }
+  }
+
+  .buttons {
+    width: 100%;
+    display: flex;
+
+    button {
+      -webkit-appearance: none;
+      width: 100%;
+      outline: none;
+      cursor: pointer;
+      border: none;
+      margin: 0;
+      background: $background;
+      color: $primary;
+      font-size: 14pt;
+      height: 40px;
+      transition: background 100ms ease-in;
+
+      &:hover {
+        background: transparent;
+      }
+      
+      .fa {
+        margin: 3px;
+        color: $primary;
+      }
     }
   }
 }

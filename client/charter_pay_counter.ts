@@ -9,6 +9,7 @@
 import { emit } from "./ipc";
 import { payCharterCounter as local } from "./local";
 import * as t from "./types";
+import { fa } from "./util";
 
 export interface Props {
   cb: (data: t.CharterPayData) => void;
@@ -43,7 +44,7 @@ export function renderCharterPayCounter(
 
   // Just a container for input elements.
   const baseWrapper = document.createElement("div");
-  baseWrapper.className = "receives-wrapper";
+  baseWrapper.className = "base-wrapper";
   wrapper.appendChild(baseWrapper);
 
   // Render base inputs at the top,
@@ -75,6 +76,10 @@ export function renderCharterPayCounter(
   receivesWrapper.className = "receives-wrapper";
   wrapper.appendChild(receivesWrapper);
 
+  const receivesTitle = document.createElement("h1");
+  receivesTitle.innerText = local.receives;
+  receivesWrapper.appendChild(receivesTitle);
+
   // This will contain each data row.
   const receivesDataWrapper = document.createElement("div");
   receivesWrapper.appendChild(receivesDataWrapper);
@@ -104,6 +109,50 @@ export function renderCharterPayCounter(
   }
 
   // Render new row buttons, so users can add new receives.
+  const receivesButtonsWrapper = document.createElement("div");
+  receivesButtonsWrapper.className = "buttons";
+  receivesWrapper.appendChild(receivesButtonsWrapper);
+
+  // Create a button and appends it to the receivesButtonsWrapper.
+  function renderRecBtn(text: string, template: t.CharterReceive) {
+    const btn = document.createElement("button");
+    btn.appendChild(fa("plus-square"));
+    btn.appendChild(document.createTextNode(text));
+    btn.onclick = () => {
+      data.receives.push({
+        ...template
+      });
+      renderReceive(data.receives.length - 1);
+    };
+    receivesButtonsWrapper.appendChild(btn);
+  }
+
+  renderRecBtn(local.newCacheRec, {
+    kind: t.CharterReceiveKind.cacheReceive,
+    amount: 0,
+    date: null,
+    receiverName: ""
+  });
+
+  renderRecBtn(local.newBankRec, {
+    kind: t.CharterReceiveKind.bankReceive,
+    amount: 0,
+    account: "",
+    date: null
+  });
+
+  renderRecBtn(local.newHekmatRec, {
+    kind: t.CharterReceiveKind.hekmatCardReceive,
+    amount: 0,
+    date: null
+  });
+
+  renderRecBtn(local.newNotificationRec, {
+    kind: t.CharterReceiveKind.notificationReceive,
+    amount: 0,
+    number: "",
+    date: null
+  });
 }
 
 setTimeout(() => emit("goto", "newCharter"));
