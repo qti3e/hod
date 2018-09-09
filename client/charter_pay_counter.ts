@@ -26,6 +26,8 @@ export function renderCharterPayCounter(
 
   // Use this function to send data back to the parent.
   function send() {
+    data.receives = data.receives.filter(x => !!x);
+    data.payments = data.payments.filter(x => !!x);
     cb(data);
   }
 
@@ -82,25 +84,42 @@ export function renderCharterPayCounter(
 
   // This will contain each data row.
   const receivesDataWrapper = document.createElement("div");
+  receivesDataWrapper.className = "receives-data";
   receivesWrapper.appendChild(receivesDataWrapper);
 
   // Render a recive data row, appends to receivesDataWrapper.
   function renderReceive(i: number) {
     const receive = data.receives[i];
+    const rowEl = document.createElement("div");
+    rowEl.className = "row";
+    const delBtn = document.createElement("button");
+    delBtn.appendChild(fa("trash"));
+    delBtn.className = "remove";
+    delBtn.onclick = () => {
+      data.receives[i] = undefined;
+      rowEl.parentElement.removeChild(rowEl);
+    };
+    rowEl.appendChild(delBtn);
+    let icon: HTMLElement;
     switch (receive.kind) {
       case t.CharterReceiveKind.cacheReceive:
-        console.log("cache");
+        icon = fa("money-bill-alt");
         break;
       case t.CharterReceiveKind.bankReceive:
-        console.log("bank");
+        icon = fa("money-check");
         break;
       case t.CharterReceiveKind.hekmatCardReceive:
-        console.log("hekmat");
+        icon = fa("credit-card");
         break;
       case t.CharterReceiveKind.notificationReceive:
-        console.log("notification");
+        icon = fa("file-invoice");
         break;
     }
+    if (icon) {
+      icon.classList.add("row-icon");
+      rowEl.appendChild(icon);
+    }
+    receivesDataWrapper.appendChild(rowEl);
   }
 
   // Initial rendering.
@@ -123,6 +142,7 @@ export function renderCharterPayCounter(
         ...template
       });
       renderReceive(data.receives.length - 1);
+      receivesDataWrapper.scrollTop = receivesDataWrapper.scrollHeight;
     };
     receivesButtonsWrapper.appendChild(btn);
   }
@@ -153,6 +173,8 @@ export function renderCharterPayCounter(
     number: "",
     date: null
   });
+
+  // End of rendering receives section.
 }
 
 setTimeout(() => emit("goto", "newCharter"));

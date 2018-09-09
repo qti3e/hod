@@ -61,14 +61,6 @@ export interface DocBase<T extends TicketBase> {
   payerName: string;
   nationalCode: string;
   phone: string;
-  receives: {
-    ICI: number;
-    cache: number;
-    companyCost: number;
-    credit: number;
-    installmentBase: number;
-    wage: number;
-  };
   // What we send for the client.
   tickets?: T[];
   // What we store in the database.
@@ -83,9 +75,70 @@ export interface CharterTicket extends TicketBase {
 
 export interface SystemicTicket extends TicketBase {}
 
+export enum CharterReceiveKind {
+  cacheReceive,
+  bankReceive,
+  hekmatCardReceive,
+  notificationReceive
+}
+
+export interface CacheReceive {
+  kind: CharterReceiveKind.cacheReceive;
+  amount: number;
+  date: number;
+  receiverName: string;
+}
+
+export interface BankReceive {
+  kind: CharterReceiveKind.bankReceive;
+  amount: number;
+  account: string;
+  date: number;
+}
+
+export interface HekmatCardReceive {
+  kind: CharterReceiveKind.hekmatCardReceive;
+  amount: number;
+  date: number;
+}
+
+export interface NotificationReceive {
+  kind: CharterReceiveKind.notificationReceive;
+  amount: number;
+  number: string;
+  date: number;
+}
+
+export type CharterReceive =
+  | CacheReceive
+  | BankReceive
+  | HekmatCardReceive
+  | NotificationReceive;
+
+export interface CharterPayment {
+  date: string;
+  amount: string;
+  account: number;
+}
+
+export interface CharterPayData {
+  base: {
+    ICI: number;
+    cache: number;
+    companyCost: number;
+    credit: number;
+    installmentBase: number;
+    wage: number;
+  };
+  receives: CharterReceive[];
+  payments: CharterPayment[];
+  additionalComments: string;
+}
+
 export interface CharterDoc extends DocBase<CharterTicket> {
   kind: "internal" | "international";
   providedBy: "cache" | "credit";
+  pay: CharterPayData;
 }
 
 export interface SystemicDoc extends DocBase<SystemicTicket> {
