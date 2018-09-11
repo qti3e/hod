@@ -127,10 +127,11 @@ export function renderCharterPayCounter(
         i3 = document.createElement("input");
         i3.placeholder = local.date;
         i3.value = String(receive.date);
-        i3.onchange = () => {
-          receive.date = Number(i3.getAttribute("data-day"));
-        };
-        datepicker(i3);
+        datepicker(i3, {
+          onchange(day: number): void {
+            receive.date = day;
+          }
+        });
         rowEl.appendChild(i3);
         break;
       case t.CharterReceiveKind.bankReceive:
@@ -156,10 +157,11 @@ export function renderCharterPayCounter(
         i3 = document.createElement("input");
         i3.placeholder = local.date;
         i3.value = String(receive.date);
-        i3.onchange = () => {
-          receive.date = Number(i3.getAttribute("data-day"));
-        };
-        datepicker(i3);
+        datepicker(i3, {
+          onchange(day: number): void {
+            receive.date = day;
+          }
+        });
         rowEl.appendChild(i3);
         break;
       case t.CharterReceiveKind.hekmatCardReceive:
@@ -177,10 +179,11 @@ export function renderCharterPayCounter(
         i3 = document.createElement("input");
         i3.placeholder = local.date;
         i3.value = String(receive.date);
-        i3.onchange = () => {
-          receive.date = Number(i3.getAttribute("data-day"));
-        };
-        datepicker(i3);
+        datepicker(i3, {
+          onchange(day: number): void {
+            receive.date = day;
+          }
+        });
         rowEl.appendChild(i3);
         break;
       case t.CharterReceiveKind.notificationReceive:
@@ -206,10 +209,11 @@ export function renderCharterPayCounter(
         i3 = document.createElement("input");
         i3.placeholder = local.date;
         i3.value = String(receive.date);
-        i3.onchange = () => {
-          receive.date = Number(i3.getAttribute("data-day"));
-        };
-        datepicker(i3);
+        datepicker(i3, {
+          onchange(day: number): void {
+            receive.date = day;
+          }
+        });
         rowEl.appendChild(i3);
         break;
     }
@@ -304,7 +308,31 @@ export function renderCharterPayCounter(
     };
     rowEl.appendChild(delBtn);
 
-    console.log(payment);
+    const i1 = document.createElement("input");
+    i1.value = payment.amount > 0 ? String(payment.amount) : "";
+    i1.placeholder = local.amount;
+    i1.onchange = () => {
+      payment.amount = Number(i1.value);
+    };
+    rowEl.appendChild(i1);
+
+    const i2 = document.createElement("input");
+    i2.value = payment.account;
+    i2.placeholder = local.account;
+    i2.onchange = () => {
+      payment.account = i2.value;
+    };
+    rowEl.appendChild(i2);
+
+    const i3 = document.createElement("input");
+    i3.value = String(payment.date);
+    i3.placeholder = local.date;
+    datepicker(i3, {
+      onchange(day: number): void {
+        payment.date = day;
+      }
+    });
+    rowEl.appendChild(i3);
   }
 
   const paymentBtnsWrapper = document.createElement("div");
@@ -325,10 +353,13 @@ export function renderCharterPayCounter(
   };
   paymentBtnsWrapper.appendChild(newPaymentBtn);
 
+  // Initial rendering
+  for (let i = 0; i < data.payments.length; ++i) {
+    renderPaymentsRow(i);
+  }
+
   const noteWrapper = document.createElement("div");
   noteWrapper.className = "note";
   noteWrapper.appendChild(document.createTextNode(local.note));
   wrapper.appendChild(noteWrapper);
 }
-
-setTimeout(() => emit("goto", "newCharter"));

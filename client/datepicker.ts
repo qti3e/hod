@@ -41,10 +41,12 @@ const i18n = {
 
 export interface Options {
   today: Date;
+  onchange: (day: number) => void;
 }
 
 const defaultOptions: Options = {
-  today: new Date()
+  today: new Date(),
+  onchange: () => null
 };
 
 const gcData: Map<HTMLInputElement, HTMLDivElement> = new Map();
@@ -136,10 +138,9 @@ export function datepicker(
   let day = jToday.jd - 1;
 
   if (input.value && !isNaN(Number(input.value))) {
-    // TODO(qti3e) Fix
     const { jy, jm, jd } = jalaali.d2j(Number(input.value));
     year = jy;
-    month = jm;
+    month = jm - 1;
     day = jd;
     updateValue();
   }
@@ -186,6 +187,7 @@ export function datepicker(
       yearName.innerText = toPersianDigits(year);
     }
     changed = true;
+    options.onchange(dayNum);
     input.focus();
   }
 

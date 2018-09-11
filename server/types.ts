@@ -116,7 +116,7 @@ export type CharterReceive =
   | NotificationReceive;
 
 export interface CharterPayment {
-  date: string;
+  date: number;
   amount: number;
   account: string;
 }

@@ -171,8 +171,6 @@ export function renderNewCharter(app: HTMLElement): void {
       }
     });
   };
-  // TODO(qti3e) Remove after dev time.
-  payBtn.onclick(null);
 
   const submitBtn = document.createElement("button");
   submitBtn.innerText = local.submit;
