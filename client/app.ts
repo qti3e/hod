@@ -28,6 +28,7 @@ import { renderNewCharter } from "./new_charter";
 import { renderNewSystemic } from "./new_systemic";
 import { renderNewUser } from "./new_user";
 import { renderSystemicPayCounter } from "./systemic_pay_counter";
+import { renderTickets } from "./tickets";
 import { renderUsersList } from "./users";
 import { renderViewCharter } from "./view_charter";
 import { renderViewSystemic } from "./view_systemic";
@@ -48,7 +49,8 @@ export type PageName =
   | "config"
   | "charterPayCounter"
   | "systemicPayCounter"
-  | "cancel";
+  | "cancel"
+  | "tickets";
 
 export type PageURLWithParam = {
   page: PageName;
@@ -80,7 +82,8 @@ export const pages: Pages = {
   config: renderConfig,
   charterPayCounter: renderCharterPayCounter,
   systemicPayCounter: renderSystemicPayCounter,
-  cancel: renderCancel
+  cancel: renderCancel,
+  tickets: renderTickets
 };
 
 function renderApp(wrapper: HTMLElement) {
