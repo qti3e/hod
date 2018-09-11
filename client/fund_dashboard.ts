@@ -16,11 +16,20 @@ import { cacheForUser } from "./util";
 
 const domCache = cacheForUser<HTMLDivElement>();
 const active = cacheForUser<boolean>();
+const docsU = cacheForUser<Array<[t.CharterDoc | t.SystemicDoc, () => void]>>();
+const seenU = cacheForUser<Map<string, number>>();
+const renderU = cacheForUser<() => void>();
 
 export function renderFundDashboard(app: HTMLElement): void {
-  const token = get("currentToken");
-
   active.set(true);
+
+  if (!docsU.has()) {
+    docsU.set([]);
+  }
+
+  if (!seenU.has()) {
+    seenU.set(new Map());
+  }
 
   if (domCache.has()) {
     return void app.appendChild(domCache.get());
@@ -44,7 +53,7 @@ export function renderFundDashboard(app: HTMLElement): void {
 
   const NUM_COL = 6;
   const cols: HTMLDivElement[] = [];
-  const docs: Array<[t.CharterDoc | t.SystemicDoc, () => void]> = [];
+  const docs = docsU.get();
 
   for (let i = 0; i < NUM_COL; ++i) {
     const tmp = document.createElement("div");
@@ -108,31 +117,11 @@ export function renderFundDashboard(app: HTMLElement): void {
     }
   }
 
-  render();
-  const seen = new Map<string, number>();
+  if (!renderU.has()) {
+    renderU.set(render);
+  }
 
-  on("sse", async ({ read, notification, currentUser }) => {
-    if (!active.get()) return;
-    // Only process new doc messages.
-    if (notification.msg.kind !== t.NotificationMsgKind.newDoc) {
-      return;
-    }
-    if (seen.has(notification._id)) {
-      return;
-    }
-    seen.set(notification._id, 1);
-    if (currentUser) {
-      docs.push([
-        await fetchDoc(
-          token,
-          notification.msg.id,
-          notification.msg.collection === "charter"
-        ),
-        read
-      ]);
-      render();
-    }
-  });
+  render();
 }
 
 async function fetchDoc(
@@ -153,3 +142,35 @@ async function fetchDoc(
   );
   return res.doc;
 }
+
+on("sse", async ({ read, notification, currentUser }) => {
+  // Only process new doc messages.
+  if (notification.msg.kind !== t.NotificationMsgKind.newDoc) {
+    return;
+  }
+
+  const seen = seenU.get();
+  const docs = docsU.get();
+  const render = renderU.get();
+
+  if (seen.has(notification._id)) {
+    return;
+  }
+
+  const token = get("currentToken");
+
+  seen.set(notification._id, 1);
+  if (currentUser) {
+    docs.push([
+      await fetchDoc(
+        token,
+        notification.msg.id,
+        notification.msg.collection === "charters"
+      ),
+      read
+    ]);
+    render();
+  }
+});
+
+renderFundDashboard(document.createElement("div"));

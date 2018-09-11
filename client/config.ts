@@ -96,7 +96,6 @@ async function pingServer() {
       }
     }
   } catch (e) {
-    console.log(e);
     emit("open-modal", "config");
   }
 }
