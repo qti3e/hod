@@ -261,3 +261,17 @@ export async function broadcast(
     sendNotification(_id, msg)
   ).length;
 }
+
+export async function payCharter(
+  id: string,
+  data: t.CharterPayData
+): Promise<void> {
+  await collections.charters.update({ _id: id }, { $set: { pay: data } });
+}
+
+export async function paySystemic(
+  id: string,
+  data: t.SystemicPayData
+): Promise<void> {
+  await collections.systemics.update({ _id: id }, { $set: { pay: data } });
+}

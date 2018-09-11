@@ -73,4 +73,27 @@ router.post("/view/:id", async function(
   }
 });
 
+router.post("/payment/:id", async function(
+  req: express.Request,
+  res: express.Response
+): Promise<void> {
+  const pay: t.SystemicPayData = req.body.pay;
+  if (!pay) {
+    return void res.send({
+      code: 403
+    });
+  }
+  try {
+    await db.paySystemic(req.params.id, pay);
+    res.send({
+      code: 200
+    });
+  } catch (e) {
+    console.log(e);
+    res.send({
+      code: 500
+    });
+  }
+});
+
 export { router };

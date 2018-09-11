@@ -106,8 +106,15 @@ export function renderFundDashboard(app: HTMLElement): void {
       btn.innerText = local.show;
       btn.onclick = () => {
         const payCb = data => {
-          // TODO(qt3ie) Send data back to the server.
           console.log(doc.pay, data);
+          const token = get("currentToken");
+
+          if (isCharter) {
+            payCharter(token, doc._id, data);
+          } else {
+            paySystemic(token, doc._id, data);
+          }
+
           // Uncomment this after dev.
           // docs[i].read();
         };
@@ -154,6 +161,48 @@ async function fetchDoc(
   return res.doc;
 }
 
+async function payCharter(
+  token: string,
+  id: string,
+  data: t.CharterPayData
+): Promise<void> {
+  const server = get("server");
+  const url = "/charter/payment/";
+  const { data: res } = await axios.post(
+    server + url + id,
+    {
+      pay: data
+    },
+    {
+      headers: {
+        "hod-token": token
+      }
+    }
+  );
+  return res.doc;
+}
+
+async function paySystemic(
+  token: string,
+  id: string,
+  data: t.CharterPayData
+): Promise<void> {
+  const server = get("server");
+  const url = "/systemic/payment/";
+  const { data: res } = await axios.post(
+    server + url + id,
+    {
+      pay: data
+    },
+    {
+      headers: {
+        "hod-token": token
+      }
+    }
+  );
+  return res.doc;
+}
+
 on("sse", async ({ read, notification, currentUser }) => {
   // Only process new doc messages.
   if (notification.msg.kind !== t.NotificationMsgKind.newDoc) {
@@ -182,6 +231,10 @@ on("sse", async ({ read, notification, currentUser }) => {
     ]);
     render();
   }
+});
+
+on("login", () => {
+  renderFundDashboard(document.createElement("div"));
 });
 
 renderFundDashboard(document.createElement("div"));
