@@ -755,10 +755,15 @@ p {
 
   #head-wrapper {
     display: flex;
+      margin-bottom: 15px;
 
     .rounded-box {
       height: 200px;
       width: 100%;
+
+      &.first-child {
+        width: 135%;
+      }
     }
   }
 

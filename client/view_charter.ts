@@ -101,6 +101,8 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
 
     infoWrapper.appendChild(row(local.providedBy, local[doc.providedBy]));
 
+    infoWrapper.appendChild(row(local.providerAgency, doc.providerAgency));
+
     infoWrapper.appendChild(
       row(local.dateOfCreation, formatDate(doc.createdAt))
     );

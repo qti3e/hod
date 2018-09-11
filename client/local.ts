@@ -102,6 +102,7 @@ export const listCharter = {
   serviceKind: "نوع خدمات",
   dateOfCreation: "تاریخ ایجاد",
   providedBy: "نحوه تهیه",
+  providerAgency: "آژانس عامل",
   payer: "طرف حساب",
   nameOfPayer: "نام طرف حساب",
 
@@ -135,7 +136,7 @@ export const viewCharter = {
   cache: "دریافت نقدی",
   companyCost: "هزینه شرکت",
   credit: "اعتباری",
-  differ: "Differ",
+  differ: "مابه‌التفاوت نقدی",
   installmentBase: "مبلغ مبنای اقساط",
   wage: "مبلغ کارمزد",
 
@@ -191,7 +192,7 @@ export const payCharterCounter = {
   cache: "دریافت نقدی...",
   companyCost: "هزینه شرکت...",
   credit: "مبلغ اعتباری...",
-  differ: "Differ...",
+  differ: "مابه‌التفاوت نقدی...",
   installmentBase: "مبلغ مبنای اقساط...",
   wage: "مبلغ کارمزد...",
   receives: "دریافت ها",
