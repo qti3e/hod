@@ -119,7 +119,9 @@ export function renderFundDashboard(app: HTMLElement): void {
             paySystemic(token, doc._id, data);
           }
 
+          docs[i][0] = undefined;
           docs[i][1]();
+          render();
         };
 
         emit("open-modal", {

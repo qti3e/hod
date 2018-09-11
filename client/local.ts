@@ -27,7 +27,8 @@ export const menu = {
   new_systemic: "سیستمی جدید",
   list_charter: "گزارشات چارتر",
   list_systemic: "گزارشات سیستمی",
-  fund_dashboard: "داشبورد صندوق"
+  fund_dashboard: "داشبورد صندوق",
+  cancel: "استرداد بلیط"
 };
 
 export const common = {
@@ -221,4 +222,8 @@ export const payCharterCounter = {
 export const paySystemicCounter = {
   ...payCharterCounter,
   title: "اطلاعات پرداخت سیستمی"
+};
+
+export const cancel = {
+  title: "استرداد بلیط"
 };
