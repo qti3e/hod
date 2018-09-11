@@ -36,7 +36,7 @@ export function renderNewCharter(app: HTMLElement): void {
         ICI: 0,
         cache: 0,
         companyCost: 0,
-        credit: 0,
+        differ: 0,
         installmentBase: 0,
         wage: 0
       },

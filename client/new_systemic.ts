@@ -42,7 +42,7 @@ export function renderNewSystemic(app: HTMLElement): void {
       },
       receives: [],
       additionalComments: ""
-    },
+    }
   };
 
   forms.set(form);
@@ -144,7 +144,7 @@ export function renderNewSystemic(app: HTMLElement): void {
   payBtn.innerText = local.pay;
   right.appendChild(payBtn);
   // Update payment information of the form.
-  const payCb = (data: t.CharterPayData) => {
+  const payCb = (data: t.SystemicPayData) => {
     // We pass form.data by reference, is this
     // thing even needed? No, but let's be sure
     // about what the heck we're doing.

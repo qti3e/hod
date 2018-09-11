@@ -130,10 +130,10 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
     );
 
     // Render receives box.
-    for (const key in doc.receives) {
+    for (const key in doc.pay.base) {
       if (local[key]) {
         receivesInner.appendChild(
-          row(local[key], toPersianDigits(doc.receives[key] || 0))
+          row(local[key], toPersianDigits(doc.pay.base[key] || 0))
         );
       }
     }

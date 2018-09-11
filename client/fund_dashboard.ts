@@ -85,7 +85,7 @@ export function renderFundDashboard(app: HTMLElement): void {
     textRow(5, "");
 
     for (let i = 0; i < docs.length; ++i) {
-      const [doc, read] = docs[i];
+      const [doc] = docs[i];
       if (!doc) continue;
       const isCharter = !!doc["providedBy"];
       textRow(0, doc._id.slice(0, 7));
@@ -97,7 +97,7 @@ export function renderFundDashboard(app: HTMLElement): void {
       btn.innerText = local.show;
       btn.onclick = () => {
         // Uncomment this after dev.
-        // read();
+        // docs[i].read();
         // TODO(qti3e) Open payment modal.
         emit("open-modal", {
           page: isCharter ? "fillCharter" : null,
@@ -123,7 +123,11 @@ export function renderFundDashboard(app: HTMLElement): void {
     seen.set(notification._id, 1);
     if (currentUser) {
       docs.push([
-        await fetchDoc(token, notification.msg.id, notification.msg.charter),
+        await fetchDoc(
+          token,
+          notification.msg.id,
+          notification.msg.collection === "charter"
+        ),
         read
       ]);
       render();
