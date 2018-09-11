@@ -204,5 +204,7 @@ export const payCharterCounter = {
   cacheReceive: "دریافت نقدی",
   bankReceive: "واریز به حساب",
   hekmatCardReceive: "حکمت کارت",
-  notificationReceive: "اطلاعیه"
+  notificationReceive: "اطلاعیه",
+  newPayment: "پرداخت جدید",
+  paymentsTitle: "پرداخت ها"
 };

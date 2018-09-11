@@ -274,6 +274,56 @@ export function renderCharterPayCounter(
   });
 
   // End of rendering receives section.
+
+  // Now let's move on and render payments section.
+  const paymentsWrapper = document.createElement("div");
+  paymentsWrapper.className = "payments-wrapper";
+  wrapper.appendChild(paymentsWrapper);
+
+  // Render title.
+  const paymentsTitle = document.createElement("h1");
+  paymentsTitle.innerText = local.paymentsTitle;
+  paymentsWrapper.appendChild(paymentsTitle);
+
+  const paymentsDataWrapper = document.createElement("div");
+  paymentsDataWrapper.className = "payments-data";
+  paymentsWrapper.appendChild(paymentsDataWrapper);
+
+  function renderPaymentsRow(i: number) {
+    const payment = data.payments[i];
+    const rowEl = document.createElement("div");
+    rowEl.className = "row";
+    paymentsDataWrapper.appendChild(rowEl);
+
+    const delBtn = document.createElement("button");
+    delBtn.appendChild(fa("trash"));
+    delBtn.className = "remove";
+    delBtn.onclick = () => {
+      data.payments[i] = undefined;
+      rowEl.parentElement.removeChild(rowEl);
+    };
+    rowEl.appendChild(delBtn);
+
+    console.log(payment);
+  }
+
+  const paymentBtnsWrapper = document.createElement("div");
+  paymentBtnsWrapper.className = "buttons";
+  paymentsWrapper.appendChild(paymentBtnsWrapper);
+
+  const newPaymentBtn = document.createElement("button");
+  newPaymentBtn.appendChild(fa("plus-square"));
+  newPaymentBtn.appendChild(document.createTextNode(local.newPayment));
+  newPaymentBtn.onclick = () => {
+    const payment: t.CharterPayment = {
+      amount: 0,
+      account: "",
+      date: null
+    };
+    data.payments.push(payment);
+    renderPaymentsRow(data.payments.length - 1);
+  };
+  paymentBtnsWrapper.appendChild(newPaymentBtn);
 }
 
 setTimeout(() => emit("goto", "newCharter"));

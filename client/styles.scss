@@ -921,9 +921,9 @@ p {
     }
   }
 
-  .receives-data {
-    height: 250px;
-    max-height: 250px;
+  .receives-data, .payments-data {
+    max-height: calc((100vh - 450px) / 2);
+    height: calc((100vh - 450px) / 2);
     overflow-y: auto;
   }
 
