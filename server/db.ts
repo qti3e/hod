@@ -275,3 +275,11 @@ export async function paySystemic(
 ): Promise<void> {
   await collections.systemics.update({ _id: id }, { $set: { pay: data } });
 }
+
+export async function acTicketById(text: string): Promise<t.TicketBase[]> {
+  const regex = new RegExp(`^${text}`, "i");
+  return await collections.tickets.find({
+    id: { $regex: regex },
+    cancelationDoc: { $exists: false }
+  });
+}

@@ -37,6 +37,7 @@ export interface TicketBase {
   readonly createdAt?: string;
   readonly updatedAt?: string;
   readonly docId?: string;
+  readonly cancelationDoc?: string;
   owner?: User;
   _ownerId?: string;
   // Ticket No.
