@@ -324,6 +324,11 @@ export function renderCharterPayCounter(
     renderPaymentsRow(data.payments.length - 1);
   };
   paymentBtnsWrapper.appendChild(newPaymentBtn);
+
+  const noteWrapper = document.createElement("div");
+  noteWrapper.className = "note";
+  noteWrapper.appendChild(document.createTextNode(local.note));
+  wrapper.appendChild(noteWrapper);
 }
 
 setTimeout(() => emit("goto", "newCharter"));

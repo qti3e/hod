@@ -207,5 +207,8 @@ export const payCharterCounter = {
   hekmatCardReceive: "حکمت کارت",
   notificationReceive: "اطلاعیه",
   newPayment: "پرداخت جدید",
-  paymentsTitle: "پرداخت ها"
+  paymentsTitle: "پرداخت ها",
+  note:
+    "توجه: اطلاعات مالی وارد شده در این مرحله نهایی نبوده " +
+    "و توسط صندوق بازبینی میشوند."
 };

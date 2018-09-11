@@ -198,9 +198,11 @@ export function renderNewCharter(app: HTMLElement): void {
 
   function newTicket() {
     const id = tickets.length;
-    tickets.push(ticket(() => {
-      tickets[id] = undefined;
-    }));
+    tickets.push(
+      ticket(() => {
+        tickets[id] = undefined;
+      })
+    );
     renderTickets();
     ticketsWrapper.scrollTop = ticketsWrapper.scrollHeight;
   }
