@@ -212,3 +212,8 @@ export const payCharterCounter = {
     "توجه: اطلاعات مالی وارد شده در این مرحله نهایی نبوده " +
     "و توسط صندوق بازبینی میشوند."
 };
+
+export const paySystemicCounter = {
+  ...payCharterCounter,
+  title: "اطلاعات پرداخت سیستمی"
+};

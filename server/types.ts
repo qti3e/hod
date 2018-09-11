@@ -123,12 +123,14 @@ export interface CharterPayment {
 
 export interface CharterPayData {
   base: {
-    ICI: number;
     cache: number;
-    companyCost: number;
-    credit: number;
     installmentBase: number;
+    ICI: number;
+    // TODO(qti3e) Rename to Mabot tafavot naghdi.
+    // IMPORTNAT-TODO
+    credit: number;
     wage: number;
+    companyCost: number;
   };
   receives: CharterReceive[];
   payments: CharterPayment[];
@@ -142,8 +144,24 @@ export interface CharterDoc extends DocBase<CharterTicket> {
   providerAgency: string;
 }
 
+export type SystemicReceive = CharterReceive;
+
+export interface SystemicPayData {
+  base: {
+    cache: number;
+    installmentBase: number;
+    wage: number;
+    ICI: number;
+    credit: number;
+    companyCost: number;
+  };
+  receives: SystemicReceive[];
+  additionalComments: string;
+}
+
 export interface SystemicDoc extends DocBase<SystemicTicket> {
   kind: "internal" | "international" | "train";
+  pay: SystemicPayData;
 }
 
 export enum NotificationMsgKind {

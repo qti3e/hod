@@ -27,6 +27,7 @@ import { renderMenu } from "./menu";
 import { renderNewCharter } from "./new_charter";
 import { renderNewSystemic } from "./new_systemic";
 import { renderNewUser } from "./new_user";
+import { renderSystemicPayCounter } from "./systemic_pay_counter";
 import { renderUsersList } from "./users";
 import { renderViewCharter } from "./view_charter";
 import { renderViewSystemic } from "./view_systemic";
@@ -46,7 +47,8 @@ export type PageName =
   | "fundDashboard"
   | "config"
   | "fillCharter"
-  | "charterPayCounter";
+  | "charterPayCounter"
+  | "systemicPayCounter";
 
 export type PageURLWithParam = {
   page: PageName;
@@ -77,7 +79,8 @@ export const pages: Pages = {
   fundDashboard: renderFundDashboard,
   config: renderConfig,
   fillCharter: renderFillCharter,
-  charterPayCounter: renderCharterPayCounter
+  charterPayCounter: renderCharterPayCounter,
+  systemicPayCounter: renderSystemicPayCounter
 };
 
 function renderApp(wrapper: HTMLElement) {

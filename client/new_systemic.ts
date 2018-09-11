@@ -31,14 +31,18 @@ export function renderNewSystemic(app: HTMLElement): void {
     nationalCode: "",
     phone: "",
     tickets: [],
-    receives: {
-      ICI: 0,
-      cache: 0,
-      companyCost: 0,
-      credit: 0,
-      installmentBase: 0,
-      wage: 0
-    }
+    pay: {
+      base: {
+        ICI: 0,
+        cache: 0,
+        companyCost: 0,
+        credit: 0,
+        installmentBase: 0,
+        wage: 0
+      },
+      receives: [],
+      additionalComments: ""
+    },
   };
 
   forms.set(form);
@@ -134,6 +138,28 @@ export function renderNewSystemic(app: HTMLElement): void {
   right.appendChild(phoneInput);
   phoneInput.onchange = () => {
     form.phone = phoneInput.value.trim();
+  };
+
+  const payBtn = document.createElement("button");
+  payBtn.innerText = local.pay;
+  right.appendChild(payBtn);
+  // Update payment information of the form.
+  const payCb = (data: t.CharterPayData) => {
+    // We pass form.data by reference, is this
+    // thing even needed? No, but let's be sure
+    // about what the heck we're doing.
+    form.pay = data;
+  };
+  payBtn.onclick = () => {
+    emit("open-modal", {
+      page: "systemicPayCounter",
+      param: {
+        cb: payCb,
+        // TODO(qti3e) Sum tickets.
+        total: 0,
+        data: form.pay
+      }
+    });
   };
 
   const submitBtn = document.createElement("button");
