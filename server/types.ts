@@ -126,9 +126,7 @@ export interface CharterPayData {
     cache: number;
     installmentBase: number;
     ICI: number;
-    // TODO(qti3e) Rename to Mabot tafavot naghdi.
-    // IMPORTNAT-TODO
-    credit: number;
+    differ: number;
     wage: number;
     companyCost: number;
   };
@@ -171,6 +169,7 @@ export enum NotificationMsgKind {
 export interface NewDocNotification {
   readonly kind: NotificationMsgKind.newDoc;
   readonly id: string;
+  readonly collection: string;
 }
 
 export type NotificationMsg = NewDocNotification;

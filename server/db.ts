@@ -37,6 +37,15 @@ export const collections = {
   })
 };
 
+for (const key in collections) {
+  if (collections[key]) {
+    const collection = collections[key];
+    Object.defineProperty(collection, "_name", {
+      value: key.toLowerCase()
+    });
+  }
+}
+
 export async function getUser(id: string): Promise<t.User> {
   if (id === "1") {
     return {
@@ -128,7 +137,8 @@ async function storeDoc<A extends t.TicketBase, T extends t.DocBase<A>>(
     {},
     {
       kind: t.NotificationMsgKind.newDoc,
-      id: insertedDoc._id
+      id: insertedDoc._id,
+      collection: docCollection["_name"]
     }
   );
 
