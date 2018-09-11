@@ -20,6 +20,9 @@ const docsU = cacheForUser<Array<[t.CharterDoc | t.SystemicDoc, () => void]>>();
 const seenU = cacheForUser<Map<string, number>>();
 const renderU = cacheForUser<() => void>();
 
+// If they ever ask me again about adding a new document type, I'll need to
+// refactor this code
+
 export function renderFundDashboard(app: HTMLElement): void {
   active.set(true);
 
@@ -105,6 +108,7 @@ export function renderFundDashboard(app: HTMLElement): void {
       const btn = document.createElement("button");
       btn.innerText = local.show;
       btn.onclick = () => {
+
         const payCb = data => {
           console.log(doc.pay, data);
           const token = get("currentToken");
@@ -115,8 +119,7 @@ export function renderFundDashboard(app: HTMLElement): void {
             paySystemic(token, doc._id, data);
           }
 
-          // Uncomment this after dev.
-          // docs[i].read();
+          docs[i][1]();
         };
 
         emit("open-modal", {
