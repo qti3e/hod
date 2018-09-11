@@ -4,6 +4,7 @@
   background: $background;
   border: 1px solid $primary;
   width: 250px;
+  z-index: 999999999999;
   * {
     user-select: none;
     -webkit-user-drag: none;

@@ -6,6 +6,7 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { datepicker } from "./datepicker";
 import { emit } from "./ipc";
 import { payCharterCounter as local } from "./local";
 import * as t from "./types";
@@ -100,23 +101,121 @@ export function renderCharterPayCounter(
       rowEl.parentElement.removeChild(rowEl);
     };
     rowEl.appendChild(delBtn);
-    let icon: HTMLElement;
+    let icon: HTMLSpanElement;
+    let i1: HTMLInputElement, i2: HTMLInputElement, i3: HTMLInputElement;
     switch (receive.kind) {
       case t.CharterReceiveKind.cacheReceive:
         icon = fa("money-bill-alt");
+        icon.title = local.cacheReceive;
+
+        i1 = document.createElement("input");
+        i1.value = receive.amount > 0 ? String(receive.amount) : "";
+        i1.placeholder = local.amount;
+        i1.onchange = () => {
+          receive.amount = Number(i1.value);
+        };
+        rowEl.appendChild(i1);
+
+        i2 = document.createElement("input");
+        i2.value = receive.receiverName;
+        i2.placeholder = local.receiverName;
+        i2.onchange = () => {
+          receive.receiverName = i2.value;
+        };
+        rowEl.appendChild(i2);
+
+        i3 = document.createElement("input");
+        i3.placeholder = local.date;
+        i3.value = String(receive.date);
+        i3.onchange = () => {
+          receive.date = Number(i3.getAttribute("data-day"));
+        };
+        datepicker(i3);
+        rowEl.appendChild(i3);
         break;
       case t.CharterReceiveKind.bankReceive:
         icon = fa("money-check");
+        icon.title = local.bankReceive;
+
+        i1 = document.createElement("input");
+        i1.value = receive.amount > 0 ? String(receive.amount) : "";
+        i1.placeholder = local.amount;
+        i1.onchange = () => {
+          receive.amount = Number(i1.value);
+        };
+        rowEl.appendChild(i1);
+
+        i2 = document.createElement("input");
+        i2.value = receive.account;
+        i2.placeholder = local.account;
+        i2.onchange = () => {
+          receive.account = i2.value;
+        };
+        rowEl.appendChild(i2);
+
+        i3 = document.createElement("input");
+        i3.placeholder = local.date;
+        i3.value = String(receive.date);
+        i3.onchange = () => {
+          receive.date = Number(i3.getAttribute("data-day"));
+        };
+        datepicker(i3);
+        rowEl.appendChild(i3);
         break;
       case t.CharterReceiveKind.hekmatCardReceive:
         icon = fa("credit-card");
+        icon.title = local.hekmatCardReceive;
+
+        i1 = document.createElement("input");
+        i1.value = receive.amount > 0 ? String(receive.amount) : "";
+        i1.placeholder = local.amount;
+        i1.onchange = () => {
+          receive.amount = Number(i1.value);
+        };
+
+        rowEl.appendChild(i1);
+        i3 = document.createElement("input");
+        i3.placeholder = local.date;
+        i3.value = String(receive.date);
+        i3.onchange = () => {
+          receive.date = Number(i3.getAttribute("data-day"));
+        };
+        datepicker(i3);
+        rowEl.appendChild(i3);
         break;
       case t.CharterReceiveKind.notificationReceive:
         icon = fa("file-invoice");
+        icon.title = local.notificationReceive;
+
+        i1 = document.createElement("input");
+        i1.value = receive.amount > 0 ? String(receive.amount) : "";
+        i1.placeholder = local.amount;
+        i1.onchange = () => {
+          receive.amount = Number(i1.value);
+        };
+        rowEl.appendChild(i1);
+
+        i2 = document.createElement("input");
+        i2.value = receive.number;
+        i2.placeholder = local.number;
+        i2.onchange = () => {
+          receive.number = i2.value;
+        };
+        rowEl.appendChild(i2);
+
+        i3 = document.createElement("input");
+        i3.placeholder = local.date;
+        i3.value = String(receive.date);
+        i3.onchange = () => {
+          receive.date = Number(i3.getAttribute("data-day"));
+        };
+        datepicker(i3);
+        rowEl.appendChild(i3);
         break;
     }
     if (icon) {
       icon.classList.add("row-icon");
+      // Maybe enable it later on?
       rowEl.appendChild(icon);
     }
     receivesDataWrapper.appendChild(rowEl);

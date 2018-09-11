@@ -195,5 +195,14 @@ export const payCharterCounter = {
   newCacheRec: "نقدی",
   newBankRec: "واریز به حساب",
   newHekmatRec: "حکمت کارت",
-  newNotificationRec: "اطلاعیه"
+  newNotificationRec: "اطلاعیه",
+  amount: "مبلغ...",
+  receiverName: "نام دریافت کننده...",
+  date: "تاریخ...",
+  account: "حساب...",
+  number: "شماره...",
+  cacheReceive: "دریافت نقدی",
+  bankReceive: "واریز به حساب",
+  hekmatCardReceive: "حکمت کارت",
+  notificationReceive: "اطلاعیه"
 };

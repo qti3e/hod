@@ -135,6 +135,15 @@ export function datepicker(
   let month = jToday.jm - 1;
   let day = jToday.jd - 1;
 
+  if (input.value && !isNaN(Number(input.value))) {
+    // TODO(qti3e) Fix
+    const { jy, jm, jd } = jalaali.d2j(Number(input.value));
+    year = jy;
+    month = jm;
+    day = jd;
+    updateValue();
+  }
+
   function prevMonth(): void {
     month--;
     if (month < 0) {
