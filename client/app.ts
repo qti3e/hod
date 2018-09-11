@@ -16,7 +16,6 @@ import { delay } from "./util";
 // Import views.
 import { renderCharterPayCounter } from "./charter_pay_counter";
 import { renderConfig } from "./config";
-import { renderFillCharter } from "./fill_charter";
 import { renderFrame } from "./frame";
 import { renderFundDashboard } from "./fund_dashboard";
 import { renderHome } from "./home";
@@ -46,7 +45,6 @@ export type PageName =
   | "viewSystemic"
   | "fundDashboard"
   | "config"
-  | "fillCharter"
   | "charterPayCounter"
   | "systemicPayCounter";
 
@@ -78,7 +76,6 @@ export const pages: Pages = {
   viewSystemic: renderViewSystemic,
   fundDashboard: renderFundDashboard,
   config: renderConfig,
-  fillCharter: renderFillCharter,
   charterPayCounter: renderCharterPayCounter,
   systemicPayCounter: renderSystemicPayCounter
 };

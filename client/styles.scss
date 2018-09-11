@@ -755,7 +755,7 @@ p {
 
   #head-wrapper {
     display: flex;
-      margin-bottom: 15px;
+    margin-bottom: 15px;
 
     .rounded-box {
       height: 200px;
@@ -999,5 +999,30 @@ p {
     color: $fg;
     height: 48px;
     line-height: 48px;
+  }
+
+  .buttons-wrapper {
+    width: 100%;
+    display: flex;
+
+    button {
+      -webkit-appearance: none;
+      width: 100%;
+      border: none;
+      outline: none;
+      margin: 10px;
+      cursor: pointer;
+      color: $fg;
+      height: 28px;
+      font-size: 14pt;
+
+      &.submit {
+        background: $primary;
+      }
+
+      &.cancel {
+        background: $secondry;
+      }
+    }
   }
 }

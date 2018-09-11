@@ -211,6 +211,8 @@ export const payCharterCounter = {
   notificationReceive: "اطلاعیه",
   newPayment: "پرداخت جدید",
   paymentsTitle: "پرداخت ها",
+  submit: "ارسال",
+  cancel: "لغو",
   note:
     "توجه: اطلاعات مالی وارد شده در این مرحله نهایی نبوده " +
     "و توسط صندوق بازبینی میشوند."

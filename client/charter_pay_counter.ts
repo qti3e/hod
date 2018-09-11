@@ -12,23 +12,25 @@ import * as t from "./types";
 import { fa } from "./util";
 
 export interface Props {
-  cb: (data: t.CharterPayData) => void;
+  cb: (data: t.CharterPayData, save: boolean) => void;
   data: t.CharterPayData;
+  fund?: boolean;
   total: number;
 }
 
 export function renderCharterPayCounter(
   app: HTMLElement,
-  { cb, data, total }: Props
+  { cb, data, fund, total }: Props,
+  close?: (e?: boolean) => Promise<void>
 ): void {
   // Default to nop.
   cb = cb || (() => null);
 
   // Use this function to send data back to the parent.
-  function send() {
+  function send(save = false) {
     data.receives = data.receives.filter(x => !!x);
     data.payments = data.payments.filter(x => !!x);
-    cb(data);
+    cb(data, save);
   }
 
   // We should append everything to this container.
@@ -36,7 +38,9 @@ export function renderCharterPayCounter(
   wrapper.id = "charter-pay-counter";
   app.appendChild(wrapper);
   wrapper.addEventListener("component-will-unmount", () => {
-    send();
+    if (!fund) {
+      send();
+    }
   });
 
   // Start the DOM manipulation
@@ -357,8 +361,37 @@ export function renderCharterPayCounter(
     renderPaymentsRow(i);
   }
 
-  const noteWrapper = document.createElement("div");
-  noteWrapper.className = "note";
-  noteWrapper.appendChild(document.createTextNode(local.note));
-  wrapper.appendChild(noteWrapper);
+  if (!fund) {
+    const noteWrapper = document.createElement("div");
+    noteWrapper.className = "note";
+    noteWrapper.appendChild(document.createTextNode(local.note));
+    wrapper.appendChild(noteWrapper);
+    return;
+  }
+
+  // Only codes for the fund section are allowed here.
+
+  wrapper.addEventListener("component-will-unmount", e => e.preventDefault());
+
+  const buttonsWrapper = document.createElement("div");
+  buttonsWrapper.className = "buttons-wrapper";
+  wrapper.appendChild(buttonsWrapper);
+
+  const submitBtn = document.createElement("button");
+  submitBtn.className = "submit";
+  submitBtn.innerText = local.submit;
+  submitBtn.onclick = () => {
+    send(true);
+    // Close
+    close(false);
+  };
+  buttonsWrapper.appendChild(submitBtn);
+
+  const cancelBtn = document.createElement("button");
+  cancelBtn.className = "cancel";
+  cancelBtn.innerText = local.cancel;
+  cancelBtn.onclick = () => {
+    close(false);
+  };
+  buttonsWrapper.appendChild(cancelBtn);
 }

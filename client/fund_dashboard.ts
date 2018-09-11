@@ -105,12 +105,23 @@ export function renderFundDashboard(app: HTMLElement): void {
       const btn = document.createElement("button");
       btn.innerText = local.show;
       btn.onclick = () => {
-        // Uncomment this after dev.
-        // docs[i].read();
-        // TODO(qti3e) Open payment modal.
+        const payCb = data => {
+          // TODO(qt3ie) Send data back to the server.
+          console.log(doc.pay, data);
+          // Uncomment this after dev.
+          // docs[i].read();
+        };
+
         emit("open-modal", {
-          page: isCharter ? "fillCharter" : null,
-          param: doc
+          page: isCharter ? "charterPayCounter" : "systemicPayCounter",
+          param: {
+            cb: payCb,
+            // TODO(qti3e) Sum tickets.
+            total: 0,
+            fund: true,
+            // Depp clone :D
+            data: JSON.parse(JSON.stringify(doc.pay))
+          }
         });
       };
       row(5, btn);
