@@ -349,6 +349,9 @@ p {
     align-items: center;
     height: calc(100vh - 50px);
     flex-wrap: wrap;
+
+    max-width: 1200px;
+    margin: auto;
   }
 
   .diamond {
