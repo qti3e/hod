@@ -43,7 +43,8 @@ export function renderNewCharter(app: HTMLElement): void {
       receives: [],
       payments: [],
       additionalComments: ""
-    }
+    },
+    providerAgency: ""
   };
 
   forms.set(form);
@@ -110,6 +111,13 @@ export function renderNewCharter(app: HTMLElement): void {
   creditCheckBox.onchange = () => {
     cacheCheckBox.checked = !cacheCheckBox.checked;
     form.providedBy = creditCheckBox.checked ? "credit" : "cache";
+  };
+
+  const agencyInput = document.createElement("input");
+  agencyInput.placeholder = local.agency;
+  right.appendChild(agencyInput);
+  agencyInput.onchange = () => {
+    form.providerAgency = agencyInput.value.trim();
   };
 
   const payerInput = document.createElement("input");

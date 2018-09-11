@@ -77,7 +77,8 @@ export const newCharter = {
   received: "دریافتی...",
   outline: "ایرلاین رفت...",
   turnline: "ایرلاین بازگشت...",
-  newTicket: "افزودن بلیط جدید"
+  newTicket: "افزودن بلیط جدید",
+  agency: "آژانس عامل..."
 };
 
 export const newSystemic = {

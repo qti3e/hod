@@ -117,8 +117,8 @@ export type CharterReceive =
 
 export interface CharterPayment {
   date: string;
-  amount: string;
-  account: number;
+  amount: number;
+  account: string;
 }
 
 export interface CharterPayData {
@@ -139,6 +139,7 @@ export interface CharterDoc extends DocBase<CharterTicket> {
   kind: "internal" | "international";
   providedBy: "cache" | "credit";
   pay: CharterPayData;
+  providerAgency: string;
 }
 
 export interface SystemicDoc extends DocBase<SystemicTicket> {
