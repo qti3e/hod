@@ -140,7 +140,7 @@ export function renderNewSystemic(app: HTMLElement): void {
   submitBtn.innerText = local.submit;
   right.appendChild(submitBtn);
   submitBtn.onclick = async () => {
-    form.tickets = tickets.map(t => t.data());
+    form.tickets = tickets.filter(x => !!x).map(t => t.data());
     console.log("sending form", form);
     await submit(form);
     // Reset form.
@@ -156,29 +156,23 @@ export function renderNewSystemic(app: HTMLElement): void {
   receivesWrapper.className = "receives-wrapper";
   left.appendChild(receivesWrapper);
 
-  for (const name in form.receives) {
-    if (local[name]) {
-      const tmpInput = document.createElement("input");
-      tmpInput.placeholder = local[name];
-      receivesWrapper.appendChild(tmpInput);
-      tmpInput.onchange = () => (form.receives.ICI = Number(tmpInput.value));
-    }
-  }
-
   const tickets: TicketElement[] = [];
   const ticketsWrapper = document.createElement("div");
   ticketsWrapper.className = "tickets-wrapper";
   left.appendChild(ticketsWrapper);
 
   function newTicket() {
-    tickets.push(ticket());
+    const id = tickets.length;
+    tickets.push(ticket(() => {
+      tickets[id] = undefined;
+    }));
     renderTickets();
     ticketsWrapper.scrollTop = ticketsWrapper.scrollHeight;
   }
 
   function renderTickets() {
     for (let i = 0; i < tickets.length; ++i) {
-      if (!tickets[i].parentElement) {
+      if (tickets[i] && !tickets[i].parentElement) {
         ticketsWrapper.appendChild(tickets[i]);
       }
     }
@@ -191,9 +185,22 @@ interface TicketElement extends HTMLDivElement {
   data(): t.SystemicTicket;
 }
 
-function ticket(): TicketElement {
+function ticket(removeCB: () => void): TicketElement {
   const wrapper = document.createElement("div") as TicketElement;
   wrapper.className = "ticket-wrapper";
+
+  const removeBtn = document.createElement("button");
+  removeBtn.className = "remove-btn";
+  removeBtn.onclick = () => {
+    removeCB();
+    if (wrapper.parentElement) {
+      wrapper.classList.add("remove");
+      setTimeout(() => {
+        wrapper.parentElement.removeChild(wrapper);
+      }, 500);
+    }
+  };
+  wrapper.appendChild(removeBtn);
 
   // Create input groups.
   const g1 = document.createElement("div");

@@ -604,6 +604,32 @@ p {
     border-radius: 0 0 25px 25px;
     min-height: 150px;
     display: flex;
+    transition: opacity 500ms ease-out;
+
+    &.remove {
+      opacity: 0;
+    }
+
+    .remove-btn {
+      -webkit-appearance: none;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      background: $primary;
+      border-radius: 0 0 0 35px;
+      width: 35px;
+      height: 35px;
+      margin-right: -14px;
+      margin-top: -14px;
+      position: absolute;
+
+      &:after {
+        content: "X";
+        color: $background;
+        font-size: 14pt;
+        text-align: center;
+      }
+    }
 
     .group {
       margin: auto;

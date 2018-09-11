@@ -178,7 +178,7 @@ export function renderNewCharter(app: HTMLElement): void {
   submitBtn.innerText = local.submit;
   right.appendChild(submitBtn);
   submitBtn.onclick = async () => {
-    form.tickets = tickets.map(t => t.data());
+    form.tickets = tickets.filter(x => !!x).map(t => t.data());
     console.log("sending form", form);
     await submit(form);
     // Reset form.
@@ -197,14 +197,17 @@ export function renderNewCharter(app: HTMLElement): void {
   left.appendChild(ticketsWrapper);
 
   function newTicket() {
-    tickets.push(ticket());
+    const id = tickets.length;
+    tickets.push(ticket(() => {
+      tickets[id] = undefined;
+    }));
     renderTickets();
     ticketsWrapper.scrollTop = ticketsWrapper.scrollHeight;
   }
 
   function renderTickets() {
     for (let i = 0; i < tickets.length; ++i) {
-      if (!tickets[i].parentElement) {
+      if (tickets[i] && !tickets[i].parentElement) {
         ticketsWrapper.appendChild(tickets[i]);
       }
     }
@@ -217,9 +220,22 @@ interface TicketElement extends HTMLDivElement {
   data(): t.CharterTicket;
 }
 
-function ticket(): TicketElement {
+function ticket(removeCB: () => void): TicketElement {
   const wrapper = document.createElement("div") as TicketElement;
   wrapper.className = "ticket-wrapper";
+
+  const removeBtn = document.createElement("button");
+  removeBtn.className = "remove-btn";
+  removeBtn.onclick = () => {
+    removeCB();
+    if (wrapper.parentElement) {
+      wrapper.classList.add("remove");
+      setTimeout(() => {
+        wrapper.parentElement.removeChild(wrapper);
+      }, 500);
+    }
+  };
+  wrapper.appendChild(removeBtn);
 
   // Create input groups.
   const g1 = document.createElement("div");
