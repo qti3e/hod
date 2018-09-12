@@ -51,8 +51,7 @@ export type PageName =
   | "charterPayCounter"
   | "systemicPayCounter"
   | "cancel"
-  | "tickets"
-  | "print";
+  | "tickets";
 
 export type PageURLWithParam = {
   page: PageName;
@@ -85,8 +84,7 @@ export const pages: Pages = {
   charterPayCounter: renderCharterPayCounter,
   systemicPayCounter: renderSystemicPayCounter,
   cancel: renderCancel,
-  tickets: renderTickets,
-  print: renderPrintView
+  tickets: renderTickets
 };
 
 function renderApp(wrapper: HTMLElement) {
@@ -222,14 +220,16 @@ const params = new URLSearchParams(location.search);
 const isPrint = params.get("print") === "true";
 document.styleSheets[isPrint ? 0 : 1].disabled = true;
 
+if (!isPrint) {
+  on("print", (data) => {
+    requestPrint(data);
+  });
+}
+
 window.addEventListener("load", async () => {
   const root = document.getElementById("root");
   if (!isPrint) {
     renderApp(root);
-    requestPrint({
-      x: true,
-      t: true
-    });
   } else {
     const data = JSON.parse(params.get("data"));
     renderPrintView(root, data);

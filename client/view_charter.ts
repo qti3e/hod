@@ -9,10 +9,12 @@
 import axios from "axios";
 import { get } from "./context";
 import { formatDate } from "./datepicker";
+import { emit } from "./ipc";
 import { viewCharter as local } from "./local";
 import { toPersianDigits } from "./persian";
 import { routeView } from "./route";
 import * as t from "./types";
+import { fa } from "./util";
 
 export function renderViewCharter(app: HTMLElement, param: string): void {
   const wrapper = document.createElement("div");
@@ -44,6 +46,15 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
   }
 
   function render(doc: t.CharterDoc): void {
+    const printBtn = document.createElement("button");
+    printBtn.className = "print-btn";
+    printBtn.onclick = () => emit("print", {
+      kind: "charter",
+      data: doc
+    });
+    printBtn.appendChild(fa("print"));
+    wrapper.appendChild(printBtn);
+
     // Render layout.
     const headWrapper = document.createElement("div");
     headWrapper.id = "head-wrapper";

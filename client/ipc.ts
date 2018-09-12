@@ -10,6 +10,7 @@ import axios from "axios";
 import EventEmitter from "eventemitter3";
 import { PageURL, PageURLWithParam } from "./app";
 import { get } from "./context";
+import { PrintData } from "./print";
 import * as t from "./types";
 
 const EE = new EventEmitter();
@@ -19,6 +20,7 @@ export interface EventDataTypeMap {
   notification: string;
   "route-change": PageURLWithParam;
   login: t.User;
+  print: PrintData;
   sse: {
     read: () => Promise<void>;
     currentUser: boolean;

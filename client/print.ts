@@ -9,12 +9,16 @@
 import * as Electron from "electron";
 import { emit } from "./ipc";
 import { print as local } from "./local";
+import * as t from "./types";
 import { delay, fa, nodeRequire } from "./util";
 
 const { remote }: typeof Electron = nodeRequire("electron");
 const currentWindow = remote.getCurrentWindow();
 
-export interface PrintData {}
+export interface PrintData {
+  kind: string;
+  data: any;
+}
 
 export function requestPrint(data: PrintData) {
   const { BrowserWindow } = remote;
@@ -43,6 +47,30 @@ export function requestPrint(data: PrintData) {
   win.loadURL(url.href);
 }
 
+class PageIterator {
+  constructor(private pagesWrapper) { }
+
+  private newPage() {
+    return new Promise(resolve => {
+      newPage().then(content => {
+        this.pagesWrapper.appendChild(content.parentElement);
+        resolve(content);
+      });
+    });
+  }
+
+  [Symbol.iterator]() {
+    return {
+      next: () => {
+        return {
+          value: this.newPage(),
+          done: false
+        };
+      }
+    };
+  }
+}
+
 export async function renderPrintView(
   root: HTMLElement,
   data: PrintData
@@ -56,15 +84,14 @@ export async function renderPrintView(
   root.appendChild(pagesWrapper);
 
   // Render print header.
-  const pageContent = await newPage();
-  pagesWrapper.appendChild(pageContent.parentElement);
 
-  pageContent.appendChild(document.createElement("h1")).innerText = "تست";
+  const pageIterator = new PageIterator(pagesWrapper);
 
-  const pageContent2 = await newPage();
-  pagesWrapper.appendChild(pageContent2.parentElement);
-
-  pageContent2.appendChild(document.createElement("h1")).innerText = "تست";
+  switch (data.kind) {
+    case "charter":
+      handlers.charter(data.data, pageIterator);
+      break;
+  }
 
   // Print button
   const printBtn = document.createElement("button");
@@ -108,4 +135,12 @@ function doPrint(): void {
   });
 }
 
-window["doPrint"] = doPrint;
+const handlers = {
+  async charter(doc: t.CharterDoc, pages: PageIterator) {
+    for (const p of pages) {
+      const page = await p;
+      console.log(page);
+      break;
+    }
+  }
+};
