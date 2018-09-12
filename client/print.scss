@@ -1,5 +1,112 @@
+body {
+  margin: 0;
+}
+
+@font-face {
+  font-family: "BBCNassim";
+  src: local("☺"), local("BBCNassim"), url("./assets/bbc.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #root.print-view {
-  &, * {
+  &,
+  * {
     text-align: right;
+    font-family: BBCNassim;
+  }
+
+  .sheet {
+    .header {
+      height: 60px;
+      border-bottom: 1px solid #000;
+    }
+
+    .header img {
+      float: left;
+      height: 50px;
+    }
+  }
+}
+
+.sheet {
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  page-break-after: always;
+}
+
+// For screen preview
+@media screen {
+  .sheet {
+    background: white;
+    box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, 0.3);
+    margin: auto;
+    margin-top: 5mm;
+    margin-bottom: 5mm;
+  }
+
+  // Paper sizes
+  body.A3 .sheet {
+    width: 297mm;
+    height: 419mm;
+  }
+
+  body.A3.landscape .sheet {
+    width: 420mm;
+    height: 296mm;
+  }
+
+  body.A4 .sheet {
+    width: 210mm;
+    height: 296mm;
+  }
+
+  body.A4.landscape .sheet {
+    width: 297mm;
+    height: 209mm;
+  }
+
+  body.A5 .sheet {
+    width: 148mm;
+    height: 209mm;
+  }
+
+  body.A5.landscape .sheet {
+    width: 210mm;
+    height: 147mm;
+  }
+}
+
+// Padding area
+.sheet.padding-5mm {
+  padding: 5mm;
+}
+
+.sheet.padding-10mm {
+  padding: 10mm;
+}
+
+.sheet.padding-15mm {
+  padding: 15mm;
+}
+
+.sheet.padding-20mm {
+  padding: 20mm;
+}
+
+.sheet.padding-25mm {
+  padding: 25mm;
+}
+
+@media print {
+  #page {
+    > * {
+      display: none;
+    }
+    .pages-wrapper {
+      display: block;
+    }
   }
 }

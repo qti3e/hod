@@ -234,5 +234,6 @@ export const tickets = {
 };
 
 export const print = {
+  title: "چاپ گزارش",
   success: "گزارش مورد نظر با موفقیت چاپ شد"
 };

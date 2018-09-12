@@ -9,30 +9,27 @@
 import * as Electron from "electron";
 import { emit } from "./ipc";
 import { print as local } from "./local";
-import { nodeRequire } from "./util";
+import { delay, nodeRequire } from "./util";
 
 const { remote }: typeof Electron = nodeRequire("electron");
 const currentWindow = remote.getCurrentWindow();
 
-export interface PrintData {
-}
+export interface PrintData {}
 
 export function requestPrint(data: PrintData) {
   const { BrowserWindow } = remote;
 
   const win = new BrowserWindow({
-    minWidth: 1200,
-    minHeight: 800,
-    backgroundColor: "#fff",
+    width: 1200,
+    height: 1000,
+    backgroundColor: "#e0e0e0",
     icon: __dirname + "/favicon.png",
-    show: false,
-    modal: true,
-    parent: currentWindow
+    show: true,
   });
 
   // Disable default menu bar.
   win.setMenu(null);
-  win.setTitle("Report View");
+  win.setTitle(local.title);
   win.center();
 
   win.webContents.toggleDevTools();
@@ -46,16 +43,59 @@ export function requestPrint(data: PrintData) {
   win.loadURL(url.href);
 }
 
-export function renderPrintView(root: HTMLElement, data: PrintData): void {
+export async function renderPrintView(
+  root: HTMLElement,
+  data: PrintData
+): Promise<void> {
+  document.title = local.title;
   root.classList.add("print-view");
-  root.innerText = JSON.stringify(data, null, 4);
+  document.body.classList.add("A4");
+
+  const pagesWrapper = document.createElement("div");
+  pagesWrapper.className = "pages-wrapper";
+  root.appendChild(pagesWrapper);
 
   // Render print header.
+  const pageContent = await newPage();
+  pagesWrapper.appendChild(pageContent.parentElement);
 
+  pageContent.appendChild(document.createElement("h1")).innerText = "تست";
+
+  const pageContent2 = await newPage();
+  pagesWrapper.appendChild(pageContent2.parentElement);
+
+  pageContent2.appendChild(document.createElement("h1")).innerText = "تست";
+
+  // Wait till it loads fonts and then request print.
+  await delay(50);
   doPrint();
 }
 
-function doPrint() {
+function newPage(): Promise<HTMLElement> {
+  let resolve;
+  const promise = new Promise<HTMLElement>(r => (resolve = r));
+
+  const page = document.createElement("div");
+  page.className = "sheet padding-5mm";
+
+  const pageHead = document.createElement("div");
+  pageHead.className = "header";
+  page.appendChild(pageHead);
+
+  const logo = document.createElement("img");
+  logo.src = require("./assets/logo.png");
+  pageHead.appendChild(logo);
+
+  const contentWrapper = document.createElement("div");
+  contentWrapper.className = "content";
+  page.appendChild(contentWrapper);
+
+  logo.onload = () => resolve(contentWrapper);
+
+  return promise;
+}
+
+async function doPrint(): Promise<void> {
   // Print document...
   currentWindow.webContents.print({}, printed => {
     if (printed) {
@@ -63,10 +103,8 @@ function doPrint() {
     }
   });
 
-  // Close the window after the next tick.
-  setTimeout(() => {
-    currentWindow.close();
-  });
+  await delay();
+  // currentWindow.close();
 }
 
 window["doPrint"] = doPrint;

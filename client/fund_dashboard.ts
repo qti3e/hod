@@ -108,7 +108,6 @@ export function renderFundDashboard(app: HTMLElement): void {
       const btn = document.createElement("button");
       btn.innerText = local.show;
       btn.onclick = () => {
-
         const payCb = data => {
           console.log(doc.pay, data);
           const token = get("currentToken");

@@ -24,5 +24,4 @@ export function renderCancel(app: HTMLElement): void {
   const title = document.createElement("h1");
   title.innerText = local.title;
   wrapper.appendChild(title);
-
 }
