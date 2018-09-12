@@ -5,6 +5,25 @@ body {
   overflow: auto;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  box-shadow: inset 0 0 6px darken($primary, 25%);
+}
+
+::selection {
+  background: $primary;
+  color: $background;
+}
+
+* {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 @font-face {
   font-family: "BBCNassim";
   src: local("☺"), local("BBCNassim"), url("./assets/bbc.woff") format("woff");
@@ -19,13 +38,13 @@ body {
       text-align: right;
     }
     .header {
-      height: 60px;
-      border-bottom: 1px solid #000;
+      height: 80px;
+      border-bottom: 1px double #000;
     }
 
     .header img {
       float: left;
-      height: 50px;
+      height: 75px;
     }
   }
 

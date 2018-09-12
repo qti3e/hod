@@ -218,7 +218,8 @@ function renderApp(wrapper: HTMLElement) {
 
 const params = new URLSearchParams(location.search);
 const isPrint = params.get("print") === "true";
-document.styleSheets[isPrint ? 0 : 1].disabled = true;
+const toRemove = document.styleSheets[isPrint ? 0 : 1].ownerNode;
+toRemove.parentElement.removeChild(toRemove);
 
 if (!isPrint) {
   on("print", (data) => {
