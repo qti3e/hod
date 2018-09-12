@@ -11,6 +11,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import { get } from "./context";
 import { emit, on, once } from "./ipc";
 import { common as local } from "./local";
+import { renderPrintView, requestPrint } from "./print";
 import { delay } from "./util";
 
 // Import views.
@@ -50,7 +51,8 @@ export type PageName =
   | "charterPayCounter"
   | "systemicPayCounter"
   | "cancel"
-  | "tickets";
+  | "tickets"
+  | "print";
 
 export type PageURLWithParam = {
   page: PageName;
@@ -83,7 +85,8 @@ export const pages: Pages = {
   charterPayCounter: renderCharterPayCounter,
   systemicPayCounter: renderSystemicPayCounter,
   cancel: renderCancel,
-  tickets: renderTickets
+  tickets: renderTickets,
+  print: renderPrintView
 };
 
 function renderApp(wrapper: HTMLElement) {
@@ -215,8 +218,22 @@ function renderApp(wrapper: HTMLElement) {
   render("home");
 }
 
+const params = new URLSearchParams(location.search);
+const isPrint = params.get("print") === "true";
+document.styleSheets[isPrint ? 0 : 1].disabled = true;
+
 window.addEventListener("load", async () => {
-  renderApp(document.getElementById("root"));
+  const root = document.getElementById("root");
+  if (!isPrint) {
+    renderApp(root);
+    requestPrint({
+      x: true,
+      t: true
+    });
+  } else {
+    const data = JSON.parse(params.get("data"));
+    renderPrintView(root, data);
+  }
 });
 
 on("notification", (text: string) => {

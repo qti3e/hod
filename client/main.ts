@@ -29,6 +29,7 @@ function main() {
   // Disable default menu bar.
   win.setMenu(null);
   win.setTitle(TITLE);
+  win.center();
 
   if (process.env.NODE_ENV === "production") {
     console.log("Production");

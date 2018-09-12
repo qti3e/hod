@@ -232,3 +232,7 @@ export const cancel = {
 export const tickets = {
   title: "بلیط ها"
 };
+
+export const print = {
+  success: "گزارش مورد نظر با موفقیت چاپ شد"
+};
