@@ -9,7 +9,7 @@
 import * as Electron from "electron";
 import { emit } from "./ipc";
 import { print as local } from "./local";
-import { delay, nodeRequire } from "./util";
+import { delay, fa, nodeRequire } from "./util";
 
 const { remote }: typeof Electron = nodeRequire("electron");
 const currentWindow = remote.getCurrentWindow();
@@ -66,9 +66,11 @@ export async function renderPrintView(
 
   pageContent2.appendChild(document.createElement("h1")).innerText = "تست";
 
-  // Wait till it loads fonts and then request print.
-  await delay(50);
-  doPrint();
+  // Print button
+  const printBtn = document.createElement("button");
+  printBtn.onclick = () => doPrint();
+  printBtn.appendChild(fa("print"));
+  root.appendChild(printBtn);
 }
 
 function newPage(): Promise<HTMLElement> {
@@ -95,16 +97,15 @@ function newPage(): Promise<HTMLElement> {
   return promise;
 }
 
-async function doPrint(): Promise<void> {
+function doPrint(): void {
   // Print document...
-  currentWindow.webContents.print({}, printed => {
+  currentWindow.webContents.print({}, async printed => {
     if (printed) {
       emit("notification", local.success);
+      await delay();
+      currentWindow.close();
     }
   });
-
-  await delay();
-  // currentWindow.close();
 }
 
 window["doPrint"] = doPrint;

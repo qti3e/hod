@@ -1,5 +1,8 @@
+@import "colors";
+
 body {
   margin: 0;
+  overflow: auto;
 }
 
 @font-face {
@@ -10,13 +13,11 @@ body {
 }
 
 #root.print-view {
-  &,
-  * {
-    text-align: right;
-    font-family: BBCNassim;
-  }
-
   .sheet {
+    &, * {
+      font-family: BBCNassim;
+      text-align: right;
+    }
     .header {
       height: 60px;
       border-bottom: 1px solid #000;
@@ -26,6 +27,23 @@ body {
       float: left;
       height: 50px;
     }
+  }
+
+  button {
+    -webkit-appearance: none;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    background: $background;
+    font-size: 14pt;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0.5mm 2mm rgba(0, 0, 0, 0.3);
+    color: $fg;
   }
 }
 
@@ -101,7 +119,7 @@ body {
 }
 
 @media print {
-  #page {
+  #root {
     > * {
       display: none;
     }
