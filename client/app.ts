@@ -222,7 +222,7 @@ const toRemove = document.styleSheets[isPrint ? 0 : 1].ownerNode;
 toRemove.parentElement.removeChild(toRemove);
 
 if (!isPrint) {
-  on("print", (data) => {
+  on("print", data => {
     requestPrint(data);
   });
 }

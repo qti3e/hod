@@ -48,10 +48,11 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
   function render(doc: t.CharterDoc): void {
     const printBtn = document.createElement("button");
     printBtn.className = "print-btn";
-    printBtn.onclick = () => emit("print", {
-      kind: "charter",
-      data: doc
-    });
+    printBtn.onclick = () =>
+      emit("print", {
+        kind: "charter",
+        data: doc
+      });
     printBtn.appendChild(fa("print"));
     wrapper.appendChild(printBtn);
 

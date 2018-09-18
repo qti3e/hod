@@ -28,7 +28,7 @@ export function requestPrint(data: PrintData) {
     height: 1000,
     backgroundColor: "#e0e0e0",
     icon: __dirname + "/favicon.png",
-    show: true,
+    show: true
   });
 
   // Disable default menu bar.
@@ -48,7 +48,7 @@ export function requestPrint(data: PrintData) {
 }
 
 class PageIterator {
-  constructor(private pagesWrapper) { }
+  constructor(private pagesWrapper) {}
 
   private newPage() {
     return new Promise(resolve => {
