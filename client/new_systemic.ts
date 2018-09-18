@@ -194,6 +194,12 @@ export function renderNewSystemic(app: HTMLElement): void {
         tickets[id] = undefined;
       })
     );
+    for (let prevId = id - 1; prevId >= 0; --prevId) {
+      if (!tickets[prevId]) continue;
+      const data = tickets[prevId].data();
+      tickets[id].data(data);
+      break;
+    }
     renderTickets();
     ticketsWrapper.scrollTop = ticketsWrapper.scrollHeight;
   }
@@ -210,7 +216,7 @@ export function renderNewSystemic(app: HTMLElement): void {
 }
 
 interface TicketElement extends HTMLDivElement {
-  data(): t.SystemicTicket;
+  data(data?: Partial<t.SystemicTicket>): t.SystemicTicket;
 }
 
 function ticket(removeCB: () => void): TicketElement {
@@ -256,9 +262,9 @@ function ticket(removeCB: () => void): TicketElement {
   receivedInput.type = "number";
   g2.appendChild(receivedInput);
 
-  const outlineInput = document.createElement("input");
-  outlineInput.placeholder = local.outline;
-  g2.appendChild(outlineInput);
+  const airlineInput = document.createElement("input");
+  airlineInput.placeholder = local.outline;
+  g2.appendChild(airlineInput);
 
   const passengerNameInput = document.createElement("input");
   passengerNameInput.placeholder = local.passengerName;
@@ -271,16 +277,32 @@ function ticket(removeCB: () => void): TicketElement {
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);
 
-  wrapper.data = () => ({
+  const collectData = (): t.SystemicTicket => ({
     id: idInput.value,
     passengerName: passengerNameInput.value,
     passengerLastname: passengerLastnameInput.value,
     received: Number(receivedInput.value),
-    airline: outlineInput.value,
+    airline: airlineInput.value,
     date: Number(dateInput.getAttribute("data-day")),
     route: routeInput.getDBRoute()
   });
 
+  const setData = (t: Partial<t.SystemicTicket>): void => {
+    if (t.id) idInput.value = t.id;
+    if (t.passengerName) passengerNameInput.value = t.passengerName;
+    if (t.passengerLastname) passengerLastnameInput.value = t.passengerLastname;
+    if (t.received) receivedInput.value = String(t.received);
+    if (t.airline) airlineInput.value = t.airline;
+    if (t.date) dateInput.value = String(t.date);
+    if (t.route) routeInput.setDBRoute(t.route);
+  }
+
+  wrapper.data = (data: Partial<t.SystemicTicket>): t.SystemicTicket => {
+    if (data) {
+      setData(data);
+    }
+    return collectData();
+  };
   return wrapper;
 }
 
