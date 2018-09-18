@@ -201,6 +201,12 @@ export function renderNewCharter(app: HTMLElement): void {
         tickets[id] = undefined;
       })
     );
+    for (let prevId = id - 1; prevId >= 0; --prevId) {
+      if (!tickets[prevId]) continue;
+      const data = tickets[prevId].data();
+      tickets[id].data(data);
+      break;
+    }
     renderTickets();
     ticketsWrapper.scrollTop = ticketsWrapper.scrollHeight;
   }
@@ -217,7 +223,7 @@ export function renderNewCharter(app: HTMLElement): void {
 }
 
 interface TicketElement extends HTMLDivElement {
-  data(): t.CharterTicket;
+  data(ticket?: Partial<t.CharterTicket>): t.CharterTicket;
 }
 
 function ticket(removeCB: () => void): TicketElement {
@@ -286,7 +292,7 @@ function ticket(removeCB: () => void): TicketElement {
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);
 
-  wrapper.data = () => ({
+  const collectData = (): t.CharterTicket => ({
     id: idInput.value,
     passengerName: passengerNameInput.value,
     passengerLastname: passengerLastnameInput.value,
@@ -296,6 +302,25 @@ function ticket(removeCB: () => void): TicketElement {
     date: Number(dateInput.getAttribute("data-day")),
     route: routeInput.getDBRoute()
   });
+
+
+  const setData = (t: Partial<t.CharterTicket>) => {
+    if (t.id) idInput.value = t.id;
+    if (t.passengerName) passengerNameInput.value = t.passengerName;
+    if (t.passengerLastname) passengerLastnameInput.value = t.passengerLastname;
+    if (t.paid) paidInput.value = String(t.paid);
+    if (t.received) receivedInput.value = String(t.received);
+    if (t.airline) airlineInput.value = t.airline;
+    if (t.date) dateInput.value = String(t.date);
+    if (t.route) routeInput.setDBRoute(t.route);
+  };
+
+  wrapper.data = (data?: Partial<t.CharterTicket>) => {
+    if (data) {
+      setData(data);
+    }
+    return collectData();
+  };
 
   return wrapper;
 }

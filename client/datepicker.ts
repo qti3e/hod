@@ -133,17 +133,33 @@ export function datepicker(
   // End of view.
 
   const jToday = jalaali.toJalaali(options.today);
+  let calledUpdateValue = false;
   let year = jToday.jy;
   let month = jToday.jm - 1;
   let day = jToday.jd - 1;
 
-  if (input.value && !isNaN(Number(input.value))) {
-    const { jy, jm, jd } = jalaali.d2j(Number(input.value));
-    year = jy;
-    month = jm - 1;
-    day = jd;
-    updateValue();
+  function setDateFromValue() {
+    if (input.value && !isNaN(Number(input.value))) {
+      const { jy, jm, jd } = jalaali.d2j(Number(input.value));
+      year = jy;
+      month = jm - 1;
+      day = jd;
+      updateValue();
+      input.blur();
+    }
   }
+
+  input.addEventListener("change", () => {
+    if (calledUpdateValue) {
+      calledUpdateValue = false;
+      return;
+    }
+    setDateFromValue();
+  });
+
+  setDateFromValue();
+  // Hack
+  setTimeout(setDateFromValue);
 
   function prevMonth(): void {
     month--;
@@ -179,6 +195,7 @@ export function datepicker(
   }
 
   function updateValue() {
+    calledUpdateValue = true;
     input.value = toPersianDigits(`${year}/${month + 1}/${day + 1}`);
     const dayNum = jalaali.j2d(year, month + 1, day);
     input.setAttribute("data-day", dayNum);

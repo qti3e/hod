@@ -39,6 +39,7 @@ export interface RouteSelectorElement extends HTMLButtonElement {
   route: t.City[];
   show(): void;
   getDBRoute(): t.DBCity[];
+  setDBRoute(route: t.DBCity[]): void;
 }
 
 export function routeSelector(): RouteSelectorElement {
@@ -252,6 +253,32 @@ export function routeSelector(): RouteSelectorElement {
       displayName: c.name || c.name[0],
       lngLat: c.lngLat
     }));
+  btn.setDBRoute = (r: t.DBCity[]): void => {
+    route.length = 0;
+    const tmp = [];
+    let toFind = r.length;
+    for (const city of citiesCache) {
+      for (let i = 0; i < r.length; ++i) {
+        if (r[i].id === city.id) {
+          tmp.push(city);
+          toFind--;
+          if (toFind === 0) break;
+        }
+      }
+      if (toFind === 0) break;
+    }
+    for (let i = 0; i < r.length; ++i) {
+      for (const city of tmp) {
+        if (city.id === r[i].id) {
+          route.push(city);
+        }
+      }
+    }
+    updateRoute();
+    searchInputEl.value = "";
+    data.results.length = 0;
+    updateSearchResults();
+  };
 
   const fromEl = document.createElement("div");
   fromEl.classList.add("city-name");
