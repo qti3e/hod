@@ -184,7 +184,7 @@ function renderTicket(ticket: t.SystemicTicket): HTMLElement {
   g1.appendChild(row(local.date, formatDate(ticket.date)));
 
   g2.appendChild(row(local.received, String(ticket.received || 0)));
-  g2.appendChild(row(local.outline, ticket.outline));
+  g2.appendChild(row(local.airline, ticket.airline));
 
   g3.appendChild(row(local.passengerName, ticket.passengerName));
   g3.appendChild(row(local.passengerLastname, ticket.passengerLastname));

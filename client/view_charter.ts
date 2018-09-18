@@ -208,8 +208,7 @@ function renderTicket(ticket: t.CharterTicket): HTMLElement {
   g3.appendChild(row(local.passengerName, ticket.passengerName));
   g3.appendChild(row(local.passengerLastname, ticket.passengerLastname));
 
-  g4.appendChild(row(local.outline, ticket.outline));
-  g4.appendChild(row(local.turnline, ticket.turnline));
+  g4.appendChild(row(local.airline, ticket.airline));
 
   wrapper.appendChild(routeView(ticket.route, wrapper));
 

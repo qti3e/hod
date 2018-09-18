@@ -13,7 +13,7 @@ import { emit } from "./ipc";
 import { newSystemic as local } from "./local";
 import { routeSelector } from "./route";
 import * as t from "./types";
-import { cacheForUser, checkBox } from "./util";
+import { cacheForUser, checkBox, fa } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
 const forms = cacheForUser<t.SystemicDoc>();
@@ -219,6 +219,7 @@ function ticket(removeCB: () => void): TicketElement {
 
   const removeBtn = document.createElement("button");
   removeBtn.className = "remove-btn";
+  removeBtn.appendChild(fa("trash"));
   removeBtn.onclick = () => {
     removeCB();
     if (wrapper.parentElement) {
@@ -275,7 +276,7 @@ function ticket(removeCB: () => void): TicketElement {
     passengerName: passengerNameInput.value,
     passengerLastname: passengerLastnameInput.value,
     received: Number(receivedInput.value),
-    outline: outlineInput.value,
+    airline: outlineInput.value,
     date: Number(dateInput.getAttribute("data-day")),
     route: routeInput.getDBRoute()
   });

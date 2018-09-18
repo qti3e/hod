@@ -77,8 +77,7 @@ export const newCharter = {
   passengerLastname: "نام خانوادگی مسافر...",
   paid: "پرداخت شده...",
   received: "دریافتی...",
-  outline: "ایرلاین رفت...",
-  turnline: "ایرلاین بازگشت...",
+  airline: "نام ایرلاین...",
   newTicket: "افزودن بلیط جدید",
   agency: "آژانس عامل..."
 };
@@ -147,8 +146,7 @@ export const viewCharter = {
   passengerLastname: "نام خانوادگی مسافر",
   paid: "پرداخت شده",
   received: "دریافتی",
-  outline: "ایرلاین رفت",
-  turnline: "ایرلاین بازگشت"
+  airline: "نام ایرلاین"
 };
 
 export const listSystemic = {

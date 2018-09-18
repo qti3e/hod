@@ -13,7 +13,7 @@ import { emit } from "./ipc";
 import { newCharter as local } from "./local";
 import { routeSelector } from "./route";
 import * as t from "./types";
-import { cacheForUser, checkBox } from "./util";
+import { cacheForUser, checkBox, fa } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
 const forms = cacheForUser<t.CharterDoc>();
@@ -226,6 +226,7 @@ function ticket(removeCB: () => void): TicketElement {
 
   const removeBtn = document.createElement("button");
   removeBtn.className = "remove-btn";
+  removeBtn.appendChild(fa("trash"));
   removeBtn.onclick = () => {
     removeCB();
     if (wrapper.parentElement) {
@@ -278,13 +279,9 @@ function ticket(removeCB: () => void): TicketElement {
   passengerLastnameInput.placeholder = local.passengerLastname;
   g3.appendChild(passengerLastnameInput);
 
-  const outlineInput = document.createElement("input");
-  outlineInput.placeholder = local.outline;
-  g4.appendChild(outlineInput);
-
-  const turnlineInput = document.createElement("input");
-  turnlineInput.placeholder = local.turnline;
-  g4.appendChild(turnlineInput);
+  const airlineInput = document.createElement("input");
+  airlineInput.placeholder = local.airline;
+  g4.appendChild(airlineInput);
 
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);
@@ -295,8 +292,7 @@ function ticket(removeCB: () => void): TicketElement {
     passengerLastname: passengerLastnameInput.value,
     paid: Number(paidInput.value),
     received: Number(receivedInput.value),
-    outline: outlineInput.value,
-    turnline: turnlineInput.value,
+    airline: airlineInput.value,
     date: Number(dateInput.getAttribute("data-day")),
     route: routeInput.getDBRoute()
   });
