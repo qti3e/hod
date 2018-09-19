@@ -293,7 +293,7 @@ function ticket(removeCB: () => void): TicketElement {
     if (t.airline) airlineInput.value = t.airline;
     if (t.date) dateInput.value = String(t.date);
     if (t.route) routeInput.setDBRoute(t.route);
-  }
+  };
 
   wrapper.data = (data: Partial<t.SystemicTicket>): t.SystemicTicket => {
     if (data) {

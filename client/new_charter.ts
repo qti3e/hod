@@ -300,7 +300,6 @@ function ticket(removeCB: () => void): TicketElement {
     route: routeInput.getDBRoute()
   });
 
-
   const setData = (t: Partial<t.CharterTicket>) => {
     if (t.id) idInput.value = t.id;
     if (t.passengerName) passengerNameInput.value = t.passengerName;

@@ -34,52 +34,57 @@ export function numberMask(input?: HTMLInputElement): HTMLInputElement {
 
     const cursor = input.selectionStart;
 
-    const str = value.map(x => x === null ? "," : toPersianDigits(x)).join("");
+    const str = value
+      .map(x => (x === null ? "," : toPersianDigits(x)))
+      .join("");
     input.setAttribute("value", str);
 
     input.selectionStart = cursor + (value.length - prevLen);
     prevLen = value.length;
   }
 
-  input.addEventListener("keydown", (e: KeyboardEvent): void => {
-    // Tab key.
-    if (e.keyCode === 9) {
-      return;
+  input.addEventListener(
+    "keydown",
+    (e: KeyboardEvent): void => {
+      // Tab key.
+      if (e.keyCode === 9) {
+        return;
+      }
+
+      const cursor = input.selectionStart;
+
+      // Backspace
+      if (e.keyCode === 8) {
+        value.splice(cursor - 1, 1);
+      }
+
+      // Delete
+      if (e.keyCode === 46) {
+        value.splice(cursor, 1);
+      }
+
+      // Arrow left
+      if (e.keyCode === 37 && cursor > 0) {
+        input.selectionStart = cursor - 1;
+        input.selectionEnd = input.selectionStart;
+      }
+
+      // Arrow right
+      if (e.keyCode === 39) {
+        input.selectionStart = cursor + 1;
+        input.selectionEnd = input.selectionStart;
+      }
+
+      const key = normalizeText(e.key);
+
+      if (/^\d$/.test(key)) {
+        value.splice(cursor, 0, key);
+      }
+
+      e.preventDefault();
+      updateInputValue();
     }
-
-    const cursor = input.selectionStart;
-
-    // Backspace
-    if (e.keyCode === 8) {
-      value.splice(cursor - 1, 1);
-    }
-
-    // Delete
-    if (e.keyCode === 46) {
-      value.splice(cursor, 1);
-    }
-
-    // Arrow left
-    if (e.keyCode === 37 && cursor > 0) {
-      input.selectionStart = cursor - 1;
-      input.selectionEnd = input.selectionStart;
-    }
-
-    // Arrow right
-    if (e.keyCode === 39) {
-      input.selectionStart = cursor + 1;
-      input.selectionEnd = input.selectionStart;
-    }
-
-    const key = normalizeText(e.key);
-
-    if (/^\d$/.test(key)) {
-      value.splice(cursor, 0, key);
-    }
-
-    e.preventDefault();
-    updateInputValue();
-  });
+  );
 
   Object.defineProperty(input, "value", {
     get() {
@@ -93,7 +98,9 @@ export function numberMask(input?: HTMLInputElement): HTMLInputElement {
   });
 
   Object.defineProperty(input, "type", {
-    get() { return "text"; },
+    get() {
+      return "text";
+    },
     set() {}
   });
 
