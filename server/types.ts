@@ -45,7 +45,7 @@ export interface TicketBase {
   passengerName: string;
   passengerLastname: string;
   received: number;
-  outline: string;
+  airline: string;
   date: number;
   route: DBCity[];
 }
@@ -71,7 +71,6 @@ export interface DocBase<T extends TicketBase> {
 
 export interface CharterTicket extends TicketBase {
   paid: number;
-  turnline: string;
 }
 
 export interface SystemicTicket extends TicketBase {}
