@@ -47,30 +47,6 @@ export function requestPrint(data: PrintData) {
   win.loadURL(url.href);
 }
 
-class PageIterator {
-  constructor(private pagesWrapper) {}
-
-  private newPage() {
-    return new Promise(resolve => {
-      newPage().then(content => {
-        this.pagesWrapper.appendChild(content.parentElement);
-        resolve(content);
-      });
-    });
-  }
-
-  [Symbol.iterator]() {
-    return {
-      next: () => {
-        return {
-          value: this.newPage(),
-          done: false
-        };
-      }
-    };
-  }
-}
-
 export async function renderPrintView(
   root: HTMLElement,
   data: PrintData
@@ -83,13 +59,9 @@ export async function renderPrintView(
   pagesWrapper.className = "pages-wrapper";
   root.appendChild(pagesWrapper);
 
-  // Render print header.
-
-  const pageIterator = new PageIterator(pagesWrapper);
-
   switch (data.kind) {
     case "charter":
-      handlers.charter(data.data, pageIterator);
+      handlers.charter(data.data);
       break;
   }
 
@@ -100,26 +72,62 @@ export async function renderPrintView(
   root.appendChild(printBtn);
 }
 
-function newPage(): Promise<HTMLElement> {
-  let resolve;
-  const promise = new Promise<HTMLElement>(r => (resolve = r));
+interface Page extends HTMLElement {
+  contentEl?: HTMLElement;
+  titleEl?: HTMLElement;
+  subtitleEl?: HTMLElement;
+  metadataWrapper?: HTMLElement;
+}
 
-  const page = document.createElement("div");
+function newPage(): Promise<Page> {
+  let resolve;
+  const promise = new Promise<Page>(r => (resolve = r));
+
+  const page = document.createElement("div") as Page;
   page.className = "sheet padding-5mm";
 
   const pageHead = document.createElement("div");
   pageHead.className = "header";
   page.appendChild(pageHead);
 
+  const logoContainer = document.createElement("div");
+  logoContainer.className = "logo-container";
+  pageHead.appendChild(logoContainer);
+
   const logo = document.createElement("img");
   logo.src = require("./assets/logo.png");
-  pageHead.appendChild(logo);
+  logoContainer.appendChild(logo);
+
+  const titleContainer = document.createElement("div");
+  titleContainer.className = "title-container";
+  pageHead.appendChild(titleContainer);
+
+  const title = document.createElement("h1");
+  titleContainer.appendChild(title);
+
+  const subtitle = document.createElement("h3");
+  titleContainer.appendChild(subtitle);
+
+  const metadataWrapper = document.createElement("div");
+  metadataWrapper.className = "metadata-container";
+  pageHead.appendChild(metadataWrapper);
 
   const contentWrapper = document.createElement("div");
   contentWrapper.className = "content";
   page.appendChild(contentWrapper);
 
-  logo.onload = () => resolve(contentWrapper);
+  page.contentEl = contentWrapper;
+  page.titleEl = title;
+  page.subtitleEl = subtitle;
+  page.metadataWrapper = metadataWrapper;
+
+  Object.defineProperty(page, "title", {
+    set(value: string): void {
+      title.innerText = value;
+    }
+  });
+
+  logo.onload = () => resolve(page);
 
   return promise;
 }
@@ -136,11 +144,6 @@ function doPrint(): void {
 }
 
 const handlers = {
-  async charter(doc: t.CharterDoc, pages: PageIterator) {
-    for (const p of pages) {
-      const page = await p;
-      console.log(page);
-      break;
-    }
+  async charter(doc: t.CharterDoc) {
   }
 };
