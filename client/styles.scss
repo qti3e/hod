@@ -1004,8 +1004,10 @@ p {
   }
 
   .buttons-wrapper {
-    width: 100%;
     display: flex;
+    position: fixed;
+    width: 70vw;
+    bottom: 0;
 
     button {
       -webkit-appearance: none;
@@ -1015,7 +1017,7 @@ p {
       margin: 10px;
       cursor: pointer;
       color: $fg;
-      height: 28px;
+      height: 35px;
       font-size: 14pt;
 
       &.submit {

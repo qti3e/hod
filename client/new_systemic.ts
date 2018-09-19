@@ -145,12 +145,22 @@ export function renderNewSystemic(app: HTMLElement): void {
   payBtn.innerText = local.pay;
   right.appendChild(payBtn);
   // Update payment information of the form.
-  const payCb = (data: t.SystemicPayData) => {
+  const payCb = async (data: t.SystemicPayData, save?: boolean) => {
     // We pass form.data by reference, is this
     // thing even needed? No, but let's be sure
     // about what the heck we're doing.
     form.pay = data;
+
+    if (!save) return;
+
+    form.tickets = tickets.filter(x => !!x).map(t => t.data());
+    console.log("sending form", form);
+    await submit(form);
+    // Reset form.
+    // TODO(qti3e) show the saved doc.
+    emit("goto", "home");
   };
+
   payBtn.onclick = () => {
     emit("open-modal", {
       page: "systemicPayCounter",
@@ -161,18 +171,6 @@ export function renderNewSystemic(app: HTMLElement): void {
         data: form.pay
       }
     });
-  };
-
-  const submitBtn = document.createElement("button");
-  submitBtn.innerText = local.submit;
-  right.appendChild(submitBtn);
-  submitBtn.onclick = async () => {
-    form.tickets = tickets.filter(x => !!x).map(t => t.data());
-    console.log("sending form", form);
-    await submit(form);
-    // Reset form.
-    // TODO(qti3e) show the saved doc.
-    emit("goto", "home");
   };
 
   const left = document.createElement("div");

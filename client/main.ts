@@ -34,6 +34,8 @@ function main() {
   if (process.env.NODE_ENV === "production") {
     console.log("Production");
     win.loadURL("file://" + __dirname + "/index.html");
+
+    win.webContents.toggleDevTools();
   } else {
     console.log("Development");
     win.loadURL("http://localhost:8080");

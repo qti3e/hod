@@ -282,16 +282,6 @@ export function renderSystemicPayCounter(
 
   // End of rendering receives section.
 
-  if (!fund) {
-    const noteWrapper = document.createElement("div");
-    noteWrapper.className = "note";
-    noteWrapper.appendChild(document.createTextNode(local.note));
-    wrapper.appendChild(noteWrapper);
-    return;
-  }
-
-  // Only codes for the fund section are allowed here.
-
   wrapper.addEventListener("component-will-unmount", e => e.preventDefault());
 
   const buttonsWrapper = document.createElement("div");
@@ -303,7 +293,7 @@ export function renderSystemicPayCounter(
   submitBtn.innerText = local.submit;
   submitBtn.onclick = () => {
     send(true);
-    // Close
+    // Force Close
     close(false);
   };
   buttonsWrapper.appendChild(submitBtn);
@@ -312,6 +302,7 @@ export function renderSystemicPayCounter(
   cancelBtn.className = "cancel";
   cancelBtn.innerText = local.cancel;
   cancelBtn.onclick = () => {
+    send(false);
     close(false);
   };
   buttonsWrapper.appendChild(cancelBtn);

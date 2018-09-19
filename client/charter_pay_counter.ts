@@ -38,11 +38,6 @@ export function renderCharterPayCounter(
   const wrapper = document.createElement("div");
   wrapper.id = "charter-pay-counter";
   app.appendChild(wrapper);
-  wrapper.addEventListener("component-will-unmount", () => {
-    if (!fund) {
-      send();
-    }
-  });
 
   // Start the DOM manipulation
   const title = document.createElement("h1");
@@ -362,16 +357,6 @@ export function renderCharterPayCounter(
     renderPaymentsRow(i);
   }
 
-  if (!fund) {
-    const noteWrapper = document.createElement("div");
-    noteWrapper.className = "note";
-    noteWrapper.appendChild(document.createTextNode(local.note));
-    wrapper.appendChild(noteWrapper);
-    return;
-  }
-
-  // Only codes for the fund section are allowed here.
-
   wrapper.addEventListener("component-will-unmount", e => e.preventDefault());
 
   const buttonsWrapper = document.createElement("div");
@@ -383,7 +368,7 @@ export function renderCharterPayCounter(
   submitBtn.innerText = local.submit;
   submitBtn.onclick = () => {
     send(true);
-    // Close
+    // Fore Close
     close(false);
   };
   buttonsWrapper.appendChild(submitBtn);
@@ -392,6 +377,7 @@ export function renderCharterPayCounter(
   cancelBtn.className = "cancel";
   cancelBtn.innerText = local.cancel;
   cancelBtn.onclick = () => {
+    send(false);
     close(false);
   };
   buttonsWrapper.appendChild(cancelBtn);
