@@ -8,6 +8,7 @@
 
 import { datepicker } from "./datepicker";
 import { paySystemicCounter as local } from "./local";
+import { numberMask } from "./mask";
 import * as t from "./types";
 import { fa } from "./util";
 
@@ -58,7 +59,7 @@ export function renderSystemicPayCounter(
   // between them in a loop.
   for (const name in data.base) {
     if (local[name]) {
-      const tmpInput = document.createElement("input");
+      const tmpInput = numberMask();
       tmpInput.placeholder = local[name];
       // Set the value from props.
       tmpInput.value = data.base[name] ? data.base[name] : "";
@@ -110,7 +111,7 @@ export function renderSystemicPayCounter(
         icon = fa("money-bill-alt");
         icon.title = local.cacheReceive;
 
-        i1 = document.createElement("input");
+        i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
         i1.onchange = () => {
@@ -140,7 +141,7 @@ export function renderSystemicPayCounter(
         icon = fa("money-check");
         icon.title = local.bankReceive;
 
-        i1 = document.createElement("input");
+        i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
         i1.onchange = () => {
@@ -170,7 +171,7 @@ export function renderSystemicPayCounter(
         icon = fa("credit-card");
         icon.title = local.hekmatCardReceive;
 
-        i1 = document.createElement("input");
+        i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
         i1.onchange = () => {
@@ -192,7 +193,7 @@ export function renderSystemicPayCounter(
         icon = fa("file-invoice");
         icon.title = local.notificationReceive;
 
-        i1 = document.createElement("input");
+        i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
         i1.onchange = () => {

@@ -8,6 +8,7 @@
 
 import { datepicker } from "./datepicker";
 import { payCharterCounter as local } from "./local";
+import { numberMask } from "./mask";
 import * as t from "./types";
 import { fa } from "./util";
 
@@ -59,7 +60,7 @@ export function renderCharterPayCounter(
   // between them in a loop.
   for (const name in data.base) {
     if (local[name]) {
-      const tmpInput = document.createElement("input");
+      const tmpInput = numberMask();
       tmpInput.placeholder = local[name];
       // Set the value from props.
       tmpInput.value = data.base[name] ? data.base[name] : "";
@@ -111,7 +112,7 @@ export function renderCharterPayCounter(
         icon = fa("money-bill-alt");
         icon.title = local.cacheReceive;
 
-        i1 = document.createElement("input");
+        i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
         i1.onchange = () => {
@@ -141,7 +142,7 @@ export function renderCharterPayCounter(
         icon = fa("money-check");
         icon.title = local.bankReceive;
 
-        i1 = document.createElement("input");
+        i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
         i1.onchange = () => {
@@ -171,7 +172,7 @@ export function renderCharterPayCounter(
         icon = fa("credit-card");
         icon.title = local.hekmatCardReceive;
 
-        i1 = document.createElement("input");
+        i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
         i1.onchange = () => {
@@ -193,7 +194,7 @@ export function renderCharterPayCounter(
         icon = fa("file-invoice");
         icon.title = local.notificationReceive;
 
-        i1 = document.createElement("input");
+        i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
         i1.onchange = () => {
@@ -311,7 +312,7 @@ export function renderCharterPayCounter(
     };
     rowEl.appendChild(delBtn);
 
-    const i1 = document.createElement("input");
+    const i1 = numberMask();
     i1.value = payment.amount > 0 ? String(payment.amount) : "";
     i1.placeholder = local.amount;
     i1.onchange = () => {

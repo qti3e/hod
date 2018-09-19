@@ -11,6 +11,7 @@ import { get } from "./context";
 import { datepicker } from "./datepicker";
 import { emit } from "./ipc";
 import { newSystemic as local } from "./local";
+import { numberMask } from "./mask";
 import { routeSelector } from "./route";
 import * as t from "./types";
 import { cacheForUser, checkBox, fa } from "./util";
@@ -257,9 +258,8 @@ function ticket(removeCB: () => void): TicketElement {
   g1.appendChild(dateInput);
   datepicker(dateInput);
 
-  const receivedInput = document.createElement("input");
+  const receivedInput = numberMask();
   receivedInput.placeholder = local.received;
-  receivedInput.type = "number";
   g2.appendChild(receivedInput);
 
   const airlineInput = document.createElement("input");
