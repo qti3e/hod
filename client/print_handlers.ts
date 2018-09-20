@@ -44,14 +44,14 @@ function newPage(): Promise<Page> {
   dateWrapper.appendChild(dateLabel);
   dateWrapper.appendChild(date);
   metadataWrapper.appendChild(dateWrapper);
- 
+
   const numberWrapper = document.createElement("div");
   numberWrapper.className = "field-wrapper";
   const numberLabel = document.createElement("label");
   numberLabel.innerText = local.number;
-  const number = document.createElement("span");
+  const num = document.createElement("span");
   numberWrapper.appendChild(numberLabel);
-  numberWrapper.appendChild(number);
+  numberWrapper.appendChild(num);
   metadataWrapper.appendChild(numberWrapper);
 
   // Middle section
@@ -92,7 +92,7 @@ function newPage(): Promise<Page> {
   defineGetterSetter("title", title);
   defineGetterSetter("subtitle", subtitle);
   defineGetterSetter("date", date);
-  defineGetterSetter("number", number);
+  defineGetterSetter("number", num);
   Object.defineProperty(page, "content", { value: contentWrapper });
 
   logo.onload = () => resolve(page);
@@ -108,47 +108,47 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
   page.number = doc._id.substr(7);
 
   const { content } = page;
-  content.appendChild(dataview(doc.tickets, {
-
-    _num_: {
-      label: "R",
-      map(_, index: number) {
-        return `${index + 1}`;
-      }
-    },
-
-    id: "شماره بلیط",
-
-    date: {
-      label: "تاریخ",
-      map(date: number) {
-        return formatDate(date, true);
-      }
-    },
-
-    route: {
-      label: "مسیر",
-      map(route: t.DBCity[]) {
-        const src = route[0];
-        const dest = route[route.length - 1];
-        if (route.length === 0) {
-          return "-";
+  content.appendChild(
+    dataview(doc.tickets, {
+      _num_: {
+        label: "R",
+        map(_, index: number) {
+          return `${index + 1}`;
         }
-        if (route.length === 1) {
-          return src.displayName + " - نامعلوم";
+      },
+
+      id: "شماره بلیط",
+
+      date: {
+        label: "تاریخ",
+        map(date: number) {
+          return formatDate(date, true);
         }
-        return src.displayName + " - " + dest.displayName;
-      }
-    },
+      },
 
-    passengerName: {
-      label: "مسافر",
-      map(name: string, _, data: t.CharterTicket) {
-        return name + " " + data.passengerLastname;
-      }
-    }
+      route: {
+        label: "مسیر",
+        map(route: t.DBCity[]) {
+          const src = route[0];
+          const dest = route[route.length - 1];
+          if (route.length === 0) {
+            return "-";
+          }
+          if (route.length === 1) {
+            return src.displayName + " - نامعلوم";
+          }
+          return src.displayName + " - " + dest.displayName;
+        }
+      },
 
-  }));
+      passengerName: {
+        label: "مسافر",
+        map(name: string, _, data: t.CharterTicket) {
+          return name + " " + data.passengerLastname;
+        }
+      }
+    })
+  );
 
   console.log(doc);
   wrapper.appendChild(page);

@@ -17,9 +17,7 @@ type TableColObj<T, P> = {
 
 type TableCol<T, P> = TableLabel | TableColObj<T, P>;
 
-type TableColsData<T> = {
-  [P in keyof T]?: TableCol<T[P], T>;
-};
+type TableColsData<T> = { [P in keyof T]?: TableCol<T[P], T> };
 
 type TableColsId<T> = {
   _num_: Required<TableColObj<never, T>>;
