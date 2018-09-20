@@ -8,6 +8,7 @@
 
 import { formatDate } from "./datepicker";
 import { print as local } from "./local";
+import { numberMaskString } from "./mask";
 import { dataview } from "./table";
 import * as t from "./types";
 
@@ -84,6 +85,9 @@ function newPage(): Promise<Page> {
         return element.innerText;
       },
       set(value: string): void {
+        if (name === "title") {
+          document.title = local.title + " - " + value;
+        }
         element.innerText = value;
       }
     });
@@ -108,6 +112,10 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
   page.number = doc._id.substr(7);
 
   const { content } = page;
+
+  let paid = 0;
+  let received = 0;
+
   content.appendChild(
     dataview(doc.tickets, {
       _num_: {
@@ -145,6 +153,25 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
         label: "مسافر",
         map(name: string, _, data: t.CharterTicket) {
           return name + " " + data.passengerLastname;
+        },
+        footer() {
+          return "جمع کل - ریال";
+        }
+      },
+
+      paid: {
+        label: "بهاء پرداخت",
+        map: (x) => (paid += Number(x), numberMaskString(x)),
+        footer() {
+          return numberMaskString(paid);
+        }
+      },
+
+      received: {
+        label: "بهاء دریافت",
+        map: (x) => (received += Number(x), numberMaskString(x)),
+        footer() {
+          return numberMaskString(received);
         }
       }
     })

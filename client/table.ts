@@ -13,6 +13,7 @@ type TableMapCb<T, P> = (data: T, index: number, e: P) => string;
 type TableColObj<T, P> = {
   label: TableLabel;
   map?: TableMapCb<T, P>;
+  footer?(): string;
 };
 
 type TableCol<T, P> = TableLabel | TableColObj<T, P>;
@@ -46,8 +47,11 @@ export function dataview<T extends {}>(
     currentTr.appendChild(tmp);
   };
 
-  const td = (data: string) => {
+  const td = (data: string, className?: string) => {
     const tmp = document.createElement("td");
+    if (className) {
+      tmp.className = className;
+    }
     tmp.innerText = data;
     currentTr.appendChild(tmp);
   };
@@ -67,6 +71,21 @@ export function dataview<T extends {}>(
       const text = getData(i, data, key, map);
       td(text);
     }
+  }
+
+  let footer = false;
+  tr();
+  currentTr.classList.add("foot");
+  for (const key of keys) {
+    if (typeof cols[key] === "object" && cols[key].footer) {
+      footer = true;
+      td(cols[key].footer());
+    } else {
+      td("", "empty");
+    }
+  }
+  if (!footer) {
+    currentTr.parentElement.removeChild(currentTr);
   }
 
   return table;

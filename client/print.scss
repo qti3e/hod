@@ -119,4 +119,25 @@ table {
     padding: 3px;
     text-align: center;
   }
+
+  td.empty {
+    background: #efefef;
+    border: none;
+  }
+
+  .foot {
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+    border-left: 1px solid;
+
+    td {
+      border-bottom: none;
+      &:nth-child(1) {
+        border-right: none;
+      }
+      &:last-child {
+        border-left: none;
+      }
+    }
+  }
 }

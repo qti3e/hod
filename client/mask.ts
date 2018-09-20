@@ -106,3 +106,20 @@ export function numberMask(input?: HTMLInputElement): HTMLInputElement {
 
   return input;
 }
+
+export function numberMaskString(a: string | number): string {
+  if (a === undefined || a === null) {
+    return "";
+  }
+  let value = [...String(a)];
+  value = value.reverse();
+  const numSpaces = Math.floor((value.length - 1) / 3);
+  for (let i = 0; i < numSpaces; ++i) {
+    value.splice((i + 1) * 3 + i, 0, null);
+  }
+  value = value.reverse();
+
+  return value
+    .map(x => (x === null ? "," : toPersianDigits(x)))
+    .join("");
+}
