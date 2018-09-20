@@ -101,3 +101,19 @@ body {
     }
   }
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 4px;
+
+  tr:nth-child(1) {
+    background: #efefef;
+  }
+
+  th, td {
+    border: 1px solid;
+    padding: 3px;
+    text-align: center;
+  }
+}

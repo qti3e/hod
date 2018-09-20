@@ -8,6 +8,7 @@
 
 import { formatDate } from "./datepicker";
 import { print as local } from "./local";
+import { dataview } from "./table";
 import * as t from "./types";
 
 interface Page extends HTMLElement {
@@ -92,6 +93,7 @@ function newPage(): Promise<Page> {
   defineGetterSetter("subtitle", subtitle);
   defineGetterSetter("date", date);
   defineGetterSetter("number", number);
+  Object.defineProperty(page, "content", { value: contentWrapper });
 
   logo.onload = () => resolve(page);
 
@@ -104,6 +106,50 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
   page.subtitle = `صدور بلیط "چارتر"`;
   page.date = formatDate(doc.createdAt, true);
   page.number = doc._id.substr(7);
+
+  const { content } = page;
+  content.appendChild(dataview(doc.tickets, {
+
+    _num_: {
+      label: "R",
+      map(_, index: number) {
+        return `${index + 1}`;
+      }
+    },
+
+    id: "شماره بلیط",
+
+    date: {
+      label: "تاریخ",
+      map(date: number) {
+        return formatDate(date, true);
+      }
+    },
+
+    route: {
+      label: "مسیر",
+      map(route: t.DBCity[]) {
+        const src = route[0];
+        const dest = route[route.length - 1];
+        if (route.length === 0) {
+          return "-";
+        }
+        if (route.length === 1) {
+          return src.displayName + " - نامعلوم";
+        }
+        return src.displayName + " - " + dest.displayName;
+      }
+    },
+
+    passengerName: {
+      label: "مسافر",
+      map(name: string, _, data: t.CharterTicket) {
+        return name + " " + data.passengerLastname;
+      }
+    }
+
+  }));
+
   console.log(doc);
   wrapper.appendChild(page);
 }
