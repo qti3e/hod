@@ -161,7 +161,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
 
       paid: {
         label: "بهاء پرداخت",
-        map: (x) => (paid += Number(x), numberMaskString(x)),
+        map: x => ((paid += Number(x)), numberMaskString(x)),
         footer() {
           return numberMaskString(paid);
         }
@@ -169,7 +169,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
 
       received: {
         label: "بهاء دریافت",
-        map: (x) => (received += Number(x), numberMaskString(x)),
+        map: x => ((received += Number(x)), numberMaskString(x)),
         footer() {
           return numberMaskString(received);
         }

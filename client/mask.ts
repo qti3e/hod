@@ -119,7 +119,5 @@ export function numberMaskString(a: string | number): string {
   }
   value = value.reverse();
 
-  return value
-    .map(x => (x === null ? "," : toPersianDigits(x)))
-    .join("");
+  return value.map(x => (x === null ? "," : toPersianDigits(x))).join("");
 }
