@@ -6,6 +6,10 @@
   size: A4;
 }
 
+body {
+  direction: rtl;
+}
+
 #root.print-view {
   .sheet {
     border: 5px double #000;
@@ -35,12 +39,36 @@
         }
 
         h1 {
+          font-size: 18px;
+        }
+
+        h3 {
           font-size: 25px;
+          background: #efefef;
+          margin-left: 15px;
+          margin-right: 15px;
         }
       }
 
       .metadata-container {
         width: 200px;
+
+        .field-wrapper {
+          span, label {
+            display: inline-block;
+            margin: 0;
+          }
+
+          label {
+            width: 60px;
+          }
+
+          span {
+            width: 140px;
+            border-bottom: 1px dotted;
+            text-align: center;
+          }
+        }
       }
     }
   }

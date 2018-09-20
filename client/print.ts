@@ -9,7 +9,7 @@
 import * as Electron from "electron";
 import { emit } from "./ipc";
 import { print as local } from "./local";
-import * as t from "./types";
+import * as handlers from "./print_handlers";
 import { delay, fa, nodeRequire } from "./util";
 
 const { remote }: typeof Electron = nodeRequire("electron");
@@ -61,7 +61,7 @@ export async function renderPrintView(
 
   switch (data.kind) {
     case "charter":
-      handlers.charter(data.data);
+      handlers.charter(data.data, pagesWrapper);
       break;
   }
 
@@ -70,66 +70,6 @@ export async function renderPrintView(
   printBtn.onclick = () => doPrint();
   printBtn.appendChild(fa("print"));
   root.appendChild(printBtn);
-}
-
-interface Page extends HTMLElement {
-  contentEl?: HTMLElement;
-  titleEl?: HTMLElement;
-  subtitleEl?: HTMLElement;
-  metadataWrapper?: HTMLElement;
-}
-
-function newPage(): Promise<Page> {
-  let resolve;
-  const promise = new Promise<Page>(r => (resolve = r));
-
-  const page = document.createElement("div") as Page;
-  page.className = "sheet padding-5mm";
-
-  const pageHead = document.createElement("div");
-  pageHead.className = "header";
-  page.appendChild(pageHead);
-
-  const logoContainer = document.createElement("div");
-  logoContainer.className = "logo-container";
-  pageHead.appendChild(logoContainer);
-
-  const logo = document.createElement("img");
-  logo.src = require("./assets/logo.png");
-  logoContainer.appendChild(logo);
-
-  const titleContainer = document.createElement("div");
-  titleContainer.className = "title-container";
-  pageHead.appendChild(titleContainer);
-
-  const title = document.createElement("h1");
-  titleContainer.appendChild(title);
-
-  const subtitle = document.createElement("h3");
-  titleContainer.appendChild(subtitle);
-
-  const metadataWrapper = document.createElement("div");
-  metadataWrapper.className = "metadata-container";
-  pageHead.appendChild(metadataWrapper);
-
-  const contentWrapper = document.createElement("div");
-  contentWrapper.className = "content";
-  page.appendChild(contentWrapper);
-
-  page.contentEl = contentWrapper;
-  page.titleEl = title;
-  page.subtitleEl = subtitle;
-  page.metadataWrapper = metadataWrapper;
-
-  Object.defineProperty(page, "title", {
-    set(value: string): void {
-      title.innerText = value;
-    }
-  });
-
-  logo.onload = () => resolve(page);
-
-  return promise;
 }
 
 function doPrint(): void {
@@ -142,8 +82,3 @@ function doPrint(): void {
     }
   });
 }
-
-const handlers = {
-  async charter(doc: t.CharterDoc) {
-  }
-};

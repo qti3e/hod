@@ -233,5 +233,7 @@ export const tickets = {
 
 export const print = {
   title: "چاپ گزارش",
-  success: "گزارش مورد نظر با موفقیت چاپ شد"
+  success: "گزارش مورد نظر با موفقیت چاپ شد",
+  date: "تاریخ:",
+  number: "شماره:"
 };
