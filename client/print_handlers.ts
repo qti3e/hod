@@ -168,7 +168,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
 
   const tmp = JSON.stringify(doc.tickets[0]);
   doc.tickets.length = 0;
-  for (let i = 0; i < 100; ++i) {
+  for (let i = 0; i < 54; ++i) {
     const x = JSON.parse(tmp);
     x.id = i + 1;
     doc.tickets.push(x);
@@ -179,6 +179,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
   const { totalReceived, totalPaid } = sumCharterTickets(doc.tickets);
 
   const pages = [];
+  const numTicketsOnFirstPage = 10;
   let renderingFirstPage;
 
   const charterTableHandler = {
@@ -234,14 +235,14 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
     renderingFirstPage = num === 0;
 
     const tabel = dataview(
-      renderingFirstPage ? 10 : 30,
-      renderingFirstPage ? 0 : num - 1,
-      renderingFirstPage ? 0 : 10,
+      renderingFirstPage ? numTicketsOnFirstPage : 30,
+      num - 1,
+      renderingFirstPage ? 0 : numTicketsOnFirstPage,
       doc.tickets,
       charterTableHandler
     );
     if (renderingFirstPage) {
-      doc.tickets.splice(0, 10);
+      doc.tickets.splice(0, numTicketsOnFirstPage);
     }
     if (!tabel) {
       return false;

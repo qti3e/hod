@@ -35,16 +35,24 @@ export function dataview<T extends {}>(
   data: T[],
   cols: TableCols<T>
 ): HTMLTableElement | false {
-  // Check if there is any data to render
-  // Always render the first page.
   // count: 5
   // len: 15
+  // 00 01 02 03 04
+  // 05 06 07 08 09
+  // 10 11 12 13 14
   // page:
-  //  0 => 5 * (0 + 1) > 15 => false
-  //  1 => 5 * (1 + 1) > 15 => false
-  //  2 => 5 * (2 + 1) > 15 => false
-  //  3 => 5 * (3 + 1) > 15 => true
-  if (count * (page + 1) > data.length && page > 0) {
+  //  0 => [00, 05)
+  //  1 => [05, 10)
+  //  2 => [10, 15)
+  //  p => [pc, pc + c)
+
+  const skipDataCheck = page < 0;
+  page = Math.max(0, page);
+  const start = page * count;
+  const end = start + count
+  // Check if there is any data to render
+  // Always render the first page.
+  if (!skipDataCheck && !data[start]) {
     return false;
   }
 
@@ -83,20 +91,6 @@ export function dataview<T extends {}>(
     const label = getLabel(cols[key]);
     th(label);
   }
-
-  // count: 5
-  // len: 15
-  // 00 01 02 03 04
-  // 05 06 07 08 09
-  // 10 11 12 13 14
-  // page:
-  //  0 => [00, 05)
-  //  1 => [05, 10)
-  //  2 => [10, 15)
-  //  p => [pc, pc + c)
-
-  const start = page * count;
-  const end = start + count
 
   // Render body
   for (let i = start; i < end; ++i) {
