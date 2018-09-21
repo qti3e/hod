@@ -9,18 +9,27 @@
 import axios from "axios";
 import { get } from "./context";
 import { formatDate } from "./datepicker";
+import { emit } from "./ipc";
 import { viewSystemic as local } from "./local";
 import { toPersianDigits } from "./persian";
 import { routeView } from "./route";
 import * as t from "./types";
+import { fa } from "./util";
 
 export function renderViewSystemic(app: HTMLElement, param: string): void {
   const wrapper = document.createElement("div");
   wrapper.id = "view-charter";
   app.appendChild(wrapper);
 
+  const printBtn = document.createElement("button");
+  printBtn.className = "print-btn";
+  printBtn.appendChild(fa("print"));
+  printBtn.style.display = "inline-block";
+  wrapper.appendChild(printBtn);
+
   const head = document.createElement("h1");
   head.innerText = local.title;
+  head.style.display = "inline-block";
   wrapper.appendChild(head);
 
   async function fetch() {
@@ -44,6 +53,12 @@ export function renderViewSystemic(app: HTMLElement, param: string): void {
   }
 
   function render(doc: t.SystemicDoc): void {
+    printBtn.onclick = () =>
+      emit("print", {
+        kind: "systemic",
+        data: doc
+      });
+
     // Render layout.
     const headWrapper = document.createElement("div");
     headWrapper.id = "head-wrapper";

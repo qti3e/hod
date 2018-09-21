@@ -21,8 +21,15 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
   wrapper.id = "view-charter";
   app.appendChild(wrapper);
 
+  const printBtn = document.createElement("button");
+  printBtn.className = "print-btn";
+  printBtn.appendChild(fa("print"));
+  printBtn.style.display = "inline-block";
+  wrapper.appendChild(printBtn);
+
   const head = document.createElement("h1");
   head.innerText = local.title;
+  head.style.display = "inline-block";
   wrapper.appendChild(head);
 
   async function fetch() {
@@ -46,15 +53,11 @@ export function renderViewCharter(app: HTMLElement, param: string): void {
   }
 
   function render(doc: t.CharterDoc): void {
-    const printBtn = document.createElement("button");
-    printBtn.className = "print-btn";
     printBtn.onclick = () =>
       emit("print", {
         kind: "charter",
         data: doc
       });
-    printBtn.appendChild(fa("print"));
-    wrapper.appendChild(printBtn);
 
     // Render layout.
     const headWrapper = document.createElement("div");
