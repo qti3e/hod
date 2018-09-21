@@ -53,6 +53,8 @@ body {
 
       .metadata-container {
         width: 200px;
+        margin-top: auto;
+        margin-bottom: auto;
 
         .field-wrapper {
           span,
@@ -139,5 +141,33 @@ table {
         border-left: none;
       }
     }
+  }
+}
+
+.simple-row {
+  display: flex;
+  width: 100%;
+}
+
+.text-wrapper {
+  margin: 5px;
+  width: 100%;
+  display: flex;
+  text-align: center;
+
+  span, label {
+    margin: 0;
+    height: 25px;
+    line-height: 26px;
+  }
+
+  label {
+    min-width: 25%;
+    font-weight: bold;
+  }
+
+  span {
+    border-bottom: 1px dotted #000;
+    flex: 1 1 auto;
   }
 }

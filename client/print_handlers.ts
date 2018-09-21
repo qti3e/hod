@@ -8,6 +8,7 @@
 
 import { formatDate } from "./datepicker";
 import { print as local } from "./local";
+import * as lng from "./local";
 import { numberMaskString } from "./mask";
 import { dataview } from "./table";
 import * as t from "./types";
@@ -37,15 +38,6 @@ function newPage(): Promise<Page> {
   metadataWrapper.className = "metadata-container";
   pageHead.appendChild(metadataWrapper);
 
-  const dateWrapper = document.createElement("div");
-  dateWrapper.className = "field-wrapper";
-  const dateLabel = document.createElement("label");
-  dateLabel.innerText = local.date;
-  const date = document.createElement("span");
-  dateWrapper.appendChild(dateLabel);
-  dateWrapper.appendChild(date);
-  metadataWrapper.appendChild(dateWrapper);
-
   const numberWrapper = document.createElement("div");
   numberWrapper.className = "field-wrapper";
   const numberLabel = document.createElement("label");
@@ -54,6 +46,15 @@ function newPage(): Promise<Page> {
   numberWrapper.appendChild(numberLabel);
   numberWrapper.appendChild(num);
   metadataWrapper.appendChild(numberWrapper);
+
+  const dateWrapper = document.createElement("div");
+  dateWrapper.className = "field-wrapper";
+  const dateLabel = document.createElement("label");
+  dateLabel.innerText = local.date;
+  const date = document.createElement("span");
+  dateWrapper.appendChild(dateLabel);
+  dateWrapper.appendChild(date);
+  metadataWrapper.appendChild(dateWrapper);
 
   // Middle section
   const titleContainer = document.createElement("div");
@@ -104,6 +105,44 @@ function newPage(): Promise<Page> {
   return promise;
 }
 
+function row(
+  wrapper: HTMLElement,
+  childs: HTMLElement[],
+  className?: string
+): void {
+  const tmp = document.createElement("div");
+  tmp.className = className || "";
+  tmp.classList.add("simple-row");
+  for (const child of childs) {
+    if (child) {
+      tmp.appendChild(child);
+    }
+  }
+  wrapper.appendChild(tmp);
+}
+
+function text(labelText: string, value: string, size?: number): HTMLElement {
+  const tmp = document.createElement("div");
+  if (size !== undefined) {
+    tmp.style.width = `${size * 100}%`;
+  }
+  labelText = labelText.replace(/\.+$/g, "");
+  if (!labelText.endsWith(":")) {
+    labelText += ":";
+  }
+  tmp.className = "text-wrapper";
+  const label = document.createElement("label");
+  label.innerText = labelText;
+  const span = document.createElement("span");
+  span.innerText = value || "";
+  if (value.length > 20) {
+    span.style.fontSize = "12px";
+  }
+  tmp.appendChild(label);
+  tmp.appendChild(span);
+  return tmp;
+}
+
 export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
   const page = await newPage();
   page.title = "گردش کار ارائه خدمات مسافرتی";
@@ -112,6 +151,18 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
   page.number = doc._id.substr(7);
 
   const { content } = page;
+
+  row(content, [
+    text(lng.newCharter.serviceKind, lng.newCharter[doc.kind]),
+    text(lng.newCharter.providedBy, lng.listCharter[doc.providedBy]),
+    text(lng.listCharter.providerAgency, doc.providerAgency, 2),
+  ]);
+
+  row(content, [
+    text(lng.newCharter.payer, doc.payer),
+    text(lng.newCharter.nameOfPayer, doc.payerName),
+    text(lng.newCharter.nationalCode, doc.nationalCode)
+  ]);
 
   let paid = 0;
   let received = 0;
@@ -124,16 +175,13 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
           return `${index + 1}`;
         }
       },
-
       id: "شماره بلیط",
-
       date: {
         label: "تاریخ",
         map(date: number) {
           return formatDate(date, true);
         }
       },
-
       route: {
         label: "مسیر",
         map(route: t.DBCity[]) {
@@ -148,7 +196,6 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
           return src.displayName + " - " + dest.displayName;
         }
       },
-
       passengerName: {
         label: "مسافر",
         map(name: string, _, data: t.CharterTicket) {
@@ -158,7 +205,6 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
           return "جمع کل - ریال";
         }
       },
-
       paid: {
         label: "بهاء پرداخت",
         map: x => ((paid += Number(x)), numberMaskString(x)),
@@ -166,14 +212,14 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
           return numberMaskString(paid);
         }
       },
-
       received: {
         label: "بهاء دریافت",
         map: x => ((received += Number(x)), numberMaskString(x)),
         footer() {
           return numberMaskString(received);
         }
-      }
+      },
+      airline: "ایرلاین"
     })
   );
 
