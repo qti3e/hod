@@ -16,12 +16,13 @@ export interface Props {
   cb: (data: t.CharterPayData, save: boolean) => void;
   data: t.CharterPayData;
   fund?: boolean;
-  total: number;
+  totalReceived: number;
+  totalPaid: number;
 }
 
 export function renderCharterPayCounter(
   app: HTMLElement,
-  { cb, data, fund, total }: Props,
+  { cb, data, fund, totalReceived, totalPaid }: Props,
   close?: (e?: boolean) => Promise<void>
 ): void {
   // Default to nop.

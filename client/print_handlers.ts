@@ -155,7 +155,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
   row(content, [
     text(lng.newCharter.serviceKind, lng.newCharter[doc.kind]),
     text(lng.newCharter.providedBy, lng.listCharter[doc.providedBy]),
-    text(lng.listCharter.providerAgency, doc.providerAgency, 2),
+    text(lng.listCharter.providerAgency, doc.providerAgency, 2)
   ]);
 
   row(content, [

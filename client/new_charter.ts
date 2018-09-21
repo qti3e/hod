@@ -14,7 +14,7 @@ import { newCharter as local } from "./local";
 import { numberMask } from "./mask";
 import { routeSelector } from "./route";
 import * as t from "./types";
-import { cacheForUser, checkBox, fa } from "./util";
+import { cacheForUser, checkBox, fa, sumCharterTickets } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
 const forms = cacheForUser<t.CharterDoc>();
@@ -177,9 +177,8 @@ export function renderNewCharter(app: HTMLElement): void {
       page: "charterPayCounter",
       param: {
         cb: payCb,
-        // TODO(qti3e) Sum tickets.
-        total: 0,
-        data: form.pay
+        data: form.pay,
+        ...sumCharterTickets(tickets.filter(x => !!x).map(t => t.data()))
       }
     });
   };

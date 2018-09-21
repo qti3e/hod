@@ -7,6 +7,7 @@
  */
 
 import { get } from "./context";
+import * as t from "./types";
 
 export function delay(t?: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, t));
@@ -95,4 +96,44 @@ export function checkBox(text: string): HTMLInputElement {
   checkmark.classList.add("checkmark");
   container.appendChild(checkmark);
   return input;
+}
+
+export interface sumCharterTicketsResult {
+  totalReceived: number;
+  totalPaid: number;
+}
+
+export function sumCharterTickets(
+  tickets: t.CharterTicket[]
+): sumCharterTicketsResult {
+  let totalReceived = 0;
+  let totalPaid = 0;
+  for (let i = 0; i < tickets.length; ++i) {
+    const received = Number(tickets[i].received);
+    const paid = Number(tickets[i].paid);
+    if (!isNaN(received)) {
+      totalReceived += received;
+    }
+    if (!isNaN(paid)) {
+      totalPaid += paid;
+    }
+  }
+  return { totalReceived, totalPaid };
+}
+
+export interface sumSystemicTicketsResult {
+  totalReceived: number;
+}
+
+export function sumSystemicTickets(
+  tickets: t.SystemicTicket[]
+): sumSystemicTicketsResult {
+  let totalReceived = 0;
+  for (let i = 0; i < tickets.length; ++i) {
+    const received = Number(tickets[i].received);
+    if (!isNaN(received)) {
+      totalReceived += received;
+    }
+  }
+  return { totalReceived };
 }

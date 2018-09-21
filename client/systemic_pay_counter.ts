@@ -16,12 +16,12 @@ export interface Props {
   cb: (data: t.SystemicPayData, save: boolean) => void;
   data: t.SystemicPayData;
   fund?: boolean;
-  total: number;
+  totalReceived: number;
 }
 
 export function renderSystemicPayCounter(
   app: HTMLElement,
-  { cb, data, fund, total }: Props,
+  { cb, data, fund, totalReceived }: Props,
   close?: (e?: boolean) => Promise<void>
 ): void {
   // Default to nop.

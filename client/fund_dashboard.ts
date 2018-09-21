@@ -12,7 +12,7 @@ import { formatDate } from "./datepicker";
 import { emit, on } from "./ipc";
 import { fundDashboard as local } from "./local";
 import * as t from "./types";
-import { cacheForUser } from "./util";
+import { cacheForUser, sumCharterTickets, sumSystemicTickets } from "./util";
 
 const domCache = cacheForUser<HTMLDivElement>();
 const active = cacheForUser<boolean>();
@@ -97,9 +97,9 @@ export function renderFundDashboard(app: HTMLElement): void {
     textRow(5, "");
 
     for (let i = 0; i < docs.length; ++i) {
-      const [doc] = docs[i];
+      const [doc, read] = docs[i];
       if (!doc) continue;
-      const isCharter = !!doc["providedBy"];
+      const isCharter = checkIsCharter(doc);
       textRow(0, doc._id.slice(0, 7));
       textRow(1, isCharter ? local.charter : local.systemic);
       textRow(2, doc.payer);
@@ -108,11 +108,14 @@ export function renderFundDashboard(app: HTMLElement): void {
       const btn = document.createElement("button");
       btn.innerText = local.show;
       btn.onclick = () => {
-        const payCb = data => {
-          console.log(doc.pay, data);
+        const payCb = (data, save) => {
+          if (!save) {
+            return;
+          }
+
           const token = get("currentToken");
 
-          if (isCharter) {
+          if (checkIsCharter(doc)) {
             payCharter(token, doc._id, data);
           } else {
             paySystemic(token, doc._id, data);
@@ -121,17 +124,25 @@ export function renderFundDashboard(app: HTMLElement): void {
           docs[i][0] = undefined;
           docs[i][1]();
           render();
+          // Remove this notification from the server side.
+          read();
         };
+
+        let totalResult;
+        if (checkIsCharter(doc)) {
+          totalResult = sumCharterTickets(doc.tickets);
+        } else {
+          totalResult = sumSystemicTickets(doc.tickets);
+        }
 
         emit("open-modal", {
           page: isCharter ? "charterPayCounter" : "systemicPayCounter",
           param: {
             cb: payCb,
-            // TODO(qti3e) Sum tickets.
-            total: 0,
             fund: true,
             // Depp clone :D
-            data: JSON.parse(JSON.stringify(doc.pay))
+            data: JSON.parse(JSON.stringify(doc.pay)),
+            ...totalResult
           }
         });
       };
@@ -242,3 +253,7 @@ on("login", () => {
 });
 
 renderFundDashboard(document.createElement("div"));
+
+function checkIsCharter(doc: any): doc is t.CharterDoc {
+  return !!doc["providedBy"];
+}

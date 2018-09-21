@@ -14,7 +14,7 @@ import { newSystemic as local } from "./local";
 import { numberMask } from "./mask";
 import { routeSelector } from "./route";
 import * as t from "./types";
-import { cacheForUser, checkBox, fa } from "./util";
+import { cacheForUser, checkBox, fa, sumSystemicTickets } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
 const forms = cacheForUser<t.SystemicDoc>();
@@ -166,9 +166,8 @@ export function renderNewSystemic(app: HTMLElement): void {
       page: "systemicPayCounter",
       param: {
         cb: payCb,
-        // TODO(qti3e) Sum tickets.
-        total: 0,
-        data: form.pay
+        data: form.pay,
+        ...sumSystemicTickets(tickets.filter(x => !!x).map(t => t.data()))
       }
     });
   };
