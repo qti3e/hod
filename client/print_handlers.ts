@@ -10,15 +10,17 @@ import { formatDate } from "./datepicker";
 import { print as local } from "./local";
 import * as lng from "./local";
 import { numberMaskString } from "./mask";
+import { toPersianDigits } from "./persian";
 import { dataview } from "./table";
 import * as t from "./types";
+import { sumCharterTickets } from "./util";
 
 interface Page extends HTMLElement {
   title: string;
   subtitle: string;
   date: string;
   number: string;
-
+  setPage(page: number, totalPages: number): void;
   content: HTMLElement;
 }
 
@@ -86,6 +88,7 @@ function newPage(): Promise<Page> {
         return element.innerText;
       },
       set(value: string): void {
+        value = toPersianDigits(value);
         if (name === "title") {
           document.title = local.title + " - " + value;
         }
@@ -99,6 +102,23 @@ function newPage(): Promise<Page> {
   defineGetterSetter("date", date);
   defineGetterSetter("number", num);
   Object.defineProperty(page, "content", { value: contentWrapper });
+
+  const pageNumWrapper = document.createElement("div");
+  pageNumWrapper.className = "field-wrapper";
+  const pageNumLabel = document.createElement("label");
+  pageNumLabel.innerText = local.page;
+  const pageNum = document.createElement("span");
+  pageNumWrapper.appendChild(pageNumLabel);
+  pageNumWrapper.appendChild(pageNum);
+
+  Object.defineProperty(page, "setPage", {
+    value(page: number, totalPages: number): void {
+      const p = toPersianDigits(page);
+      const t = toPersianDigits(totalPages);
+      pageNum.innerText = p + " " + local.from + " " + t;
+      metadataWrapper.appendChild(pageNumWrapper);
+    }
+  });
 
   logo.onload = () => resolve(page);
 
@@ -134,7 +154,7 @@ function text(labelText: string, value: string, size?: number): HTMLElement {
   const label = document.createElement("label");
   label.innerText = labelText;
   const span = document.createElement("span");
-  span.innerText = value || "";
+  span.innerText = toPersianDigits(value || "-");
   if (value.length > 20) {
     span.style.fontSize = "12px";
   }
@@ -144,85 +164,128 @@ function text(labelText: string, value: string, size?: number): HTMLElement {
 }
 
 export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
-  const page = await newPage();
-  page.title = "گردش کار ارائه خدمات مسافرتی";
-  page.subtitle = `صدور بلیط "چارتر"`;
-  page.date = formatDate(doc.createdAt, true);
-  page.number = doc._id.substr(7);
-
-  const { content } = page;
-
-  row(content, [
-    text(lng.newCharter.serviceKind, lng.newCharter[doc.kind]),
-    text(lng.newCharter.providedBy, lng.listCharter[doc.providedBy]),
-    text(lng.listCharter.providerAgency, doc.providerAgency, 2)
-  ]);
-
-  row(content, [
-    text(lng.newCharter.payer, doc.payer),
-    text(lng.newCharter.nameOfPayer, doc.payerName),
-    text(lng.newCharter.nationalCode, doc.nationalCode)
-  ]);
-
-  let paid = 0;
-  let received = 0;
-
-  content.appendChild(
-    dataview(doc.tickets, {
-      _num_: {
-        label: "R",
-        map(_, index: number) {
-          return `${index + 1}`;
-        }
-      },
-      id: "شماره بلیط",
-      date: {
-        label: "تاریخ",
-        map(date: number) {
-          return formatDate(date, true);
-        }
-      },
-      route: {
-        label: "مسیر",
-        map(route: t.DBCity[]) {
-          const src = route[0];
-          const dest = route[route.length - 1];
-          if (route.length === 0) {
-            return "-";
-          }
-          if (route.length === 1) {
-            return src.displayName + " - نامعلوم";
-          }
-          return src.displayName + " - " + dest.displayName;
-        }
-      },
-      passengerName: {
-        label: "مسافر",
-        map(name: string, _, data: t.CharterTicket) {
-          return name + " " + data.passengerLastname;
-        },
-        footer() {
-          return "جمع کل - ریال";
-        }
-      },
-      paid: {
-        label: "بهاء پرداخت",
-        map: x => ((paid += Number(x)), numberMaskString(x)),
-        footer() {
-          return numberMaskString(paid);
-        }
-      },
-      received: {
-        label: "بهاء دریافت",
-        map: x => ((received += Number(x)), numberMaskString(x)),
-        footer() {
-          return numberMaskString(received);
-        }
-      },
-      airline: "ایرلاین"
-    })
-  );
-
   console.log(doc);
-  wrapper.appendChild(page);
+
+  const tmp = JSON.stringify(doc.tickets[0]);
+  doc.tickets.length = 0;
+  for (let i = 0; i < 100; ++i) {
+    const x = JSON.parse(tmp);
+    x.id = i + 1;
+    doc.tickets.push(x);
+  }
+
+  // --- the real code
+
+  const { totalReceived, totalPaid } = sumCharterTickets(doc.tickets);
+
+  const pages = [];
+  let renderingFirstPage;
+
+  const charterTableHandler = {
+    _num_: true,
+    id: "شماره بلیط",
+    date: {
+      label: "تاریخ",
+      map(date: number) {
+        return formatDate(date, true);
+      }
+    },
+    route: {
+      label: "مسیر",
+      map(route: t.DBCity[]) {
+        const src = route[0];
+        const dest = route[route.length - 1];
+        if (route.length === 0) {
+          return "-";
+        }
+        if (route.length === 1) {
+          return src.displayName + " - نامعلوم";
+        }
+        return src.displayName + " - " + dest.displayName;
+      }
+    },
+    passengerName: {
+      label: "مسافر",
+      map(name: string, _, data: t.CharterTicket) {
+        return name + " " + data.passengerLastname;
+      },
+      footer() {
+        return renderingFirstPage && "جمع کل - ریال";
+      }
+    },
+    paid: {
+      label: "بهاء پرداخت",
+      map: numberMaskString,
+      footer() {
+        return renderingFirstPage && numberMaskString(totalPaid);
+      }
+    },
+    received: {
+      label: "بهاء دریافت",
+      map: numberMaskString,
+      footer() {
+        return renderingFirstPage && numberMaskString(totalReceived);
+      }
+    },
+    airline: "ایرلاین"
+  };
+
+  async function renderPage(num: number): Promise<boolean> {
+    renderingFirstPage = num === 0;
+
+    const tabel = dataview(
+      renderingFirstPage ? 10 : 30,
+      renderingFirstPage ? 0 : num - 1,
+      renderingFirstPage ? 0 : 10,
+      doc.tickets,
+      charterTableHandler
+    );
+    if (renderingFirstPage) {
+      doc.tickets.splice(0, 10);
+    }
+    if (!tabel) {
+      return false;
+    }
+
+    const page = await newPage();
+    page.title = "گردش کار ارائه خدمات مسافرتی";
+    page.subtitle = `صدور بلیط "چارتر"`;
+    page.date = formatDate(doc.createdAt, true);
+    page.number = doc._id.substr(7);
+
+    const { content } = page;
+
+    if (num === 0) {
+      row(content, [
+        text(lng.newCharter.serviceKind, lng.newCharter[doc.kind]),
+        text(lng.newCharter.providedBy, lng.listCharter[doc.providedBy]),
+        text(lng.listCharter.providerAgency, doc.providerAgency, 2)
+      ]);
+
+      row(content, [
+        text(lng.newCharter.payer, doc.payer),
+        text(lng.newCharter.nameOfPayer, doc.payerName),
+        text(lng.newCharter.nationalCode, doc.nationalCode)
+      ]);
+    }
+
+    content.appendChild(tabel);
+
+    if (num === 0) {
+    }
+
+    pages.push(page);
+    console.log(num);
+    wrapper.appendChild(page);
+    return true;
+  }
+
+  let page = 0;
+  while (await renderPage(page++)) {}
+
+  if (pages.length > 1) {
+    for (let i = 0; i < pages.length; ++i) {
+      pages[i].setPage(i + 1, pages.length);
+    }
+  }
 }

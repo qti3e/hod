@@ -10,6 +10,10 @@ body {
   direction: rtl;
 }
 
+* {
+  -webkit-print-color-adjust: exact;
+}
+
 #root.print-view {
   .sheet {
     border: 5px double #000;

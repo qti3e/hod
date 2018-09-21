@@ -235,5 +235,7 @@ export const print = {
   title: "چاپ گزارش",
   success: "گزارش مورد نظر با موفقیت چاپ شد",
   date: "تاریخ:",
-  number: "شماره:"
+  number: "شماره:",
+  page: "صفحه:",
+  from: "از"
 };

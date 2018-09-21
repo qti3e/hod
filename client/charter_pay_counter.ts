@@ -28,6 +28,8 @@ export function renderCharterPayCounter(
   // Default to nop.
   cb = cb || (() => null);
 
+  console.log(totalReceived, totalPaid);
+
   // Use this function to send data back to the parent.
   function send(save = false) {
     data.receives = data.receives.filter(x => !!x);
@@ -147,6 +149,7 @@ export function renderCharterPayCounter(
         rowEl.appendChild(i1);
 
         i2 = document.createElement("input");
+        i2.className = "ltr";
         i2.value = receive.account;
         i2.placeholder = local.account;
         i2.onchange = () => {
@@ -317,6 +320,7 @@ export function renderCharterPayCounter(
     rowEl.appendChild(i1);
 
     const i2 = document.createElement("input");
+    i2.className = "ltr";
     i2.value = payment.account;
     i2.placeholder = local.account;
     i2.onchange = () => {

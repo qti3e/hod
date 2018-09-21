@@ -6,6 +6,8 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { toPersianDigits } from "./persian";
+
 type TableLabel = string;
 
 type TableMapCb<T, P> = (data: T, index: number, e: P) => string;
@@ -20,19 +22,35 @@ type TableCol<T, P> = TableLabel | TableColObj<T, P>;
 
 type TableColsData<T> = { [P in keyof T]?: TableCol<T[P], T> };
 
-type TableColsId<T> = {
-  _num_: Required<TableColObj<never, T>>;
+type TableColsId = {
+  _num_?: boolean;
 };
 
-type TableCols<T> = TableColsData<T> | TableColsId<T>;
+type TableCols<T> = TableColsData<T> & TableColsId;
 
 export function dataview<T extends {}>(
+  count: number,
+  page: number,
+  addToNum: number,
   data: T[],
   cols: TableCols<T>
-): HTMLTableElement {
+): HTMLTableElement | false {
+  // Check if there is any data to render
+  // Always render the first page.
+  // count: 5
+  // len: 15
+  // page:
+  //  0 => 5 * (0 + 1) > 15 => false
+  //  1 => 5 * (1 + 1) > 15 => false
+  //  2 => 5 * (2 + 1) > 15 => false
+  //  3 => 5 * (3 + 1) > 15 => true
+  if (count * (page + 1) > data.length && page > 0) {
+    return false;
+  }
+
   const table = document.createElement("table");
 
-  const keys = Object.keys(cols);
+  const keys = Object.keys(cols).filter(x => x !== "_num_");
 
   let currentTr: HTMLTableRowElement;
 
@@ -58,14 +76,34 @@ export function dataview<T extends {}>(
 
   // Render header
   tr();
+  if (cols._num_) {
+    td("*");
+  }
   for (const key of keys) {
     const label = getLabel(cols[key]);
     th(label);
   }
 
+  // count: 5
+  // len: 15
+  // 00 01 02 03 04
+  // 05 06 07 08 09
+  // 10 11 12 13 14
+  // page:
+  //  0 => [00, 05)
+  //  1 => [05, 10)
+  //  2 => [10, 15)
+  //  p => [pc, pc + c)
+
+  const start = page * count;
+  const end = start + count
+
   // Render body
-  for (let i = 0; i < data.length; ++i) {
+  for (let i = start; i < end; ++i) {
     tr();
+    if (cols._num_) {
+      td(toPersianDigits(`${i + 1 + addToNum}`));
+    }
     for (const key of keys) {
       const map = getMap(cols[key]);
       const text = getData(i, data, key, map);
@@ -76,13 +114,19 @@ export function dataview<T extends {}>(
   let footer = false;
   tr();
   currentTr.classList.add("foot");
+  if (cols._num_) {
+    td("", "empty");
+  }
   for (const key of keys) {
     if (typeof cols[key] === "object" && cols[key].footer) {
-      footer = true;
-      td(cols[key].footer());
-    } else {
-      td("", "empty");
+      const tmp = cols[key].footer();
+      if (tmp) {
+        footer = true;
+        td(tmp);
+        continue;
+      }
     }
+    td("", "empty");
   }
   if (!footer) {
     currentTr.parentElement.removeChild(currentTr);
@@ -111,9 +155,12 @@ function getData(
   key: string,
   map: TableMapCb<any, any>
 ): string {
+  if (!e[index]) {
+    return "";
+  }
   const data = e[index][key];
   if (map) {
-    return map(data, index, e[index]);
+    return toPersianDigits(map(data, index, e[index]) || "-");
   }
-  return data;
+  return toPersianDigits(data || "-");
 }
