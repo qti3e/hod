@@ -141,15 +141,22 @@ function row(
   wrapper.appendChild(tmp);
 }
 
+function ensureColon(text: string): string {
+  if (!text) return "";
+  text = text.replace(/\.+$/g, "");
+  if (!text.endsWith(":")) {
+    text += ":";
+  }
+  return toPersianDigits(text);
+}
+  
+
 function text(labelText: string, value: string, size?: number): HTMLElement {
   const tmp = document.createElement("div");
   if (size !== undefined) {
     tmp.style.width = `${size * 100}%`;
   }
-  labelText = labelText.replace(/\.+$/g, "");
-  if (!labelText.endsWith(":")) {
-    labelText += ":";
-  }
+  labelText = ensureColon(labelText);
   tmp.className = "text-wrapper";
   const label = document.createElement("label");
   label.innerText = labelText;
@@ -163,23 +170,30 @@ function text(labelText: string, value: string, size?: number): HTMLElement {
   return tmp;
 }
 
-export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
-  console.log(doc);
-
-  const tmp = JSON.stringify(doc.tickets[0]);
-  doc.tickets.length = 0;
-  for (let i = 0; i < 54; ++i) {
-    const x = JSON.parse(tmp);
-    x.id = i + 1;
-    doc.tickets.push(x);
+function span(text: string, className?: string): HTMLElement {
+  const tmp = document.createElement("span");
+  if (className) {
+    tmp.className = className;
   }
+  tmp.innerText = text;
+  return tmp;
+}
 
-  // --- the real code
+function bold(text: string, className?: string): HTMLElement {
+  const tmp = document.createElement("b");
+  if (className) {
+    tmp.className = className;
+  }
+  tmp.innerText = ensureColon(text);
+  return tmp;
+}
 
+export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
   const { totalReceived, totalPaid } = sumCharterTickets(doc.tickets);
 
   const pages = [];
-  const numTicketsOnFirstPage = 10;
+  const len = doc.pay.payments.length + doc.pay.receives.length;
+  const numTicketsOnFirstPage = len > 10 ? 5 : 10;
   let renderingFirstPage;
 
   const charterTableHandler = {
@@ -273,10 +287,104 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
     content.appendChild(tabel);
 
     if (num === 0) {
+      const { pay } = doc;
+
+      const r = (n) => numberMaskString(n) + " ریال"
+      const tabel = dataview(1, 0, 0, [{
+        cache: pay.base.cache,
+        installmentBase: pay.base.installmentBase,
+        ICI: pay.base.ICI,
+        differ: pay.base.differ,
+        wage: pay.base.wage,
+        companyCost: pay.base.companyCost
+      }], {
+        cache: {
+          label: lng.viewCharter.cache
+          map: r
+        },
+        installmentBase: {
+          label: lng.viewCharter.installmentBase,
+          map: r
+        },
+        ICI: {
+          label: lng.viewCharter.ICI,
+          map: r
+        },
+        differ: {
+          label: lng.viewCharter.differ,
+          map: r
+        },
+        wage: {
+          label: lng.viewCharter.wage,
+          map: r
+        },
+        companyCost: {
+          label: lng.viewCharter.companyCost,
+          map: r
+        },
+      });
+
+      content.appendChild(tabel);
+
+      const receivesHead = document.createElement("h4");
+      receivesHead.innerText = "دریافت ها";
+      content.appendChild(receivesHead);
+      for (const r of pay.receives) {
+        switch (r.kind) {
+          case t.CharterReceiveKind.cacheReceive:
+            row(content, [
+              bold("نقدی (صندوق)"),
+              text("به مبلغ", numberMaskString(r.amount)),
+              span("ریال"),
+              text("در تاریخ", formatDate(r.date)),
+              text("دریافت کننده", r.receiverName)
+            ]);
+            break;
+          case t.CharterReceiveKind.bankReceive:
+            row(content, [
+              bold("واریز به حساب"),
+              text("به مبلغ", numberMaskString(r.amount)),
+              span("ریال"),
+              text("به حساب", r.account),
+              text("مورخ", formatDate(r.date)),
+            ]);
+            break;
+          case t.CharterReceiveKind.hekmatCardReceive:
+            row(content, [
+              bold("دریافت از طریق حکمت کارت"),
+              text("به مبلغ", numberMaskString(r.amount)),
+              span("ریال"),
+              text("بر اساس برگ خرید اقساطی مورخ", formatDate(r.date), 2.5),
+            ]);
+            break;
+          case t.CharterReceiveKind.notificationReceive:
+            row(content, [
+              bold("صدور اطلاعیه برای طرف حساب"),
+              text("به مبلغ", numberMaskString(r.amount)),
+              span("ریال"),
+              text("ریال به شماره", r.number),
+              text("مورخ", formatDate(r.date)),
+            ]);
+            break;
+        }
+      }
+
+      const paidHead = document.createElement("h4");
+      paidHead.innerText = "پرداخت ها";
+      content.appendChild(paidHead);
+      for (let i = 0; i < pay.payments.length; ++i) {
+        const p = pay.payments[i];
+        row(content, [
+          bold(`پرداخت ${i + 1}`),
+          text("در تاریخ", formatDate(p.date)),
+          text("به مبلغ", numberMaskString(p.amount)),
+          span("ریال"),
+          text("به حساب", p.account)
+        ]);
+      }
     }
 
     pages.push(page);
-    console.log(num);
     wrapper.appendChild(page);
     return true;
   }

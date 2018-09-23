@@ -133,7 +133,7 @@ export const viewCharter = {
   name: "نام",
   lastName: "نام خانوادگی",
 
-  ICI: "دریافت ICI",
+  ICI: "جمع اصل و فرع",
   cache: "دریافت نقدی",
   companyCost: "هزینه شرکت",
   credit: "اعتباری",
@@ -188,7 +188,7 @@ export const fillCharter = {
 
 export const payCharterCounter = {
   title: "اطلاعات پرداخت چارتر",
-  ICI: "دریافت ICI...",
+  ICI: "جمع اصل و فرع...",
   cache: "دریافت نقدی...",
   companyCost: "هزینه شرکت...",
   credit: "مبلغ اعتباری...",
