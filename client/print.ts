@@ -63,6 +63,9 @@ export async function renderPrintView(
     case "charter":
       handlers.charter(data.data, pagesWrapper);
       break;
+    case "systemic":
+      handlers.systemic(data.data, pagesWrapper);
+      break;
   }
 
   // Print button

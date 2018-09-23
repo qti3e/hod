@@ -49,7 +49,7 @@ export function dataview<T extends {}>(
   const skipDataCheck = page < 0;
   page = Math.max(0, page);
   const start = page * count;
-  const end = start + count
+  const end = start + count;
   // Check if there is any data to render
   // Always render the first page.
   if (!skipDataCheck && !data[start]) {

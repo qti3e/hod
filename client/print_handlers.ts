@@ -13,7 +13,7 @@ import { numberMaskString } from "./mask";
 import { toPersianDigits } from "./persian";
 import { dataview } from "./table";
 import * as t from "./types";
-import { sumCharterTickets } from "./util";
+import { sumCharterTickets, sumSystemicTickets } from "./util";
 
 interface Page extends HTMLElement {
   title: string;
@@ -149,7 +149,6 @@ function ensureColon(text: string): string {
   }
   return toPersianDigits(text);
 }
-  
 
 function text(labelText: string, value: string, size?: number): HTMLElement {
   const tmp = document.createElement("div");
@@ -289,42 +288,52 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
     if (num === 0) {
       const { pay } = doc;
 
-      const r = (n) => numberMaskString(n) + " ریال"
-      const tabel = dataview(1, 0, 0, [{
-        cache: pay.base.cache,
-        installmentBase: pay.base.installmentBase,
-        ICI: pay.base.ICI,
-        differ: pay.base.differ,
-        wage: pay.base.wage,
-        companyCost: pay.base.companyCost
-      }], {
-        cache: {
-          label: lng.viewCharter.cache
-          map: r
-        },
-        installmentBase: {
-          label: lng.viewCharter.installmentBase,
-          map: r
-        },
-        ICI: {
-          label: lng.viewCharter.ICI,
-          map: r
-        },
-        differ: {
-          label: lng.viewCharter.differ,
-          map: r
-        },
-        wage: {
-          label: lng.viewCharter.wage,
-          map: r
-        },
-        companyCost: {
-          label: lng.viewCharter.companyCost,
-          map: r
-        },
-      });
+      const r = n => numberMaskString(n) + " ریال";
+      const tabel = dataview(
+        1,
+        0,
+        0,
+        [
+          {
+            cache: pay.base.cache,
+            installmentBase: pay.base.installmentBase,
+            ICI: pay.base.ICI,
+            differ: pay.base.differ,
+            wage: pay.base.wage,
+            companyCost: pay.base.companyCost
+          }
+        ],
+        {
+          cache: {
+            label: lng.viewCharter.cache,
+            map: r
+          },
+          installmentBase: {
+            label: lng.viewCharter.installmentBase,
+            map: r
+          },
+          ICI: {
+            label: lng.viewCharter.ICI,
+            map: r
+          },
+          differ: {
+            label: lng.viewCharter.differ,
+            map: r
+          },
+          wage: {
+            label: lng.viewCharter.wage,
+            map: r
+          },
+          companyCost: {
+            label: lng.viewCharter.companyCost,
+            map: r
+          }
+        }
+      );
 
-      content.appendChild(tabel);
+      if (tabel) {
+        content.appendChild(tabel);
+      }
 
       const receivesHead = document.createElement("h4");
       receivesHead.innerText = "دریافت ها";
@@ -346,7 +355,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
               text("به مبلغ", numberMaskString(r.amount)),
               span("ریال"),
               text("به حساب", r.account),
-              text("مورخ", formatDate(r.date)),
+              text("مورخ", formatDate(r.date))
             ]);
             break;
           case t.CharterReceiveKind.hekmatCardReceive:
@@ -354,7 +363,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
               bold("دریافت از طریق حکمت کارت"),
               text("به مبلغ", numberMaskString(r.amount)),
               span("ریال"),
-              text("بر اساس برگ خرید اقساطی مورخ", formatDate(r.date), 2.5),
+              text("بر اساس برگ خرید اقساطی مورخ", formatDate(r.date), 2.5)
             ]);
             break;
           case t.CharterReceiveKind.notificationReceive:
@@ -363,7 +372,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
               text("به مبلغ", numberMaskString(r.amount)),
               span("ریال"),
               text("ریال به شماره", r.number),
-              text("مورخ", formatDate(r.date)),
+              text("مورخ", formatDate(r.date))
             ]);
             break;
         }
@@ -381,6 +390,195 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
           span("ریال"),
           text("به حساب", p.account)
         ]);
+      }
+    }
+
+    pages.push(page);
+    wrapper.appendChild(page);
+    return true;
+  }
+
+  let page = 0;
+  while (await renderPage(page++)) {}
+
+  if (pages.length > 1) {
+    for (let i = 0; i < pages.length; ++i) {
+      pages[i].setPage(i + 1, pages.length);
+    }
+  }
+}
+
+export async function systemic(doc: t.SystemicDoc, wrapper: HTMLElement) {
+  const { totalReceived } = sumSystemicTickets(doc.tickets);
+
+  const pages = [];
+  const len = doc.pay.receives.length;
+  const numTicketsOnFirstPage = len > 10 ? 5 : 10;
+  let renderingFirstPage;
+
+  const systemicTableHandler = {
+    _num_: true,
+    id: "شماره بلیط",
+    date: {
+      label: "تاریخ",
+      map(date: number) {
+        return formatDate(date, true);
+      }
+    },
+    route: {
+      label: "مسیر",
+      map(route: t.DBCity[]) {
+        const src = route[0];
+        const dest = route[route.length - 1];
+        if (route.length === 0) {
+          return "-";
+        }
+        if (route.length === 1) {
+          return src.displayName + " - نامعلوم";
+        }
+        return src.displayName + " - " + dest.displayName;
+      }
+    },
+    passengerName: {
+      label: "مسافر",
+      map(name: string, _, data: t.CharterTicket) {
+        return name + " " + data.passengerLastname;
+      },
+      footer() {
+        return renderingFirstPage && "جمع کل - ریال";
+      }
+    },
+    received: {
+      label: "قیمت - ریال",
+      map: numberMaskString,
+      footer() {
+        return renderingFirstPage && numberMaskString(totalReceived);
+      }
+    },
+    airline: "ایرلاین"
+  };
+
+  async function renderPage(num: number): Promise<boolean> {
+    renderingFirstPage = num === 0;
+
+    const tabel = dataview(
+      renderingFirstPage ? numTicketsOnFirstPage : 30,
+      num - 1,
+      renderingFirstPage ? 0 : numTicketsOnFirstPage,
+      doc.tickets,
+      systemicTableHandler
+    );
+    if (renderingFirstPage) {
+      doc.tickets.splice(0, numTicketsOnFirstPage);
+    }
+    if (!tabel) {
+      return false;
+    }
+
+    const page = await newPage();
+    page.title = "گردش کار ارائه خدمات مسافرتی";
+    page.subtitle = `صدور بلیط "سیسنمی"`;
+    page.date = formatDate(doc.createdAt, true);
+    page.number = doc._id.substr(7);
+
+    const { content } = page;
+
+    if (num === 0) {
+      row(content, [
+        text(lng.newCharter.serviceKind, lng.newSystemic[doc.kind]),
+        text(lng.newCharter.payer, doc.payer)
+      ]);
+
+      row(content, [
+        text(lng.newCharter.nameOfPayer, doc.payerName),
+        text(lng.newCharter.nationalCode, doc.nationalCode)
+      ]);
+    }
+
+    content.appendChild(tabel);
+
+    if (num === 0) {
+      const { pay } = doc;
+
+      const r = n => numberMaskString(n) + " ریال";
+      const tabel = dataview(
+        1,
+        0,
+        0,
+        [ pay.base ],
+        {
+          cache: {
+            label: lng.viewCharter.cache,
+            map: r
+          },
+          installmentBase: {
+            label: lng.viewSystemic.installmentBase,
+            map: r
+          },
+          wage: {
+            label: lng.viewSystemic.wage,
+            map: r
+          },
+          ICI: {
+            label: lng.viewSystemic.ICI,
+            map: r
+          },
+          credit: {
+            label: lng.viewSystemic.credit,
+            map: r
+          },
+          companyCost: {
+            label: lng.viewSystemic.companyCost,
+            map: r
+          }
+        }
+      );
+
+      if (tabel) {
+        content.appendChild(tabel);
+      }
+
+      const receivesHead = document.createElement("h4");
+      receivesHead.innerText = "دریافت ها";
+      content.appendChild(receivesHead);
+      for (const r of pay.receives) {
+        switch (r.kind) {
+          case t.CharterReceiveKind.cacheReceive:
+            row(content, [
+              bold("نقدی (صندوق)"),
+              text("به مبلغ", numberMaskString(r.amount)),
+              span("ریال"),
+              text("در تاریخ", formatDate(r.date)),
+              text("دریافت کننده", r.receiverName)
+            ]);
+            break;
+          case t.CharterReceiveKind.bankReceive:
+            row(content, [
+              bold("واریز به حساب"),
+              text("به مبلغ", numberMaskString(r.amount)),
+              span("ریال"),
+              text("به حساب", r.account),
+              text("مورخ", formatDate(r.date))
+            ]);
+            break;
+          case t.CharterReceiveKind.hekmatCardReceive:
+            row(content, [
+              bold("دریافت از طریق حکمت کارت"),
+              text("به مبلغ", numberMaskString(r.amount)),
+              span("ریال"),
+              text("بر اساس برگ خرید اقساطی مورخ", formatDate(r.date), 2.5)
+            ]);
+            break;
+          case t.CharterReceiveKind.notificationReceive:
+            row(content, [
+              bold("صدور اطلاعیه برای طرف حساب"),
+              text("به مبلغ", numberMaskString(r.amount)),
+              span("ریال"),
+              text("ریال به شماره", r.number),
+              text("مورخ", formatDate(r.date))
+            ]);
+            break;
+        }
       }
     }
 
