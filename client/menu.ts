@@ -48,9 +48,8 @@ export function renderMenu(app: HTMLElement): void {
       diamond("fund_dashboard", "file-invoice-dollar", "fundDashboard")
     );
 
-    wrapper.appendChild(diamond("cancel", "file-excel", "cancel"));
-
-    wrapper.appendChild(diamond("tickets", "ticket-alt", "tickets"));
+    // wrapper.appendChild(diamond("cancel", "file-excel", "cancel"));
+    // wrapper.appendChild(diamond("tickets", "ticket-alt", "tickets"));
   }
 
   app.appendChild(menuWrapper);

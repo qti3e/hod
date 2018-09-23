@@ -36,7 +36,7 @@ export function requestPrint(data: PrintData) {
   win.setTitle(local.title);
   win.center();
 
-  win.webContents.toggleDevTools();
+  // win.webContents.toggleDevTools();
   win.show();
 
   const url = new URL(document.location.href);
