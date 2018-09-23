@@ -477,7 +477,7 @@ export async function systemic(doc: t.SystemicDoc, wrapper: HTMLElement) {
 
     const page = await newPage();
     page.title = "گردش کار ارائه خدمات مسافرتی";
-    page.subtitle = `صدور بلیط "سیسنمی"`;
+    page.subtitle = `صدور بلیط "سیستمی"`;
     page.date = formatDate(doc.createdAt, true);
     page.number = doc._id.substr(7);
 
