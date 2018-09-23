@@ -501,38 +501,32 @@ export async function systemic(doc: t.SystemicDoc, wrapper: HTMLElement) {
       const { pay } = doc;
 
       const r = n => numberMaskString(n) + " ریال";
-      const tabel = dataview(
-        1,
-        0,
-        0,
-        [ pay.base ],
-        {
-          cache: {
-            label: lng.viewCharter.cache,
-            map: r
-          },
-          installmentBase: {
-            label: lng.viewSystemic.installmentBase,
-            map: r
-          },
-          wage: {
-            label: lng.viewSystemic.wage,
-            map: r
-          },
-          ICI: {
-            label: lng.viewSystemic.ICI,
-            map: r
-          },
-          credit: {
-            label: lng.viewSystemic.credit,
-            map: r
-          },
-          companyCost: {
-            label: lng.viewSystemic.companyCost,
-            map: r
-          }
+      const tabel = dataview(1, 0, 0, [pay.base], {
+        cache: {
+          label: lng.viewCharter.cache,
+          map: r
+        },
+        installmentBase: {
+          label: lng.viewSystemic.installmentBase,
+          map: r
+        },
+        wage: {
+          label: lng.viewSystemic.wage,
+          map: r
+        },
+        ICI: {
+          label: lng.viewSystemic.ICI,
+          map: r
+        },
+        credit: {
+          label: lng.viewSystemic.credit,
+          map: r
+        },
+        companyCost: {
+          label: lng.viewSystemic.companyCost,
+          map: r
         }
-      );
+      });
 
       if (tabel) {
         content.appendChild(tabel);
