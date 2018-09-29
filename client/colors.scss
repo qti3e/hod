@@ -1,5 +1,16 @@
-$secondry: #87cefa;
-$primary: #ff9b26;
-$background: #111c24;
-$fg: #fff;
+$secondryX: #87cefa;
+$primaryX: #ff9b26;
+$backgroundX: #111c24;
+$fgX: #fff;
 $frame-height: 50px;
+
+:root {
+  --secondry: #{$secondryX};
+  --primary: #{$primaryX};
+  --background: #{$backgroundX};
+  --fg: #{$fgX};
+  --light-background-10: #{lighten($backgroundX, 10%)};
+  --alpha-background-5: #{rgba($backgroundX, 0.5)};
+  --alpha-background-7: #{rgba($backgroundX, 0.7)};
+  --dark-primary-25: #{darken($primaryX, 25%)};
+}

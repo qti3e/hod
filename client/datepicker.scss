@@ -1,8 +1,8 @@
 @import "colors";
 
 .qti3e-datepicker {
-  background: $background;
-  border: 1px solid $primary;
+  background: var(--background);
+  border: 1px solid var(--primary);
   width: 250px;
   z-index: 999999999999;
   * {
@@ -12,14 +12,14 @@
 
   .head {
     height: 30px;
-    border-bottom: 1px solid $primary;
+    border-bottom: 1px solid var(--primary);
 
     div,
     button {
       display: inline-block;
       height: 30px;
       text-align: center;
-      color: $primary;
+      color: var(--primary);
       margin: 0;
       border: none;
       padding: 0;
@@ -30,7 +30,7 @@
       font-family: "Font Awesome 5 Free";
 
       &::before {
-        color: $background;
+        color: var(--background);
         content: "\f359";
       }
     }
@@ -45,7 +45,7 @@
       font-family: "Font Awesome 5 Free";
 
       &::before {
-        color: $background;
+        color: var(--background);
         content: "\f35a";
       }
     }
@@ -56,8 +56,8 @@
     }
 
     button {
-      background: $primary;
-      color: $background;
+      background: var(--primary);
+      color: var(--background);
       cursor: pointer;
 
       &:focus {
@@ -73,8 +73,8 @@
       width: 35.7px;
 
       .day-name {
-        color: $secondry;
-        border-bottom: 1px solid $primary;
+        color: var(--secondry);
+        border-bottom: 1px solid var(--primary);
       }
 
       div {
@@ -85,18 +85,18 @@
         height: 35.7px;
         width: 35.7px;
         line-height: 35.7px;
-        color: $primary;
+        color: var(--primary);
         cursor: pointer;
         border-radius: 17.6px;
 
         &.is-today {
-          background: $secondry;
-          color: $background;
+          background: var(--secondry);
+          color: var(--background);
         }
 
         &.is-selected {
-          background: $primary;
-          color: $background;
+          background: var(--primary);
+          color: var(--background);
         }
       }
     }
