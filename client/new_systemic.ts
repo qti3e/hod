@@ -13,6 +13,7 @@ import { emit } from "./ipc";
 import { newSystemic as local } from "./local";
 import { numberMask } from "./mask";
 import { routeSelector } from "./route";
+import { inputWithLabel } from "./input";
 import * as t from "./types";
 import { cacheForUser, checkBox, fa, sumSystemicTickets } from "./util";
 
@@ -111,32 +112,32 @@ export function renderNewSystemic(app: HTMLElement): void {
 
   updateCheckbox();
 
-  const payerInput = document.createElement("input");
+  const payerInput = inputWithLabel(true);
   payerInput.placeholder = local.payer;
-  right.appendChild(payerInput);
+  right.appendChild(payerInput.parentElement);
   payerInput.onchange = () => {
     form.payer = payerInput.value.trim();
   };
 
-  const payerNameInput = document.createElement("input");
+  const payerNameInput = inputWithLabel(true);
   payerNameInput.placeholder = local.nameOfPayer;
-  right.appendChild(payerNameInput);
+  right.appendChild(payerNameInput.parentElement);
   payerNameInput.onchange = () => {
     form.payerName = payerNameInput.value.trim();
   };
 
-  const nationalCodeInput = document.createElement("input");
+  const nationalCodeInput = inputWithLabel(true);
   nationalCodeInput.placeholder = local.nationalCode;
   nationalCodeInput.className = "ltr";
-  right.appendChild(nationalCodeInput);
+  right.appendChild(nationalCodeInput.parentElement);
   nationalCodeInput.onchange = () => {
     form.nationalCode = nationalCodeInput.value.trim();
   };
 
-  const phoneInput = document.createElement("input");
+  const phoneInput = inputWithLabel(true);
   phoneInput.placeholder = local.phoneNumber;
   phoneInput.className = "ltr";
-  right.appendChild(phoneInput);
+  right.appendChild(phoneInput.parentElement);
   phoneInput.onchange = () => {
     form.phone = phoneInput.value.trim();
   };
@@ -246,30 +247,30 @@ function ticket(removeCB: () => void): TicketElement {
   g3.className = "group g3";
   wrapper.appendChild(g3);
 
-  const idInput = document.createElement("input");
+  const idInput = inputWithLabel(true);
   idInput.placeholder = local.id;
-  g1.appendChild(idInput);
+  g1.appendChild(idInput.parentElement);
 
-  const dateInput = document.createElement("input");
+  const dateInput = inputWithLabel(true);
   dateInput.placeholder = local.date;
-  g1.appendChild(dateInput);
-  datepicker(dateInput);
+  g1.appendChild(dateInput.parentElement);
+  datepicker(dateInput.parentElement);
 
-  const receivedInput = numberMask();
+  const receivedInput = numberMask(inputWithLabel(true));
   receivedInput.placeholder = local.received;
-  g2.appendChild(receivedInput);
+  g2.appendChild(receivedInput.parentElement);
 
-  const airlineInput = document.createElement("input");
+  const airlineInput = inputWithLabel(true);
   airlineInput.placeholder = local.outline;
-  g2.appendChild(airlineInput);
+  g2.appendChild(airlineInput.parentElement);
 
-  const passengerNameInput = document.createElement("input");
+  const passengerNameInput = inputWithLabel(true);
   passengerNameInput.placeholder = local.passengerName;
-  g3.appendChild(passengerNameInput);
+  g3.appendChild(passengerNameInput.parentElement);
 
-  const passengerLastnameInput = document.createElement("input");
+  const passengerLastnameInput = inputWithLabel(true);
   passengerLastnameInput.placeholder = local.passengerLastname;
-  g3.appendChild(passengerLastnameInput);
+  g3.appendChild(passengerLastnameInput.parentElement);
 
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);

@@ -9,6 +9,7 @@
 import { datepicker } from "./datepicker";
 import { paySystemicCounter as local } from "./local";
 import { numberMask } from "./mask";
+import { inputWithLabel } from "./input";
 import * as t from "./types";
 import { fa } from "./util";
 
@@ -59,11 +60,11 @@ export function renderSystemicPayCounter(
   // between them in a loop.
   for (const name in data.base) {
     if (local[name]) {
-      const tmpInput = numberMask();
+      const tmpInput = numberMask(inputWithLabel());
       tmpInput.placeholder = local[name];
       // Set the value from props.
       tmpInput.value = data.base[name] ? data.base[name] : "";
-      baseWrapper.appendChild(tmpInput);
+      baseWrapper.appendChild(tmpInput.parentElement);
       tmpInput.onchange = () => (data.base[name] = Number(tmpInput.value));
     } else {
       // It would not going to happen in production.
