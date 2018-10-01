@@ -528,9 +528,10 @@ p {
     }
 
     :-webkit-any(.right-split, .ticket-wrapper, .group, .receives-wrapper)
-    > input,
+      > input,
     :-webkit-any(.right-split, .ticket-wrapper, .group, .receives-wrapper)
-    > .placeholder-input input {
+      > .placeholder-input
+      input {
       width: 100%;
       height: 30px;
       font-size: 14pt;

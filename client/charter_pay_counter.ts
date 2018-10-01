@@ -7,9 +7,9 @@
  */
 
 import { datepicker } from "./datepicker";
+import { inputWithLabel } from "./input";
 import { payCharterCounter as local } from "./local";
 import { numberMask } from "./mask";
-import { inputWithLabel } from "./input";
 import * as t from "./types";
 import { fa } from "./util";
 

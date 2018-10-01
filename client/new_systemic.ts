@@ -9,11 +9,11 @@
 import axios from "axios";
 import { get } from "./context";
 import { datepicker } from "./datepicker";
+import { inputWithLabel } from "./input";
 import { emit } from "./ipc";
 import { newSystemic as local } from "./local";
 import { numberMask } from "./mask";
 import { routeSelector } from "./route";
-import { inputWithLabel } from "./input";
 import * as t from "./types";
 import { cacheForUser, checkBox, fa, sumSystemicTickets } from "./util";
 
