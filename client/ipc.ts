@@ -21,6 +21,8 @@ export interface EventDataTypeMap {
   "route-change": PageURLWithParam;
   login: t.User;
   print: PrintData;
+  color: "light" | "dark";
+  "color-changed": any;
   sse: {
     read: () => Promise<void>;
     currentUser: boolean;

@@ -33,10 +33,10 @@ export function nodeRequire(module: string): any {
   return require(module);
 }
 
-export function fa(icon: string | string[]): HTMLElement {
+export function fa(icon: string | string[], reqular = false): HTMLElement {
   if (typeof icon === "string") {
     const span = document.createElement("span");
-    span.classList.add("fa");
+    span.classList.add(reqular ? "far" : "fa");
     span.classList.add("fa-" + icon);
     return span;
   } else {

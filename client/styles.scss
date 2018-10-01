@@ -14,7 +14,7 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(var(--background), var(--light-background-10) 70%);
+  background: var(--background);
   overflow-y: hidden;
 }
 
@@ -66,6 +66,19 @@ p {
 
     &:focus {
       outline: none;
+    }
+  }
+
+  #toggle-color {
+    height: $frame-height;
+    width: $frame-height;
+    justify-content: center;
+    border-left: 1px solid var(--primary);
+    font-size: 14pt;
+    &,
+    * {
+      cursor: pointer;
+      color: var(--primary);
     }
   }
 
@@ -561,7 +574,7 @@ p {
   }
 
   .ticket-wrapper {
-    background: var(--background);
+    background: var(--light-background-10);
     margin: 15px;
     padding: 15px;
     border-radius: 0 0 25px 25px;
@@ -673,10 +686,7 @@ p {
     position: fixed;
     top: 0;
     left: -100%;
-    background-image: linear-gradient(
-      var(--background),
-      var(--light-background-10) 70%
-    );
+    background: var(--background);
     border-right: 1px solid var(--primary);
     transition: left 800ms ease-in;
     padding: 15px;

@@ -27,6 +27,7 @@ const defaultContext: ContextTypesMap = {
   currentToken: undefined,
   // Note: There must be no "/" at the end.
   host: "http://localhost:10234",
+  color: "light",
   get server() {
     return this.host + "/" + version;
   }
@@ -37,6 +38,7 @@ export interface ContextTypesMap {
     [token: string]: t.User;
   };
   currentToken: string;
+  color: "light" | "dark";
   host: string;
   readonly server: string;
 }

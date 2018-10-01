@@ -7,6 +7,7 @@
  */
 
 import "@fortawesome/fontawesome-free/css/all.css";
+import "./colors";
 
 import { get } from "./context";
 import { emit, on, once } from "./ipc";

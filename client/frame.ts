@@ -12,7 +12,7 @@ import { save } from "./context";
 import { emit, on } from "./ipc";
 import { frame as local } from "./local";
 import * as t from "./types";
-import { nodeRequire, prepend } from "./util";
+import { fa, nodeRequire, prepend } from "./util";
 
 const { remote } = nodeRequire("electron");
 
@@ -142,6 +142,26 @@ export function renderFrame(app: HTMLElement): void {
   updateDropbox();
 
   // End of drop down menu.
+
+  const toggleColorBtn = document.createElement("button");
+  toggleColorBtn.id = "toggle-color";
+  let icon = fa("moon", true);
+  let currentColor;
+  toggleColorBtn.appendChild(icon);
+  toggleColorBtn.onclick = () => {
+    emit("color", currentColor === "light" ? "dark" : "light");
+  };
+  wrapper.appendChild(toggleColorBtn);
+  on("color-changed", c => {
+    currentColor = c.name;
+    icon.parentElement.removeChild(icon);
+    if (c.name === "light") {
+      icon = fa("moon", true);
+    } else {
+      icon = fa("moon");
+    }
+    toggleColorBtn.appendChild(icon);
+  });
 
   // Close button.
   const closeBtn = document.createElement("button");
