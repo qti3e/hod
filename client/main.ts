@@ -6,14 +6,9 @@
  * \___,_\ \__|_|____/ \___|
  */
 
-import { config } from "dotenv";
 import { app, BrowserWindow } from "electron";
 
 const TITLE = "Hod Hod";
-
-config({
-  path: __dirname + "/.env"
-});
 
 function main() {
   // Create a new window.
@@ -31,24 +26,18 @@ function main() {
   win.setTitle(TITLE);
   win.center();
 
-  if (process.env.NODE_ENV === "production") {
-    console.log("Production");
-    win.loadURL("file://" + __dirname + "/index.html");
+  win.loadURL("file://" + __dirname + "/index.html");
 
-    win.webContents.toggleDevTools();
-  } else {
-    console.log("Development");
-    win.loadURL("http://localhost:8080");
-
-    // Open devtools.
-    win.webContents.toggleDevTools();
-  }
+  // win.webContents.toggleDevTools();
 
   win.once("ready-to-show", () => {
     win.show();
   });
 
-  win.on("closed", () => app.quit());
+  win.on("closed", () => {
+    app.quit()
+    process.exit();
+  });
 }
 
 app.on("ready", main);

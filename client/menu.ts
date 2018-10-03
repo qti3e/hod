@@ -49,7 +49,7 @@ export function renderMenu(app: HTMLElement): void {
     );
 
     // wrapper.appendChild(diamond("cancel", "file-excel", "cancel"));
-    // wrapper.appendChild(diamond("tickets", "ticket-alt", "tickets"));
+    wrapper.appendChild(diamond("tickets", "ticket-alt", "tickets"));
   }
 
   app.appendChild(menuWrapper);
