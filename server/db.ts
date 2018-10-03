@@ -34,6 +34,11 @@ export const collections = {
     filename: ".db/notifications.db",
     autoload: true,
     timestampData: true
+  }),
+  // Autocomplete
+  autocomplete: new Datastore({
+    filename: ".db/ac.db",
+    autoload: true
   })
 };
 

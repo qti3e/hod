@@ -12,22 +12,4 @@ import * as t from "./types";
 
 const router = express.Router();
 
-// AutoComplete
-router.post("/ac", async function(
-  req: express.Request,
-  res: express.Response
-): Promise<void> {
-  const { text } = req.body;
-  if (!text) {
-    return void res.send({
-      code: 403
-    });
-  }
-  const tickets: t.TicketBase[] = await db.acTicketById(name);
-  res.send({
-    code: 200,
-    tickets
-  });
-});
-
 export { router };

@@ -7,6 +7,7 @@
  */
 
 import express from "express";
+import { router as autocomplete } from "./v1.ac";
 import { router as admin } from "./v1.admin";
 import { requestToken, router as auth } from "./v1.auth";
 import { router as charter } from "./v1.charter";
@@ -28,5 +29,6 @@ router.use("/charter", charter);
 router.use("/systemic", systemic);
 router.use("/tickets", tickets);
 router.use("/pub", pub);
+router.use("/autocomplete", autocomplete);
 
 export { router };
