@@ -7,12 +7,13 @@
  */
 
 import axios from "axios";
+import { autocompleteInput, sendData, resetData } from "./autocomplete";
 import { get } from "./context";
 import { datepicker } from "./datepicker";
 import { inputWithLabel } from "./input";
 import { emit } from "./ipc";
 import { newSystemic as local } from "./local";
-import { numberMask } from "./mask";
+import { numberMask, numberMaskString } from "./mask";
 import { routeSelector } from "./route";
 import * as t from "./types";
 import { cacheForUser, checkBox, fa, sumSystemicTickets } from "./util";
@@ -21,6 +22,7 @@ const domCache = cacheForUser<HTMLElement>();
 const forms = cacheForUser<t.SystemicDoc>();
 
 export function renderNewSystemic(app: HTMLElement): void {
+  resetData();
   // Check DOM cache for current user.
   if (domCache.has()) {
     return void app.appendChild(domCache.get());
@@ -56,10 +58,6 @@ export function renderNewSystemic(app: HTMLElement): void {
   domCache.set(wrapper);
   app.appendChild(wrapper);
 
-  const title = document.createElement("h1");
-  title.innerText = local.title;
-  wrapper.appendChild(title);
-
   const view = document.createElement("div");
   view.className = "view";
   wrapper.appendChild(view);
@@ -72,6 +70,22 @@ export function renderNewSystemic(app: HTMLElement): void {
   newTicketBtn.innerText = local.newTicket;
   right.appendChild(newTicketBtn);
   newTicketBtn.onclick = () => newTicket();
+
+  const totalReceivesLabel = document.createElement("h3");
+  totalReceivesLabel.innerText = "مجموع دریافتی:";
+  totalReceivesLabel.style.margin = "0";
+  right.appendChild(totalReceivesLabel);
+
+  const totalReceives = document.createElement("h2");
+  totalReceives.innerText = numberMaskString(0);
+  totalReceives.style.textAlign = "center";
+  totalReceives.style.margin = "0";
+  right.appendChild(totalReceives);
+
+  const updateSums = () => {
+    const sum = sumSystemicTickets(tickets.filter(x => !!x).map(t => t.data()));
+    totalReceives.innerText = numberMaskString(sum.totalReceived);
+  };
 
   const serviceKindText = document.createElement("h3");
   serviceKindText.innerText = local.serviceKind;
@@ -118,6 +132,7 @@ export function renderNewSystemic(app: HTMLElement): void {
   payerInput.onchange = () => {
     form.payer = payerInput.value.trim();
   };
+  autocompleteInput("payer", payerInput);
 
   const payerNameInput = inputWithLabel(true);
   payerNameInput.placeholder = local.nameOfPayer;
@@ -125,6 +140,7 @@ export function renderNewSystemic(app: HTMLElement): void {
   payerNameInput.onchange = () => {
     form.payerName = payerNameInput.value.trim();
   };
+  autocompleteInput("payer_name", payerNameInput);
 
   const nationalCodeInput = inputWithLabel(true);
   nationalCodeInput.placeholder = local.nationalCode;
@@ -156,6 +172,7 @@ export function renderNewSystemic(app: HTMLElement): void {
 
     form.tickets = tickets.filter(x => !!x).map(t => t.data());
     console.log("sending form", form);
+    sendData();
     await submit(form);
     // Reset form.
     // TODO(qti3e) show the saved doc.
@@ -191,7 +208,7 @@ export function renderNewSystemic(app: HTMLElement): void {
     tickets.push(
       ticket(() => {
         tickets[id] = undefined;
-      })
+      }, updateSums)
     );
     for (let prevId = id - 1; prevId >= 0; --prevId) {
       if (!tickets[prevId]) continue;
@@ -200,6 +217,7 @@ export function renderNewSystemic(app: HTMLElement): void {
       break;
     }
     renderTickets();
+    updateSums();
     ticketsWrapper.scrollTop = ticketsWrapper.scrollHeight;
   }
 
@@ -218,7 +236,7 @@ interface TicketElement extends HTMLDivElement {
   data(data?: Partial<t.SystemicTicket>): t.SystemicTicket;
 }
 
-function ticket(removeCB: () => void): TicketElement {
+function ticket(removeCB: () => void, updateSums: () => void): TicketElement {
   const wrapper = document.createElement("div") as TicketElement;
   wrapper.className = "ticket-wrapper";
 
@@ -254,23 +272,27 @@ function ticket(removeCB: () => void): TicketElement {
   const dateInput = inputWithLabel(true);
   dateInput.placeholder = local.date;
   g1.appendChild(dateInput.parentElement);
-  datepicker(dateInput.parentElement);
+  datepicker(dateInput);
 
   const receivedInput = numberMask(inputWithLabel(true));
   receivedInput.placeholder = local.received;
   g2.appendChild(receivedInput.parentElement);
+  receivedInput.addEventListener("keydown", () => updateSums());
 
   const airlineInput = inputWithLabel(true);
   airlineInput.placeholder = local.outline;
   g2.appendChild(airlineInput.parentElement);
+  autocompleteInput("airline", airlineInput);
 
   const passengerNameInput = inputWithLabel(true);
   passengerNameInput.placeholder = local.passengerName;
   g3.appendChild(passengerNameInput.parentElement);
+  autocompleteInput("first_name", passengerNameInput);
 
   const passengerLastnameInput = inputWithLabel(true);
   passengerLastnameInput.placeholder = local.passengerLastname;
   g3.appendChild(passengerLastnameInput.parentElement);
+  autocompleteInput("last_name", passengerLastnameInput);
 
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);

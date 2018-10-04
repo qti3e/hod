@@ -7,12 +7,13 @@
  */
 
 import axios from "axios";
+import { autocompleteInput, sendData, resetData } from "./autocomplete";
 import { get } from "./context";
 import { datepicker } from "./datepicker";
 import { inputWithLabel } from "./input";
 import { emit } from "./ipc";
 import { newCharter as local } from "./local";
-import { numberMask } from "./mask";
+import { numberMask, numberMaskString } from "./mask";
 import { routeSelector } from "./route";
 import * as t from "./types";
 import { cacheForUser, checkBox, fa, sumCharterTickets } from "./util";
@@ -20,6 +21,7 @@ import { cacheForUser, checkBox, fa, sumCharterTickets } from "./util";
 const domCache = cacheForUser<HTMLElement>();
 const forms = cacheForUser<t.CharterDoc>();
 export function renderNewCharter(app: HTMLElement): void {
+  resetData();
   // Check DOM cache for current user.
   if (domCache.has()) {
     return void app.appendChild(domCache.get());
@@ -58,10 +60,6 @@ export function renderNewCharter(app: HTMLElement): void {
   domCache.set(wrapper);
   app.appendChild(wrapper);
 
-  const title = document.createElement("h1");
-  title.innerText = local.title;
-  wrapper.appendChild(title);
-
   const view = document.createElement("div");
   view.className = "view";
   wrapper.appendChild(view);
@@ -74,6 +72,34 @@ export function renderNewCharter(app: HTMLElement): void {
   newTicketBtn.innerText = local.newTicket;
   right.appendChild(newTicketBtn);
   newTicketBtn.onclick = () => newTicket();
+
+  const totalReceivesLabel = document.createElement("h3");
+  totalReceivesLabel.innerText = "مجموع دریافتی:";
+  totalReceivesLabel.style.margin = "0";
+  right.appendChild(totalReceivesLabel);
+
+  const totalReceives = document.createElement("h2");
+  totalReceives.innerText = numberMaskString(0);
+  totalReceives.style.textAlign = "center";
+  totalReceives.style.margin = "0";
+  right.appendChild(totalReceives);
+
+  const totalPayLabel = document.createElement("h3");
+  totalPayLabel.innerText = "مجموع پرداختی:";
+  totalPayLabel.style.margin = "0";
+  right.appendChild(totalPayLabel);
+
+  const totalPay = document.createElement("h2");
+  totalPay.innerText = numberMaskString(0);
+  totalPay.style.textAlign = "center";
+  totalPay.style.margin = "0";
+  right.appendChild(totalPay);
+
+  const updateSums = () => {
+    const sum = sumCharterTickets(tickets.filter(x => !!x).map(t => t.data()));
+    totalReceives.innerText = numberMaskString(sum.totalReceived);
+    totalPay.innerText = numberMaskString(sum.totalPaid);
+  };
 
   const serviceKindText = document.createElement("h3");
   serviceKindText.innerText = local.serviceKind;
@@ -121,6 +147,7 @@ export function renderNewCharter(app: HTMLElement): void {
   agencyInput.onchange = () => {
     form.providerAgency = agencyInput.value.trim();
   };
+  autocompleteInput("agency", agencyInput);
 
   const payerInput = inputWithLabel(true);
   payerInput.placeholder = local.payer;
@@ -128,6 +155,7 @@ export function renderNewCharter(app: HTMLElement): void {
   payerInput.onchange = () => {
     form.payer = payerInput.value.trim();
   };
+  autocompleteInput("payer", payerInput);
 
   const payerNameInput = inputWithLabel(true);
   payerNameInput.placeholder = local.nameOfPayer;
@@ -135,6 +163,7 @@ export function renderNewCharter(app: HTMLElement): void {
   payerNameInput.onchange = () => {
     form.payerName = payerNameInput.value.trim();
   };
+  autocompleteInput("payer_name", payerNameInput);
 
   const nationalCodeInput = inputWithLabel(true);
   nationalCodeInput.placeholder = local.nationalCode;
@@ -167,6 +196,7 @@ export function renderNewCharter(app: HTMLElement): void {
     form.tickets = tickets.filter(x => !!x).map(t => t.data());
     console.log("sending form", form);
     await submit(form);
+    sendData();
     // Reset form.
     domCache.delete();
     // TODO(qti3e) show the saved doc.
@@ -198,7 +228,7 @@ export function renderNewCharter(app: HTMLElement): void {
     tickets.push(
       ticket(() => {
         tickets[id] = undefined;
-      })
+      }, updateSums)
     );
     for (let prevId = id - 1; prevId >= 0; --prevId) {
       if (!tickets[prevId]) continue;
@@ -207,6 +237,7 @@ export function renderNewCharter(app: HTMLElement): void {
       break;
     }
     renderTickets();
+    updateSums();
     ticketsWrapper.scrollTop = ticketsWrapper.scrollHeight;
   }
 
@@ -225,7 +256,7 @@ interface TicketElement extends HTMLDivElement {
   data(ticket?: Partial<t.CharterTicket>): t.CharterTicket;
 }
 
-function ticket(removeCB: () => void): TicketElement {
+function ticket(removeCB: () => void, updateSums: () => void): TicketElement {
   const wrapper = document.createElement("div") as TicketElement;
   wrapper.className = "ticket-wrapper";
 
@@ -269,22 +300,27 @@ function ticket(removeCB: () => void): TicketElement {
   const paidInput = numberMask(inputWithLabel(true));
   paidInput.placeholder = local.paid;
   g2.appendChild(paidInput.parentElement);
+  paidInput.addEventListener("keydown", () => updateSums());
 
   const receivedInput = numberMask(inputWithLabel(true));
   receivedInput.placeholder = local.received;
   g2.appendChild(receivedInput.parentElement);
+  receivedInput.addEventListener("keydown", () => updateSums());
 
   const passengerNameInput = inputWithLabel(true);
   passengerNameInput.placeholder = local.passengerName;
   g3.appendChild(passengerNameInput.parentElement);
+  autocompleteInput("first_name", passengerNameInput);
 
   const passengerLastnameInput = inputWithLabel(true);
   passengerLastnameInput.placeholder = local.passengerLastname;
   g3.appendChild(passengerLastnameInput.parentElement);
+  autocompleteInput("last_name", passengerLastnameInput);
 
   const airlineInput = inputWithLabel(true);
   airlineInput.placeholder = local.airline;
   g4.appendChild(airlineInput.parentElement);
+  autocompleteInput("airline", airlineInput);
 
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);

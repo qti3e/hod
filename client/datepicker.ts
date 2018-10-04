@@ -144,7 +144,7 @@ export function datepicker(
       year = jy;
       month = jm - 1;
       day = jd;
-      updateValue();
+      updateValue(false);
       input.blur();
     }
   }
@@ -194,7 +194,7 @@ export function datepicker(
     // renderMonth already handles changes of .is-selected class.
   }
 
-  function updateValue() {
+  function updateValue(f = true) {
     calledUpdateValue = true;
     input.value = toPersianDigits(`${year}/${month + 1}/${day + 1}`);
     const dayNum = jalaali.j2d(year, month + 1, day);
@@ -205,7 +205,9 @@ export function datepicker(
     }
     changed = true;
     options.onchange(dayNum);
-    input.focus();
+    if (f) {
+      input.focus();
+    }
   }
 
   function render() {
@@ -215,8 +217,9 @@ export function datepicker(
   function show() {
     ensureWrapper();
     wrapper.classList.remove("is-hidden");
-    const top = input.offsetTop + input.offsetHeight;
-    const left = input.offsetLeft;
+    const rect = input.getBoundingClientRect();
+    const left = rect.left;
+    const top = rect.top + input.offsetHeight;
     wrapper.style.top = top + "px";
     wrapper.style.left = left + "px";
   }

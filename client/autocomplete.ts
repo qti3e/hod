@@ -11,24 +11,26 @@ import { get } from "./context";
 import { delay } from "./util";
 
 const wrapper = document.createElement("div");
-const titleWrapper = document.createElement("div");
 const itemsWrapper = document.createElement("div");
-wrapper.appendChild(titleWrapper);
 wrapper.appendChild(itemsWrapper);
 wrapper.id = "autocomplete";
-titleWrapper.className = "title";
 itemsWrapper.className = "items";
 
 function show(input: HTMLInputElement) {
+  wrapper.style = "";
   // Ensure that opacity is zero.
   // (It's supposed to be zero.)
   wrapper.style.opacity = "0";
   // Set the position.
   wrapper.style.position = "fixed";
-  const top = input.offsetTop + input.offsetHeight;
-  const left = input.offsetLeft;
-  wrapper.style.top = top + "px";
+  const rect = input.getBoundingClientRect();
+  const left = rect.left;
+  const top = rect.top + input.offsetHeight;
+  wrapper.style.width = input.offsetWidth + "px";
   wrapper.style.left = left + "px";
+  wrapper.style.top = top + "px";
+  wrapper.style.borderRadius = "0 0 25px 25px";
+  wrapper.style.borderTop = "none";
   // Hide items.
   itemsWrapper.style.opacity = "0";
   // Add the element to the document.
@@ -36,7 +38,7 @@ function show(input: HTMLInputElement) {
   if (!parent) {
     return;
   }
-  parent.insertBefore(input.nextSibling);
+  parent.insertBefore(wrapper, input.nextSibling);
   // Now show the wrapper.
   wrapper.style.opacity = "1";
 }
@@ -50,8 +52,10 @@ async function hide() {
   // Remove the element from the document.
   const parent = wrapper.parentElement;
   if (parent) {
-    parent.removeElement(wrapper);
+    parent.removeChild(wrapper);
   }
+  // Remove items.
+  itemsWrapper.innerHTML = "";
 }
 
 function renderItems(items: string[], cb) {
@@ -60,7 +64,9 @@ function renderItems(items: string[], cb) {
   for (const item of items) {
     const btn = document.createElement("button");
     btn.innerHTML = item;
-    btn.onclick = () => cb(item);
+    btn.onclick = () => {
+      cb(item);
+    };
     itemsWrapper.appendChild(btn);
   }
 }
@@ -74,8 +80,7 @@ async function fetchData(
 ) {
   text = text.trim();
   const server = get("server");
-  const tokens = get("tokens");
-  if (text.length < 2) return;
+  const token = get("currentToken");
   items.splice(0);
   if (cache.has(text)) {
     items.push(...cache.get(text));
@@ -94,15 +99,15 @@ async function fetchData(
     }
   );
   items.splice(0);
-  data.ret.sort((a, b) => a[1] - b[1]);
-  data.ret = data.ret.map(x => x[0]);
   items.push(...data.ret);
   renderItems(items, cb);
   cache.set(text, data.ret);
 }
 
-const values = {};
+const values = [];
 const caches = new Map();
+let last_id = 0;
+let current_id;
 
 // Public functions.
 
@@ -113,6 +118,9 @@ export function autocompleteInput(id: string, input: HTMLInputElement) {
   const cache = caches.get(id);
   const items = [];
   let selected = false;
+  const fid = last_id++;
+  const arr = [id, ""];
+  values.push(arr);
 
   const css = () => {
     if (selected) {
@@ -126,38 +134,46 @@ export function autocompleteInput(id: string, input: HTMLInputElement) {
     selected = true;
     css();
     input.value = value;
-    values[id] = input.value.trim();
+    arr[1] = input.value.trim();
   };
 
-  fetchData(id, input.value, items, cb, cache);
+  fetchData(id, input.value, items, cache, cb);
 
   // Attach the event listeners.
   input.addEventListener("change", () => {
-    values[id] = input.value.trim();
+    arr[1] = input.value.trim();
+    fetchData(id, input.value, items, cache, cb);
   });
-  input.addEventListener("keydown", () => {
+  input.addEventListener("keyup", () => {
     selected = false;
     css();
-    values[id] = input.value.trim();
-    fetchData(id, input.value, items, cb, cache);
+    arr[1] = input.value.trim();
+    fetchData(id, input.value, items, cache, cb);
   });
   input.addEventListener("focus", () => {
+    current_id = fid;
     show(input);
-    renderItems(items);
+    renderItems(items, cb);
   });
   input.addEventListener("blur", () => {
-    hide();
+    setTimeout(() => {
+      if (current_id === fid) {
+        current_id = null;
+        hide();
+      }
+    }, 300);
   });
 }
 
 export function sendData(): void {
   const data = [];
-  for (const key in values) {
-    data.push([key, values]);
+  for (const [k, v] of values) {
+    data.push([k, v]);
   }
+  resetData();
   if (data.length < 1) return;
   const server = get("server");
-  const tokens = get("tokens");
+  const token = get("currentToken");
   axios.post(
     server + "/autocomplete/add_array",
     {
@@ -172,7 +188,35 @@ export function sendData(): void {
 }
 
 export function resetData(): void {
-  for (const key in values) {
-    delete values[key];
-  }
+  values.splice(0);
+}
+
+window["sampleData"] = () => {
+  const data = [
+    ["first_name", "test"],
+    ["first_name", "test"],
+    ["first_name", "test"],
+    ["first_name", "test"],
+    ["first_name", "test"],
+    ["first_name", "test"],
+    ["first_name", "testal"],
+    ["first_name", "testol"],
+    ["first_name", "abc"],
+    ["first_name", "abcd"],
+    ["first_name", "abce"],
+    ["first_name", "abce"],
+  ];
+  const server = get("server");
+  const token = get("currentToken");
+  axios.post(
+    server + "/autocomplete/add_array",
+    {
+      data
+    },
+    {
+      headers: {
+        "hod-token": token
+      }
+    }
+  );
 }
