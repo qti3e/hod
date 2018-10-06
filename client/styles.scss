@@ -1061,7 +1061,8 @@ p {
   transition: opacity 150ms ease-in;
   z-index: 45545454;
 
-  &, * {
+  &,
+  * {
     -webkit-user-drag: none;
   }
 
@@ -1080,9 +1081,80 @@ p {
     height: 30px;
     color: var(--primary);
     font-size: 12pt;
+    display: block;
   }
 }
 
 .ac-sel {
   border-color: var(--secondry) !important;
+}
+
+#tickets-page {
+  #search-box {
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+  }
+
+  .group {
+    display: flex;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--primary);
+    }
+
+    & > button {
+      width: 40px;
+      -webkit-appearance: none;
+      background: transparent;
+      outline: none;
+      border: none;
+      cursor: pointer;
+
+      .fa {
+        cursor: pointer;
+        font-size: 14pt;
+        color: var(--primary);
+      }
+    }
+
+    .placeholder-input {
+      flex: 1;
+      margin-top: auto;
+
+      label {
+        color: var(--primary);
+      }
+    }
+
+    .checkbox-container {
+      flex: 1;
+      margin: auto;
+      text-align: center;
+    }
+
+    input {
+      -webkit-appearance: none;
+      outline: none;
+      border: none;
+      height: 40px;
+      width: 100%;
+      background: transparent;
+      border-right: 1px solid var(--primary);
+      border-left: 1px solid var(--primary);
+      color: var(--primary);
+      font-size: 14pt;
+      text-align: center;
+    }
+  }
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 3px;
+    border-radius: 5px;
+    background: var(--primary);
+    margin-top: auto;
+    margin-bottom: auto;
+  }
 }

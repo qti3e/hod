@@ -134,6 +134,7 @@ export function autocompleteInput(id: string, input: HTMLInputElement) {
     selected = true;
     css();
     input.value = value;
+    input.dispatchEvent(new Event("change"));
     arr[1] = input.value.trim();
   };
 
@@ -152,6 +153,8 @@ export function autocompleteInput(id: string, input: HTMLInputElement) {
   });
   input.addEventListener("focus", () => {
     current_id = fid;
+    itemsWrapper.innerHTML = "";
+    renderItems(items, cb);
     show(input);
     renderItems(items, cb);
   });
@@ -204,7 +207,7 @@ window["sampleData"] = () => {
     ["first_name", "abc"],
     ["first_name", "abcd"],
     ["first_name", "abce"],
-    ["first_name", "abce"],
+    ["first_name", "abce"]
   ];
   const server = get("server");
   const token = get("currentToken");
@@ -219,4 +222,4 @@ window["sampleData"] = () => {
       }
     }
   );
-}
+};

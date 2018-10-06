@@ -197,6 +197,7 @@ export function datepicker(
   function updateValue(f = true) {
     calledUpdateValue = true;
     input.value = toPersianDigits(`${year}/${month + 1}/${day + 1}`);
+    input.dispatchEvent(new Event("change"));
     const dayNum = jalaali.j2d(year, month + 1, day);
     input.setAttribute("data-day", dayNum);
     if (monthName) {
@@ -359,7 +360,6 @@ export function formatDate(d: string | Date | number, short = false): string {
 }
 
 function doGC() {
-  console.log("Run datepicker gc...");
   const keys = gcData.keys();
   for (const key of keys) {
     if (!inScreen(key)) {

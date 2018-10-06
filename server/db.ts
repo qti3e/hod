@@ -34,11 +34,6 @@ export const collections = {
     filename: ".db/notifications.db",
     autoload: true,
     timestampData: true
-  }),
-  // Autocomplete
-  autocomplete: new Datastore({
-    filename: ".db/ac.db",
-    autoload: true
   })
 };
 
@@ -179,7 +174,7 @@ export async function listCharter(page: number): Promise<t.CharterDoc[]> {
 }
 
 async function getTicket<T extends t.TicketBase>(id: string): Promise<T> {
-  return collections.tickets.findOne({ _id: id });
+  return await collections.tickets.findOne({ _id: id });
 }
 
 export async function getCharter(id: string): Promise<t.CharterDoc> {
@@ -287,4 +282,34 @@ export async function acTicketById(text: string): Promise<t.TicketBase[]> {
     id: { $regex: regex },
     cancelationDoc: { $exists: false }
   });
+}
+
+export async function searchTicket<T extends t.TicketBase>(q): Promise<T[]> {
+  const tickets = [];
+  const docs = new Map();
+  if (q.systemic) {
+    const tmp = await collections.systemics.find(q.systemic);
+    for (const doc of tmp) {
+      tickets.push(...doc._ticketIds);
+      docs.set(doc._id, doc);
+    }
+  }
+  if (q.charter) {
+    const tmp = await collections.charters.find(q.charter);
+    for (const doc of tmp) {
+      tickets.push(...doc._ticketIds);
+      docs.set(doc._id, doc);
+    }
+  }
+  if (tickets.length === 0) {
+    return [];
+  }
+  let rawData = await collections.tickets.find(q.ticket);
+  rawData = rawData.filter(t => tickets.indexOf(t._id) > -1);
+  for (let i = 0; i < rawData.length; ++i) {
+    rawData[i].owner = await getUser(rawData[i]._ownerId);
+    rawData[i].doc = docs.get(rawData[i].docId);
+    delete rawData[i]._ownerId;
+  }
+  return rawData;
 }

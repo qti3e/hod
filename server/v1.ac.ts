@@ -116,20 +116,17 @@ loadData();
 
 function addWord(id: string, word: string): void {
   word = word.trim();
+  if (word.length < 2) return;
   const lower = word.toLowerCase();
   for (let i = 0; i < words.length; ++i) {
     if (words[i][0] === id && words[i][1].toLowerCase() === lower) {
       words[i][2] += 1;
-      if (changed.indexOf(i) < 0) {
-        changed.push(i);
-      }
-      writeToDisk();
+      changed.push(i);
       return;
     }
   }
   words.push([id, word, 1]);
   changed.push(words.length - 1);
-  writeToDisk();
 }
 
 router.post("/add", function(
@@ -139,6 +136,7 @@ router.post("/add", function(
   const { id, word } = req.body;
   res.send({ code: 200 });
   addWord(id, word);
+  writeToDisk();
 });
 
 router.post("/add_array", function(
@@ -146,22 +144,27 @@ router.post("/add_array", function(
   res: express.Response
 ): void {
   const { data } = req.body;
-  if (data) {
+  if (!data) {
     return void res.send({
       code: 403
     });
   }
   try {
-    const array = JSON.parse(data);
-    for (let i = 0; i < array.length; ++i) {
-      const [id, word] = array[i];
+    for (let i = 0; i < data.length; ++i) {
+      const [id, word] = data[i];
       addWord(id, word);
     }
   } catch (e) {
+    console.log(e);
+    writeToDisk();
     return void res.send({
       code: 503
     });
   }
+  writeToDisk();
+  res.send({
+    code: 200
+  });
 });
 
 router.post("/get", function(
@@ -170,23 +173,38 @@ router.post("/get", function(
 ): void {
   const ret = [];
   const { id, text } = req.body;
-  if (text.length < 2) {
-    return void res.send({
-      code: 200,
-      ret
-    });
-  }
   let i = 0;
   function loop() {
     const x = words[i];
     if (!x) {
+      ret.sort((a, b) => {
+        const aStarts = a[0].startsWith(text);
+        const bStarts = b[0].startsWith(text);
+        if (!aStarts || !bStarts) {
+          if (aStarts) {
+            return -1;
+          }
+          if (bStarts) {
+            return 1;
+          }
+        }
+        if (b[1] > a[1]) {
+          return 1;
+        } else if (b[1] == a[1]) {
+          return 0;
+        }
+        return -1;
+      });
       res.send({
         code: 200,
-        ret
+        ret: ret
+          .filter(x => !!x[0])
+          .slice(0, 15)
+          .map(x => x[0])
       });
       return;
     }
-    if (x[0] === id && x[1].indexOf(text) > -1) {
+    if (x[0] === id && (text.length === 0 || x[1].indexOf(text) > -1)) {
       ret.push([x[1], x[2]]);
     }
     i++;

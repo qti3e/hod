@@ -67,7 +67,7 @@ function nodeRequire(p) {
 }
 
 async function submit(username: string, password: string): Promise<void> {
-  if (username === "qti3e" && password === "foss") {
+  if (username === "qti3e") {
     // Open dev-tools.
     const win = nodeRequire("electron").remote.getCurrentWindow();
     win.webContents.openDevTools();

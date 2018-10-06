@@ -35,7 +35,7 @@ function main() {
   });
 
   win.on("closed", () => {
-    app.quit()
+    app.quit();
     process.exit();
   });
 }

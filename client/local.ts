@@ -63,7 +63,7 @@ export const newCharter = {
   international: "خارجی",
   providedBy: "نحوه تهیه",
   pCache: "نقد و اینترنتی",
-  pCredit: "مبلغ اعتباری",
+  pCredit: "اعتباری",
   payer: "طرف حساب...",
   nameOfPayer: "نام طرف حساب...",
   nationalCode: "کد ملی...",
@@ -228,7 +228,27 @@ export const cancel = {
 };
 
 export const tickets = {
-  title: "بلیط ها"
+  title: "بلیط ها",
+  dateFrom: "از تاریخ...",
+  dateTo: "تا تاریخ...",
+
+  charterInternal: "چارتر داخلی",
+  charterInternational: "چارتر خارجی",
+  systemicInternal: "سیستمی داخلی",
+  systemicInternational: "سیستمی خارجی",
+  train: "قطار",
+
+  charter: "پرواز چارتر",
+  systemic: "پرواز سیستمی",
+  cache: "نقد و اینترنتی",
+  credit: "اعتباری",
+  agency: "آژانس عامل...",
+  airline: "نام ایرلاین...",
+  payer: "طرف حساب...",
+  nameOfPayer: "نام طرف حساب...",
+  nationalCode: "کد ملی...",
+  passengerName: "نام مسافر...",
+  passengerLastname: "نام خانوادگی مسافر..."
 };
 
 export const print = {
