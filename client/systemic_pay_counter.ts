@@ -58,7 +58,8 @@ export function renderSystemicPayCounter(
   // As there is nothing too much special about this items
   // we render all of them without putting any difference
   // between them in a loop.
-  for (const name in data.base) {
+  const order = ["B", "C", "A", "D", "I", "E"];
+  for (const name of order) {
     if (local[name]) {
       const tmpInput = numberMask(inputWithLabel());
       tmpInput.placeholder = local[name];

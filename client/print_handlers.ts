@@ -288,51 +288,71 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
     if (num === 0) {
       const { pay } = doc;
 
-      const r = n => numberMaskString(n) + " ریال";
+      const r = n => numberMaskString(Number(n).toFixed(3)) + " ریال";
+      const o = l => ({ [l] : { label: lng.mathStr[l], map: r } });
+
+      const F = totalPaid;
+      const G = totalReceived;
+
+      const { A, B, C, D, E, I } = pay.base;
+
+      const H = G - (A + D + I + E);
+      const J = (D + I) * C * B;
+      const K = G - F;
+      const L = J + D + I;
+
       const tabel = dataview(
         1,
         0,
         0,
-        [
-          {
-            cache: pay.base.cache,
-            installmentBase: pay.base.installmentBase,
-            ICI: pay.base.ICI,
-            differ: pay.base.differ,
-            wage: pay.base.wage,
-            companyCost: pay.base.companyCost
-          }
-        ],
+        [ { A, H, D, I, J, K, L, E, } ],
         {
-          cache: {
-            label: lng.viewCharter.cache,
-            map: r
-          },
-          installmentBase: {
-            label: lng.viewCharter.installmentBase,
-            map: r
-          },
-          ICI: {
-            label: lng.viewCharter.ICI,
-            map: r
-          },
-          differ: {
-            label: lng.viewCharter.differ,
-            map: r
-          },
-          wage: {
-            label: lng.viewCharter.wage,
-            map: r
-          },
-          companyCost: {
-            label: lng.viewCharter.companyCost,
-            map: r
-          }
+          ...o("A"),
+          ...o("H"),
+          ...o("D"),
+          ...o("I"),
+          ...o("J"),
+          ...o("K"),
+          ...o("L"),
+          ...o("E"),
         }
       );
 
       if (tabel) {
         content.appendChild(tabel);
+      }
+
+      const t2 = dataview(
+        2,
+        0,
+        0,
+        [
+          { 
+            label: lng.mathStr.M,
+            K: K / 1.09,
+            J: J / 1.09,
+            I: I / 1.09,
+            T: (K + J + I) / 1.09
+          },
+          {
+            label: lng.mathStr.N,
+            K: K - (K / 1.09),
+            J: J - (J / 1.09),
+            I: I - (I / 1.09),
+            T: (K - (K / 1.09)) + (J - (J / 1.09)) + (I - (I / 1.09))
+          }
+        ],
+        {
+          label: "",
+          ...o("K"),
+          ...o("J"),
+          ...o("I"),
+          ...o("T")
+        }
+      );
+
+      if (t2) {
+        content.appendChild(t2);
       }
 
       const receivesHead = document.createElement("h4");
@@ -500,36 +520,64 @@ export async function systemic(doc: t.SystemicDoc, wrapper: HTMLElement) {
     if (num === 0) {
       const { pay } = doc;
 
-      const r = n => numberMaskString(n) + " ریال";
-      const tabel = dataview(1, 0, 0, [pay.base], {
-        cache: {
-          label: lng.viewCharter.cache,
-          map: r
-        },
-        installmentBase: {
-          label: lng.viewSystemic.installmentBase,
-          map: r
-        },
-        wage: {
-          label: lng.viewSystemic.wage,
-          map: r
-        },
-        ICI: {
-          label: lng.viewSystemic.ICI,
-          map: r
-        },
-        credit: {
-          label: lng.viewSystemic.credit,
-          map: r
-        },
-        companyCost: {
-          label: lng.viewSystemic.companyCost,
-          map: r
+      const r = n => numberMaskString(Number(n).toFixed(3)) + " ریال";
+      const o = l => ({ [l] : { label: lng.mathStr[l], map: r } });
+
+      const G = totalReceived;
+      const { A, B, C, D, E, I } = pay.base;
+
+      const H = G - (A + D + I + E);
+      const J = (D + I) * C * B;
+      const L = J + D + I;
+
+      const tabel = dataview(
+        1,
+        0,
+        0,
+        [ { A, H, D, I, J, K, L, E, } ],
+        {
+          ...o("A"),
+          ...o("H"),
+          ...o("D"),
+          ...o("I"),
+          ...o("J"),
+          ...o("L"),
+          ...o("E"),
         }
-      });
+      );
 
       if (tabel) {
         content.appendChild(tabel);
+      }
+
+      const t2 = dataview(
+        2,
+        0,
+        0,
+        [
+          { 
+            label: lng.mathStr.M,
+            J: J / 1.09,
+            I: I / 1.09,
+            T: (K + J + I) / 1.09
+          },
+          {
+            label: lng.mathStr.N,
+            J: J - (J / 1.09),
+            I: I - (I / 1.09),
+            T: (J - (J / 1.09)) + (I - (I / 1.09))
+          }
+        ],
+        {
+          label: "",
+          ...o("J"),
+          ...o("I"),
+          T: lng.mathStr.T
+        }
+      );
+
+      if (t2) {
+        content.appendChild(t2);
       }
 
       const receivesHead = document.createElement("h4");

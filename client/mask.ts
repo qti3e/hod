@@ -25,12 +25,18 @@ export function numberMask(input?: HTMLInputElement): HTMLInputElement {
   function updateInputValue() {
     value = value.filter(x => x !== null);
 
+    const index = value.indexOf("/");
+    const left = value.slice(0, index < 0 ? undefined : index);
+    const right = index < 0 ? [] : ["/", ...value.slice(index + 1)];
+
+    value = left;
     value = value.reverse();
     const numSpaces = Math.floor((value.length - 1) / 3);
     for (let i = 0; i < numSpaces; ++i) {
       value.splice((i + 1) * 3 + i, 0, null);
     }
     value = value.reverse();
+    value = [...value, ...right];
 
     const cursor = input.selectionStart;
 
@@ -41,6 +47,10 @@ export function numberMask(input?: HTMLInputElement): HTMLInputElement {
 
     input.selectionStart = cursor + (value.length - prevLen);
     prevLen = value.length;
+    input.dispatchEvent(new Event("change"));
+    if (input.onchange) {
+      input.onchange(new Event("change"));
+    }
   }
 
   input.addEventListener(
@@ -77,8 +87,8 @@ export function numberMask(input?: HTMLInputElement): HTMLInputElement {
 
       const key = normalizeText(e.key);
 
-      if (/^\d$/.test(key)) {
-        value.splice(cursor, 0, key);
+      if (/^\d$/.test(key) || ((key === "." || key === "/") && value.indexOf("/") < 0)) {
+        value.splice(cursor, 0, key === "." ? "/" : key);
       }
 
       e.preventDefault();
@@ -88,7 +98,7 @@ export function numberMask(input?: HTMLInputElement): HTMLInputElement {
 
   Object.defineProperty(input, "value", {
     get() {
-      return value.filter(x => x !== null).join("");
+      return value.filter(x => x !== null).join("").replace("/", ".");
     },
     set(val: string): void {
       value = [...val];
@@ -112,12 +122,18 @@ export function numberMaskString(a: string | number): string {
     return "";
   }
   let value = [...String(a)];
+  const index = value.indexOf(".");
+  const left = value.slice(0, index < 0 ? undefined : index);
+  const right = index < 0 ? [] : ["/", ...value.slice(index + 1)];
+
+  value = left;
   value = value.reverse();
   const numSpaces = Math.floor((value.length - 1) / 3);
   for (let i = 0; i < numSpaces; ++i) {
     value.splice((i + 1) * 3 + i, 0, null);
   }
   value = value.reverse();
+  value = [...value, ...right];
 
   return value.map(x => (x === null ? "," : toPersianDigits(x))).join("");
 }

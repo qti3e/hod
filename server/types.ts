@@ -124,12 +124,12 @@ export interface CharterPayment {
 
 export interface CharterPayData {
   base: {
-    cache: number;
-    installmentBase: number;
-    ICI: number;
-    differ: number;
-    wage: number;
-    companyCost: number;
+    A: number;
+    B: number;
+    C: number;
+    D: number;
+    E: number;
+    I: number;
   };
   receives: CharterReceive[];
   payments: CharterPayment[];

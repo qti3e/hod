@@ -37,12 +37,12 @@ export function renderNewCharter(app: HTMLElement): void {
     tickets: [],
     pay: {
       base: {
-        ICI: 0,
-        cache: 0,
-        companyCost: 0,
-        differ: 0,
-        installmentBase: 0,
-        wage: 0
+        A: 0,
+        B: 0,
+        C: 0,
+        D: 0,
+        E: 0,
+        I: 0
       },
       receives: [],
       payments: [],
