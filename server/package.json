@@ -32,6 +32,7 @@
     "nedb-core": "^3.0.6",
     "nedb-promise": "^2.0.1",
     "parcel-bundler": "^1.9.7",
+    "query-objects": "0.0.6",
     "uuid": "^3.3.2"
   },
   "browserslist": [

@@ -6,6 +6,7 @@
  * \___,_\ \__|_|____/ \___|
  */
 
+import { get } from "./context";
 import { datepicker } from "./datepicker";
 import { inputWithLabel } from "./input";
 import { paySystemicCounter as local } from "./local";
@@ -113,6 +114,9 @@ export function renderSystemicPayCounter(
         icon = fa("money-bill-alt");
         icon.title = local.cacheReceive;
 
+        rowEl.appendChild(text("نقدی (صندوق)", true));
+        rowEl.appendChild(text("به مبلغ"));
+
         i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
@@ -121,13 +125,7 @@ export function renderSystemicPayCounter(
         };
         rowEl.appendChild(i1);
 
-        i2 = document.createElement("input");
-        i2.value = receive.receiverName;
-        i2.placeholder = local.receiverName;
-        i2.onchange = () => {
-          receive.receiverName = i2.value;
-        };
-        rowEl.appendChild(i2);
+        rowEl.appendChild(text("ریال در تاریخ"));
 
         i3 = document.createElement("input");
         i3.placeholder = local.date;
@@ -138,10 +136,24 @@ export function renderSystemicPayCounter(
           }
         });
         rowEl.appendChild(i3);
+
+        rowEl.appendChild(text("توسط"));
+        i2 = document.createElement("input");
+        i2.value = receive.receiverName;
+        i2.placeholder = local.receiverName;
+        i2.onchange = () => {
+          receive.receiverName = i2.value;
+        };
+        rowEl.appendChild(i2);
+
         break;
       case t.CharterReceiveKind.bankReceive:
         icon = fa("money-check");
         icon.title = local.bankReceive;
+
+
+        rowEl.appendChild(text("واریز به حساب", true));
+        rowEl.appendChild(text("به مبلغ"));
 
         i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
@@ -151,13 +163,18 @@ export function renderSystemicPayCounter(
         };
         rowEl.appendChild(i1);
 
+        rowEl.appendChild(text("ریال به حساب"));
+
         i2 = document.createElement("input");
+        i2.className = "ltr";
         i2.value = receive.account;
         i2.placeholder = local.account;
         i2.onchange = () => {
           receive.account = i2.value;
         };
         rowEl.appendChild(i2);
+
+        rowEl.appendChild(text("مورخ"));
 
         i3 = document.createElement("input");
         i3.placeholder = local.date;
@@ -173,14 +190,19 @@ export function renderSystemicPayCounter(
         icon = fa("credit-card");
         icon.title = local.hekmatCardReceive;
 
+        rowEl.appendChild(text("حکمت کارت:", true));
+        rowEl.appendChild(text("به مبلغ"));
+
         i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
         i1.onchange = () => {
           receive.amount = Number(i1.value);
         };
-
         rowEl.appendChild(i1);
+
+        rowEl.appendChild(text("ریال براساس برگ خرید اقساطی مورخ"));
+
         i3 = document.createElement("input");
         i3.placeholder = local.date;
         i3.value = String(receive.date);
@@ -195,6 +217,9 @@ export function renderSystemicPayCounter(
         icon = fa("file-invoice");
         icon.title = local.notificationReceive;
 
+        rowEl.appendChild(text("صدور اطلاعیه برای طرف حساب:", true));
+        rowEl.appendChild(text("به مبلغ"));
+
         i1 = numberMask();
         i1.value = receive.amount > 0 ? String(receive.amount) : "";
         i1.placeholder = local.amount;
@@ -203,6 +228,8 @@ export function renderSystemicPayCounter(
         };
         rowEl.appendChild(i1);
 
+        rowEl.appendChild(text("ریال به شماره"));
+
         i2 = document.createElement("input");
         i2.value = receive.number;
         i2.placeholder = local.number;
@@ -210,6 +237,8 @@ export function renderSystemicPayCounter(
           receive.number = i2.value;
         };
         rowEl.appendChild(i2);
+
+        rowEl.appendChild(text("مورخ"));
 
         i3 = document.createElement("input");
         i3.placeholder = local.date;
@@ -229,6 +258,7 @@ export function renderSystemicPayCounter(
     }
     receivesDataWrapper.appendChild(rowEl);
   }
+
 
   // Initial rendering.
   for (let i = 0; i < data.receives.length; ++i) {
@@ -255,11 +285,13 @@ export function renderSystemicPayCounter(
     receivesButtonsWrapper.appendChild(btn);
   }
 
+  const currentToken = get("currentToken");
+  const tokens = get("tokens");
   renderRecBtn(local.newCacheRec, {
     kind: t.CharterReceiveKind.cacheReceive,
     amount: 0,
     date: null,
-    receiverName: ""
+    receiverName: getUserName(tokens[currentToken])
   });
 
   renderRecBtn(local.newBankRec, {
@@ -308,4 +340,18 @@ export function renderSystemicPayCounter(
     close(false);
   };
   buttonsWrapper.appendChild(cancelBtn);
+}
+
+function text(str: string, bold = false) {
+  const tag = bold ? "b" : "span";
+  const tmp = document.createElement(tag);
+  tmp.innerText = str;
+  return tmp;
+}
+
+function getUserName(u: t.User): string {
+  if (u._id === "1") {
+    return local.admin;
+  }
+  return u.name + " " + u.lastName;
 }
