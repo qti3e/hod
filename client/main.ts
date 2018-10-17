@@ -13,8 +13,8 @@ const TITLE = "Hod Hod";
 function main() {
   // Create a new window.
   const win = new BrowserWindow({
-    minWidth: 1200,
-    minHeight: 800,
+    minWidth: 1000,
+    minHeight: 700,
     frame: false,
     backgroundColor: "#111c24",
     show: false,
@@ -28,7 +28,7 @@ function main() {
 
   win.loadURL("file://" + __dirname + "/index.html");
 
-  win.webContents.toggleDevTools();
+  // win.webContents.toggleDevTools();
 
   win.once("ready-to-show", () => {
     win.show();

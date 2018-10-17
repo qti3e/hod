@@ -250,9 +250,10 @@ export function routeSelector(): RouteSelectorElement {
   btn.getDBRoute = () =>
     route.map(c => ({
       id: c.id,
-      displayName: c.name || c.name[0],
+      displayName: c.name || c.names[0],
       lngLat: c.lngLat
     }));
+
   btn.setDBRoute = (r: t.DBCity[]): void => {
     route.length = 0;
     const tmp = [];
@@ -270,7 +271,10 @@ export function routeSelector(): RouteSelectorElement {
     for (let i = 0; i < r.length; ++i) {
       for (const city of tmp) {
         if (city.id === r[i].id) {
-          route.push(city);
+          route.push({
+            ...city,
+            name: r[i].displayName
+          });
         }
       }
     }
@@ -585,3 +589,5 @@ function inScreen(e: HTMLElement): boolean {
   }
   return false;
 }
+
+fetchData();

@@ -150,7 +150,6 @@ export function renderCharterPayCounter(
         icon = fa("money-check");
         icon.title = local.bankReceive;
 
-
         rowEl.appendChild(text("واریز به حساب", true));
         rowEl.appendChild(text("به مبلغ"));
 

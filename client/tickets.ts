@@ -19,7 +19,7 @@ import { cacheForUser, checkBox, fa } from "./util";
 const domCache = cacheForUser<HTMLElement>();
 const stacks = [];
 
-const interval = setInterval(() => {
+setInterval(() => {
   for (const stack of stacks) {
     for (const search of stack) {
       search.ping();
@@ -193,7 +193,7 @@ export async function renderTickets(app: HTMLElement): void {
 
   function pushToStack(s) {
     for (let i = head + 1; i < stack.length; ++i) {
-      search.destroy();
+      stack[i].destroy();
     }
     stack.splice(head + 1);
     stack.push(s);

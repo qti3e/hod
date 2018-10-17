@@ -8,6 +8,7 @@
 
 body {
   direction: rtl;
+  background: #e0e0e0 !important;
 }
 
 * {
@@ -178,5 +179,23 @@ table {
   span {
     border-bottom: 1px dotted #000;
     flex: 1 1 auto;
+  }
+}
+
+.sig {
+  display: flex;
+  width: 745px;
+  position: absolute;
+  bottom: 5px;
+  border-top: 2px dashed;
+
+  div {
+    flex: 1;
+
+    h4,
+    span {
+      text-align: center;
+      display: block;
+    }
   }
 }

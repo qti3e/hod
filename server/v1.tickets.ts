@@ -48,7 +48,7 @@ router.post("/results", function(
     });
   }
 
-  const perPage = 15;
+  const perPage = 50;
   const start = page * perPage;
   const data = results.get(id);
   times.set(id, Date.now());

@@ -313,3 +313,109 @@ export async function searchTicket<T extends t.TicketBase>(q): Promise<T[]> {
   }
   return rawData;
 }
+
+function update(db) {
+  if (!db || !db.update || !db.findOne) {
+    throw new Error("Bad argument passed to update()");
+  }
+
+  async function getDoc(id) {
+    const doc = await db.findOne({
+      _id: id
+    });
+    if (!doc) return;
+    doc.tickets = [];
+    for (let i = 0; i < doc._ticketIds.length; ++i) {
+      doc.tickets.push(getTicket(doc._ticketIds[i]));
+    }
+    doc.tickets = await Promise.all(doc.tickets);
+    return doc;
+  }
+
+  return async function(doc, user) {
+    const id = doc._id;
+    const oldDoc = await getDoc(id);
+    if (!oldDoc) {
+      return false;
+    }
+    // User can not change the owner.
+    doc._ownerId = oldDoc._ownerId;
+    delete doc.owner;
+    delete doc.modifier;
+    delete doc.updatedAt;
+    delete doc.createdAt;
+    delete doc._id;
+
+    doc.modifier = user._id;
+    doc._old = oldDoc; // Backup
+
+    const tickets = doc.tickets;
+    delete doc.tickets;
+    doc._ticketIds = [];
+
+    const ticketsToRemove = [...oldDoc._ticketIds];
+    const oldTickets = new Map();
+
+    for (let i = 0; i < oldDoc._ticketIds.length; ++i) {
+      for (let j = 0; j < oldDoc.tickets.length; ++j) {
+        if (oldDoc._ticketIds[i] === oldDoc.tickets[j]._id) {
+          oldTickets.set(oldDoc._ticketIds[i], oldDoc.tickets[j]);
+        }
+      }
+    }
+
+    for (let i = 0; i < tickets.length; ++i) {
+      const ticket = tickets[i];
+      const index = ticketsToRemove.indexOf(ticket._id);
+      const newTicket = index < 0;
+
+      console.log(ticket._id, newTicket);
+
+      if (newTicket) {
+        // Insert ticket to database.
+        ticket.docId = id;
+        ticket._ownerId = user._id;
+        const t = await storeTicket(ticket);
+        doc._ticketIds.push(t._id);
+        tickets[i] = t;
+      } else {
+        // Don't remove this ticket
+        ticketsToRemove.splice(index, 1);
+        // Update ticket
+        ticket._ownerId = oldTickets.get(ticket._id)._ownerId;
+        delete ticket.owner;
+        delete ticket.createdAt;
+        delete ticket.updatedAt;
+        const _id = ticket._id;
+        delete ticket._id;
+        await collections.tickets.update({ _id }, ticket, {});
+        doc._ticketIds.push(_id);
+      }
+    }
+
+    for (let i = 0; i < ticketsToRemove.length; ++i) {
+      const _id = ticketsToRemove[i];
+      // Delete ticket
+      await collections.tickets.remove({ _id }, {});
+    }
+
+    // Now store the new document in database.
+    await db.update({ _id: id }, doc, {});
+
+    // TODO(qti3e) Broadcast only to users who have access to fund.
+    broadcast(
+      {},
+      {
+        kind: t.NotificationMsgKind.newDoc,
+        id,
+        collection: db["_name"]
+      }
+    );
+
+    return true;
+  };
+}
+
+export const updateCharter = update(collections.charters);
+
+export const updateSystemic = update(collections.systemics);

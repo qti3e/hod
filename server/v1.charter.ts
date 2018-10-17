@@ -31,6 +31,23 @@ router.post("/new", async function(
   }
 });
 
+router.post("/update", async function(
+  req: express.Request,
+  res: express.Response
+): Promise<void> {
+  const doc: t.CharterDoc = req.body.doc;
+  let error = true;
+  try {
+    const ret = await db.updateCharter(doc, req.user);
+    error = !ret;
+  } catch (e) {
+    console.log(e);
+  }
+  res.send({
+    code: error ? 500 : 200
+  });
+});
+
 router.post("/list/:page", async function(
   req: express.Request,
   res: express.Response

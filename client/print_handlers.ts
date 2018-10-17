@@ -289,7 +289,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
       const { pay } = doc;
 
       const r = n => numberMaskString(Number(n).toFixed(3)) + " ریال";
-      const o = l => ({ [l] : { label: lng.mathStr[l], map: r } });
+      const o = l => ({ [l]: { label: lng.mathStr[l], map: r } });
 
       const F = totalPaid;
       const G = totalReceived;
@@ -301,22 +301,16 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
       const K = G - F;
       const L = J + D + I;
 
-      const tabel = dataview(
-        1,
-        0,
-        0,
-        [ { A, H, D, I, J, K, L, E, } ],
-        {
-          ...o("A"),
-          ...o("H"),
-          ...o("D"),
-          ...o("I"),
-          ...o("J"),
-          ...o("K"),
-          ...o("L"),
-          ...o("E"),
-        }
-      );
+      const tabel = dataview(1, 0, 0, [{ A, H, D, I, J, K, L, E }], {
+        ...o("A"),
+        ...o("H"),
+        ...o("D"),
+        ...o("I"),
+        ...o("J"),
+        ...o("K"),
+        ...o("L"),
+        ...o("E")
+      });
 
       if (tabel) {
         content.appendChild(tabel);
@@ -327,7 +321,7 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
         0,
         0,
         [
-          { 
+          {
             label: lng.mathStr.M,
             K: K / 1.09,
             J: J / 1.09,
@@ -336,10 +330,10 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
           },
           {
             label: lng.mathStr.N,
-            K: K - (K / 1.09),
-            J: J - (J / 1.09),
-            I: I - (I / 1.09),
-            T: (K - (K / 1.09)) + (J - (J / 1.09)) + (I - (I / 1.09))
+            K: K - K / 1.09,
+            J: J - J / 1.09,
+            I: I - I / 1.09,
+            T: K - K / 1.09 + (J - J / 1.09) + (I - I / 1.09)
           }
         ],
         {
@@ -411,6 +405,8 @@ export async function charter(doc: t.CharterDoc, wrapper: HTMLElement) {
           text("به حساب", p.account)
         ]);
       }
+
+      content.appendChild(sig());
     }
 
     pages.push(page);
@@ -521,7 +517,7 @@ export async function systemic(doc: t.SystemicDoc, wrapper: HTMLElement) {
       const { pay } = doc;
 
       const r = n => numberMaskString(Number(n).toFixed(3)) + " ریال";
-      const o = l => ({ [l] : { label: lng.mathStr[l], map: r } });
+      const o = l => ({ [l]: { label: lng.mathStr[l], map: r } });
 
       const G = totalReceived;
       const { A, B, C, D, E, I } = pay.base;
@@ -530,21 +526,15 @@ export async function systemic(doc: t.SystemicDoc, wrapper: HTMLElement) {
       const J = (D + I) * C * B;
       const L = J + D + I;
 
-      const tabel = dataview(
-        1,
-        0,
-        0,
-        [ { A, H, D, I, J, K, L, E, } ],
-        {
-          ...o("A"),
-          ...o("H"),
-          ...o("D"),
-          ...o("I"),
-          ...o("J"),
-          ...o("L"),
-          ...o("E"),
-        }
-      );
+      const tabel = dataview(1, 0, 0, [{ A, H, D, I, J, L, E }], {
+        ...o("A"),
+        ...o("H"),
+        ...o("D"),
+        ...o("I"),
+        ...o("J"),
+        ...o("L"),
+        ...o("E")
+      });
 
       if (tabel) {
         content.appendChild(tabel);
@@ -555,17 +545,17 @@ export async function systemic(doc: t.SystemicDoc, wrapper: HTMLElement) {
         0,
         0,
         [
-          { 
+          {
             label: lng.mathStr.M,
             J: J / 1.09,
             I: I / 1.09,
-            T: (K + J + I) / 1.09
+            T: (J + I) / 1.09
           },
           {
             label: lng.mathStr.N,
-            J: J - (J / 1.09),
-            I: I - (I / 1.09),
-            T: (J - (J / 1.09)) + (I - (I / 1.09))
+            J: J - J / 1.09,
+            I: I - I / 1.09,
+            T: J - J / 1.09 + (I - I / 1.09)
           }
         ],
         {
@@ -622,6 +612,8 @@ export async function systemic(doc: t.SystemicDoc, wrapper: HTMLElement) {
             break;
         }
       }
+
+      content.appendChild(sig());
     }
 
     pages.push(page);
@@ -637,4 +629,31 @@ export async function systemic(doc: t.SystemicDoc, wrapper: HTMLElement) {
       pages[i].setPage(i + 1, pages.length);
     }
   }
+}
+
+function sig() {
+  const wrapper = document.createElement("div");
+  wrapper.className = "sig";
+
+  const names = [
+    "کانتر فروش",
+    "تائید مدیر مستقیم",
+    "دایرهٔ نقد و بانک",
+    "کنترولر امور مالی",
+    "معاون امور مالی",
+    "معاون مالی"
+  ];
+
+  for (let i = 0; i < names.length; ++i) {
+    const tmp = document.createElement("div");
+    const h4 = document.createElement("h4");
+    const span = document.createElement("span");
+    tmp.appendChild(h4);
+    tmp.appendChild(span);
+    wrapper.appendChild(tmp);
+    h4.innerText = names[i];
+    span.innerText = "نام و امضاء";
+  }
+
+  return wrapper;
 }

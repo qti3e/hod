@@ -87,7 +87,10 @@ export function numberMask(input?: HTMLInputElement): HTMLInputElement {
 
       const key = normalizeText(e.key);
 
-      if (/^\d$/.test(key) || ((key === "." || key === "/") && value.indexOf("/") < 0)) {
+      if (
+        /^\d$/.test(key) ||
+        ((key === "." || key === "/") && value.indexOf("/") < 0)
+      ) {
         value.splice(cursor, 0, key === "." ? "/" : key);
       }
 
@@ -98,9 +101,18 @@ export function numberMask(input?: HTMLInputElement): HTMLInputElement {
 
   Object.defineProperty(input, "value", {
     get() {
-      return value.filter(x => x !== null).join("").replace("/", ".");
+      return value
+        .filter(x => x !== null)
+        .join("")
+        .replace("/", ".");
     },
     set(val: string): void {
+      if (typeof val === "number") {
+        val = String(val);
+        val.replace(".", "/");
+      } else if (!val) {
+        val = "";
+      }
       value = [...val];
       prevLen = value.length;
       updateInputValue();
@@ -121,7 +133,13 @@ export function numberMaskString(a: string | number): string {
   if (a === undefined || a === null) {
     return "";
   }
-  let value = [...String(a)];
+  if (typeof a === "number") {
+    a = String(a);
+    a.replace(".", "/");
+  } else if (!a) {
+    return "";
+  }
+  let value = [...a];
   const index = value.indexOf(".");
   const left = value.slice(0, index < 0 ? undefined : index);
   const right = index < 0 ? [] : ["/", ...value.slice(index + 1)];

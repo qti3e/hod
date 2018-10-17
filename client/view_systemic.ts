@@ -32,6 +32,12 @@ export function renderViewSystemic(app: HTMLElement, param: string): void {
   head.style.display = "inline-block";
   wrapper.appendChild(head);
 
+  const editBtn = document.createElement("button");
+  editBtn.className = "edit-btn";
+  editBtn.innerText = local.edit;
+  editBtn.appendChild(fa("edit"));
+  wrapper.appendChild(editBtn);
+
   async function fetch() {
     const token = get("currentToken");
     const server = get("server");
@@ -58,6 +64,16 @@ export function renderViewSystemic(app: HTMLElement, param: string): void {
         kind: "systemic",
         data: doc
       });
+
+    editBtn.onclick = () => {
+      emit("goto", {
+        page: "newSystemic",
+        param: {
+          edit: true,
+          doc
+        }
+      });
+    };
 
     // Render layout.
     const headWrapper = document.createElement("div");
@@ -171,6 +187,18 @@ function row(label: string, value: string): HTMLDivElement {
 
   const valueEl = document.createElement("div");
   valueEl.innerText = value;
+  if (value.length > 15) {
+    valueEl.style.fontSize = "13pt";
+  }
+  if (value.length > 17) {
+    valueEl.style.fontSize = "12pt";
+  }
+  if (value.length > 18) {
+    valueEl.style.fontSize = "11pt";
+  }
+  if (value.length > 20) {
+    valueEl.style.fontSize = "10pt";
+  }
   tmp.appendChild(valueEl);
 
   return tmp;

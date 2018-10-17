@@ -151,7 +151,6 @@ export function renderSystemicPayCounter(
         icon = fa("money-check");
         icon.title = local.bankReceive;
 
-
         rowEl.appendChild(text("واریز به حساب", true));
         rowEl.appendChild(text("به مبلغ"));
 
@@ -258,7 +257,6 @@ export function renderSystemicPayCounter(
     }
     receivesDataWrapper.appendChild(rowEl);
   }
-
 
   // Initial rendering.
   for (let i = 0; i < data.receives.length; ++i) {

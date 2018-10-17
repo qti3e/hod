@@ -147,12 +147,12 @@ export type SystemicReceive = CharterReceive;
 
 export interface SystemicPayData {
   base: {
-    cache: number;
-    installmentBase: number;
-    wage: number;
-    ICI: number;
-    credit: number;
-    companyCost: number;
+    A: number;
+    B: number;
+    C: number;
+    D: number;
+    E: number;
+    I: number;
   };
   receives: SystemicReceive[];
   additionalComments: string;

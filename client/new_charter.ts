@@ -19,45 +19,51 @@ import * as t from "./types";
 import { cacheForUser, checkBox, fa, sumCharterTickets } from "./util";
 
 const domCache = cacheForUser<HTMLElement>();
-const forms = cacheForUser<t.CharterDoc>();
-export function renderNewCharter(app: HTMLElement): void {
+
+export function renderNewCharter(app: HTMLElement, props = {}): void {
   resetData();
   // Check DOM cache for current user.
-  if (domCache.has()) {
+  if (!props.edit && domCache.has()) {
     return void app.appendChild(domCache.get());
   }
 
-  const form: t.CharterDoc = {
-    kind: "internal",
-    providedBy: "credit",
-    payer: "",
-    payerName: "",
-    nationalCode: "",
-    phone: "",
-    tickets: [],
-    pay: {
-      base: {
-        A: 0,
-        B: 0,
-        C: 0,
-        D: 0,
-        E: 0,
-        I: 0
-      },
-      receives: [],
-      payments: [],
-      additionalComments: ""
-    },
-    providerAgency: ""
-  };
+  let form: t.CharterDoc;
 
-  forms.set(form);
+  if (props.edit) {
+    form = props.doc;
+  } else {
+    form = {
+      kind: "internal",
+      providedBy: "credit",
+      payer: "",
+      payerName: "",
+      nationalCode: "",
+      phone: "",
+      tickets: [],
+      pay: {
+        base: {
+          A: 0,
+          B: 0,
+          C: 0,
+          D: 0,
+          E: 0,
+          I: 0
+        },
+        receives: [],
+        payments: [],
+        additionalComments: ""
+      },
+      providerAgency: ""
+    };
+  }
 
   // Create wrapper
   const wrapper = document.createElement("div");
   wrapper.id = "new-charter";
   wrapper.classList.add("full-page");
-  domCache.set(wrapper);
+  if (!props.edit) {
+    domCache.set(wrapper);
+  }
   app.appendChild(wrapper);
 
   const view = document.createElement("div");
@@ -143,6 +149,7 @@ export function renderNewCharter(app: HTMLElement): void {
 
   const agencyInput = inputWithLabel(true);
   agencyInput.placeholder = local.agency;
+  agencyInput.value = form.providerAgency;
   right.appendChild(agencyInput.parentElement);
   agencyInput.onchange = () => {
     form.providerAgency = agencyInput.value.trim();
@@ -151,6 +158,7 @@ export function renderNewCharter(app: HTMLElement): void {
 
   const payerInput = inputWithLabel(true);
   payerInput.placeholder = local.payer;
+  payerInput.value = form.payer;
   right.appendChild(payerInput.parentElement);
   payerInput.onchange = () => {
     form.payer = payerInput.value.trim();
@@ -159,6 +167,7 @@ export function renderNewCharter(app: HTMLElement): void {
 
   const payerNameInput = inputWithLabel(true);
   payerNameInput.placeholder = local.nameOfPayer;
+  payerNameInput.value = form.payerName;
   right.appendChild(payerNameInput.parentElement);
   payerNameInput.onchange = () => {
     form.payerName = payerNameInput.value.trim();
@@ -167,6 +176,7 @@ export function renderNewCharter(app: HTMLElement): void {
 
   const nationalCodeInput = inputWithLabel(true);
   nationalCodeInput.placeholder = local.nationalCode;
+  nationalCodeInput.value = form.nationalCode;
   nationalCodeInput.className = "ltr";
   right.appendChild(nationalCodeInput.parentElement);
   nationalCodeInput.onchange = () => {
@@ -175,6 +185,7 @@ export function renderNewCharter(app: HTMLElement): void {
 
   const phoneInput = inputWithLabel(true);
   phoneInput.placeholder = local.phoneNumber;
+  phoneInput.value = form.phone;
   phoneInput.className = "ltr";
   right.appendChild(phoneInput.parentElement);
   phoneInput.onchange = () => {
@@ -195,7 +206,11 @@ export function renderNewCharter(app: HTMLElement): void {
 
     form.tickets = tickets.filter(x => !!x).map(t => t.data());
     console.log("sending form", form);
-    await submit(form);
+    if (props.edit) {
+      await edit(form);
+    } else {
+      await submit(form);
+    }
     sendData();
     // Reset form.
     domCache.delete();
@@ -249,7 +264,19 @@ export function renderNewCharter(app: HTMLElement): void {
     }
   }
 
-  newTicket();
+  if (props.edit) {
+    for (const t of form.tickets) {
+      const id = tickets.length;
+      const ti = ticket(() => {
+        tickets[id] = undefined;
+      }, updateSums);
+      ti.data(t);
+      tickets.push(ti);
+    }
+    renderTickets();
+  } else {
+    newTicket();
+  }
 }
 
 interface TicketElement extends HTMLDivElement {
@@ -325,7 +352,10 @@ function ticket(removeCB: () => void, updateSums: () => void): TicketElement {
   const routeInput = routeSelector();
   wrapper.appendChild(routeInput);
 
+  let _id;
+
   const collectData = (): t.CharterTicket => ({
+    _id,
     id: idInput.value,
     passengerName: passengerNameInput.value,
     passengerLastname: passengerLastnameInput.value,
@@ -345,6 +375,7 @@ function ticket(removeCB: () => void, updateSums: () => void): TicketElement {
     if (t.airline) airlineInput.value = t.airline;
     if (t.date) dateInput.value = String(t.date);
     if (t.route) routeInput.setDBRoute(t.route);
+    if (t._id) _id = t._id;
   };
 
   wrapper.data = (data?: Partial<t.CharterTicket>) => {
@@ -362,6 +393,20 @@ async function submit(doc: t.CharterDoc): Promise<void> {
   const server = get("server");
   await axios.post(
     server + "/charter/new",
+    { doc },
+    {
+      headers: {
+        "hod-token": token
+      }
+    }
+  );
+}
+
+async function edit(doc: t.CharterDoc): Promise<void> {
+  const token = get("currentToken");
+  const server = get("server");
+  await axios.post(
+    server + "/charter/update",
     { doc },
     {
       headers: {

@@ -17,6 +17,9 @@ wrapper.id = "autocomplete";
 itemsWrapper.className = "items";
 
 function show(input: HTMLInputElement) {
+  if (input !== document.activeElement) {
+    return;
+  }
   wrapper.style = "";
   // Ensure that opacity is zero.
   // (It's supposed to be zero.)
@@ -31,8 +34,6 @@ function show(input: HTMLInputElement) {
   wrapper.style.top = top + "px";
   wrapper.style.borderRadius = "0 0 25px 25px";
   wrapper.style.borderTop = "none";
-  // Hide items.
-  itemsWrapper.style.opacity = "0";
   // Add the element to the document.
   const parent = input.parentElement;
   if (!parent) {
@@ -58,7 +59,7 @@ async function hide() {
   itemsWrapper.innerHTML = "";
 }
 
-function renderItems(items: string[], cb) {
+function renderItems(items: string[], cb, input) {
   itemsWrapper.innerHTML = "";
   itemsWrapper.style.opacity = "1";
   for (const item of items) {
@@ -69,6 +70,11 @@ function renderItems(items: string[], cb) {
     };
     itemsWrapper.appendChild(btn);
   }
+  if (items.length) {
+    show(input);
+  } else {
+    hide();
+  }
 }
 
 async function fetchData(
@@ -76,7 +82,8 @@ async function fetchData(
   text: string,
   items: string[],
   cache: Map,
-  cb
+  cb,
+  input
 ) {
   text = text.trim();
   const server = get("server");
@@ -84,7 +91,7 @@ async function fetchData(
   items.splice(0);
   if (cache.has(text)) {
     items.push(...cache.get(text));
-    renderItems(items, cb);
+    renderItems(items, cb, input);
   }
   const { data } = await axios.post(
     server + "/autocomplete/get",
@@ -100,7 +107,7 @@ async function fetchData(
   );
   items.splice(0);
   items.push(...data.ret);
-  renderItems(items, cb);
+  renderItems(items, cb, input);
   cache.set(text, data.ret);
 }
 
@@ -138,25 +145,22 @@ export function autocompleteInput(id: string, input: HTMLInputElement) {
     arr[1] = input.value.trim();
   };
 
-  fetchData(id, input.value, items, cache, cb);
+  fetchData(id, input.value, items, cache, cb, input);
 
   // Attach the event listeners.
   input.addEventListener("change", () => {
     arr[1] = input.value.trim();
-    fetchData(id, input.value, items, cache, cb);
+    fetchData(id, input.value, items, cache, cb, input);
   });
   input.addEventListener("keyup", () => {
     selected = false;
     css();
     arr[1] = input.value.trim();
-    fetchData(id, input.value, items, cache, cb);
+    fetchData(id, input.value, items, cache, cb, input);
   });
   input.addEventListener("focus", () => {
     current_id = fid;
-    itemsWrapper.innerHTML = "";
-    renderItems(items, cb);
-    show(input);
-    renderItems(items, cb);
+    fetchData(id, input.value, items, cache, cb, input);
   });
   input.addEventListener("blur", () => {
     setTimeout(() => {

@@ -515,9 +515,12 @@ p {
 
     .right-split {
       display: inline-block;
-      width: 30%;
+      width: calc(30% - 11px);
       max-width: 350px;
       margin: 10px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 5px;
     }
 
     .left-split {
@@ -715,6 +718,21 @@ p {
     color: var(--background);
     background: var(--primary);
     border: none;
+    outline: none;
+    &,
+    * {
+      cursor: pointer;
+    }
+  }
+
+  .edit-btn {
+    -webkit-appearance: none;
+    background: var(--secondry);
+    border: none;
+    color: var(--fg);
+    float: left;
+    height: 30px;
+    margin: 20px;
     outline: none;
     &,
     * {
