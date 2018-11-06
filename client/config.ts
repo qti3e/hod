@@ -18,6 +18,10 @@ export function renderConfig(
   param?: any,
   close?: (e?: boolean) => Promise<void>
 ): void {
+  if (open) {
+    return;
+  }
+
   open = true;
 
   const wrapper = document.createElement("div");
@@ -48,6 +52,7 @@ export function renderConfig(
       }
     } catch (e) {
       emit("notification", local.error);
+      emit("net", true);
     }
   }
 
@@ -94,12 +99,13 @@ async function pingServer() {
       if (versions.indexOf(version) === -1) {
         throw null;
       }
+      emit("net", true);
     }
   } catch (e) {
+    emit("net", false);
     emit("open-modal", "config");
   }
 }
 
 setInterval(pingServer, 3e3);
-
 pingServer();

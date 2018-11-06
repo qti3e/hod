@@ -14,6 +14,7 @@ import { route as local } from "./local";
 import { normalizeText } from "./persian";
 import * as t from "./types";
 import { delay, fa } from "./util";
+import { on } from "./ipc";
 
 let citiesCache: t.City[];
 let canvasCache;
@@ -590,4 +591,9 @@ function inScreen(e: HTMLElement): boolean {
   return false;
 }
 
-fetchData();
+on("net", status => {
+  if (citiesCache || !status) {
+    return;
+  }
+  fetchData();
+});

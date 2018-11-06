@@ -15,6 +15,7 @@ import * as t from "./types";
 
 const EE = new EventEmitter();
 export interface EventDataTypeMap {
+  net: boolean;
   goto: PageURL;
   "open-modal": PageURL;
   notification: string;
