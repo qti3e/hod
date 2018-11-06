@@ -1176,3 +1176,62 @@ p {
     margin-bottom: auto;
   }
 }
+
+.airline-icon .q-icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+  margin: auto;
+  background-image: url("./assets/airlines.png");
+  background-position: -1110px;
+  &.IR { background-position: 0px; }
+  &.W5 { background-position: -30px; }
+  &.EP { background-position: -60px; }
+  &.I3 { background-position: -90px; }
+  &.B9 { background-position: -120px; }
+  &.HH { background-position: -150px; }
+  &.QB { background-position: -180px; }
+  &.IV { background-position: -210px; }
+  &.Y9 { background-position: -240px; }
+  &.NV { background-position: -270px; }
+  &.ZV { background-position: -300px; }
+  &.JI { background-position: -330px; }
+  &.AK { background-position: -360px; }
+  &.TF { background-position: -390px; }
+  &.J2 { background-position: -420px; }
+  &.FZ { background-position: -450px; }
+  &.KC { background-position: -480px; }
+  &.TG { background-position: -510px; }
+  &.OS { background-position: -540px; }
+  &.KK { background-position: -570px; }
+  &.EY { background-position: -600px; }
+  &.AZ { background-position: -630px; }
+  &.EK { background-position: -660px; }
+  &.PS { background-position: -690px; } 
+  &.TK { background-position: -720px; } 
+  &.WY { background-position: -750px; } 
+  &.KL { background-position: -780px; } 
+  &.GF { background-position: -810px; } 
+  &.LH { background-position: -840px; } 
+  &.A3 { background-position: -870px; } 
+  &.CZ { background-position: -900px; }
+  &.QR { background-position: -930px; }
+  &.KU { background-position: -960px; }
+  &.Z2 { background-position: -990px; }
+  &.Z5 { background-position: -1080px; }
+  &.Z3 { background-position: -1020px; }
+  &.Z4 { background-position: -1050px; }
+  &.YB { background-position: -1140px; } 
+  &.AM { background-position: -1170px; } 
+  &.G9 { background-position: -1200px; }
+  &.BA { background-position: -1230px; }
+  &.AF { background-position: -1261px; }
+  &.SU { background-position: -1374px; }
+  &.JF { background-position: -1401px; }
+  &.KQ { background-position: -1432px; }
+  &.CO { background-position: -1462px; }
+  &.7J { background-position: -1471px; }
+  &.CAO { background-position: 1741px; } 
+  &.AST { background-position: 1686px; }
+  &.ASI { background-position: 1715px; }
+}
