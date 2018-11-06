@@ -9,6 +9,7 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
+import { data } from "./ac.data";
 
 const router = express.Router();
 
@@ -20,6 +21,10 @@ const changed: number[] = [];
 let cursor = 0;
 let stream;
 let writing = false;
+
+try {
+  fs.mkdirSync(".db");
+} catch (e) {}
 
 function writeToDisk(sync = false): void {
   if (writing) return;
@@ -63,8 +68,8 @@ function writeToDisk(sync = false): void {
 function loadData(): void {
   // Create the file if it does not exsits.
   fs.closeSync(fs.openSync(filename, "a"));
-  const data = fs.readFileSync(filename, "utf-8");
-  const jsons = data.split("\n\n");
+  const raw = fs.readFileSync(filename, "utf-8");
+  const jsons = raw.split("\n\n");
   for (let i = 0; i < jsons.length; ++i) {
     try {
       if (!jsons[i]) continue;
@@ -87,6 +92,9 @@ function loadData(): void {
       // I don't think so.
       console.log(e);
     }
+  }
+  if (words.length < data.length / 2) {
+    init();
   }
   normalize();
   console.log("Loaded autocomplete db");
@@ -199,7 +207,7 @@ router.post("/get", function(
         code: 200,
         ret: ret
           .filter(x => !!x[0])
-          .slice(0, 15)
+          .slice(0, 10)
           .map(x => x[0])
       });
       return;
@@ -216,5 +224,13 @@ router.post("/get", function(
   }
   loop();
 });
+
+function init() {
+  console.log("init ac");
+  for (const [id, word, count] of data) {
+    words.push([id, word, count]);
+    changed.push(words.length - 1);
+  }
+}
 
 export { router };
